@@ -158,9 +158,7 @@ $stats = $dbcon->query("SELECT * FROM site_stats");
                 <?php endforeach; ?>
 
             </div>
-            <!-- Add Pagination -->
-            <div class="swiper-pagination"></div>
-        </div>
+      </div>
 
         <!-- Add Navigation -->
         <div class="swiper-button-prev"></div>

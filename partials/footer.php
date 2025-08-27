@@ -5,7 +5,7 @@ if (!isset($dbcon)) {
 }
 
 // Fetch the service titles specifically for the footer links.
-$footer_services_query = $dbcon->query("SELECT title FROM services ORDER BY id DESC LIMIT 5");
+$footer_services_query = $dbcon->query("SELECT title,title_ar FROM services ORDER BY id DESC LIMIT 5");
 ?>
 
 <!-- ======= Footer ======= -->
@@ -27,8 +27,8 @@ $footer_services_query = $dbcon->query("SELECT title FROM services ORDER BY id D
         <div class="col-lg-2 col-md-6 footer-links">
           <h4><?= $lang['footer_useful_links'] ?></h4>
           <ul>
-            <li><i class="bx bx-chevron-right"></i> <a href="index.php?lang=<?= $current_lang ?>"><?= $lang['home_link'] ?></a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="index.php?lang=<?= $current_lang ?>#about"><?= $lang['services_link'] ?></a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#Home_link"><?= $lang['home_link'] ?></a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#services"><?= $lang['services_link'] ?></a></li>
             <li><i class="bx bx-chevron-right"></i> <a href="services.php?lang=<?= $current_lang ?>"><?= $lang['portfolio_link'] ?></a></li>
             <li><i class="bx bx-chevron-right"></i> <a href="#"><?= $lang['team_link'] ?></a></li>
             <li><i class="bx bx-chevron-right"></i> <a href="#"><?= $lang['contact_link'] ?></a></li>
@@ -41,7 +41,7 @@ $footer_services_query = $dbcon->query("SELECT title FROM services ORDER BY id D
             <?php
             if (isset($footer_services_query) && $footer_services_query->num_rows > 0) {
                 foreach ($footer_services_query as $service) {
-                    echo '<li><i class="bx bx-chevron-right"></i> <a href="services.php?lang=' . $current_lang . '">' . htmlspecialchars($service['title']) . '</a></li>';
+                    echo '<li><i class="bx bx-chevron-right"></i> <a href="#services">' . htmlspecialchars($current_lang == 'en' ?$service['title']:$service['title_ar']) . '</a></li>';
                 }
             }
             ?>
