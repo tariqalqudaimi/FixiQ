@@ -27,8 +27,8 @@ $footer_services_query = $dbcon->query("SELECT title,title_ar FROM services ORDE
         <div class="col-lg-2 col-md-6 footer-links">
           <h4><?= $lang['footer_useful_links'] ?></h4>
           <ul>
-            <li><i class="bx bx-chevron-right"></i> <a href="#"><?= $lang['home_link'] ?></a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#services"><?= $lang['services_link'] ?></a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="index.php?lang=<?= $current_lang ?>"><?= $lang['home_link'] ?></a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="index.php?lang=<?= $current_lang ?>#about"><?= $lang['services_link'] ?></a></li>
             <li><i class="bx bx-chevron-right"></i> <a href="services.php?lang=<?= $current_lang ?>"><?= $lang['portfolio_link'] ?></a></li>
             <li><i class="bx bx-chevron-right"></i> <a href="#"><?= $lang['team_link'] ?></a></li>
             <li><i class="bx bx-chevron-right"></i> <a href="#"><?= $lang['contact_link'] ?></a></li>

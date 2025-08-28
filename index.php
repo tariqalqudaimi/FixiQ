@@ -146,37 +146,33 @@ $features_query = $dbcon->query("SELECT * FROM features ORDER BY display_order A
     <section id="portfolio" class="portfolio">
       <div class="container" data-aos="fade-up">
         <div class="swiper portfolio-slider">
-          <div class="swiper-wrapper">
-            <?php if($products_query): foreach ($products_query as $product) : ?>
-              <div class="swiper-slide">
-                <div class="portfolio-slide-content">
-                  <div class="portfolio-item-wrap">
-                    <a href="assets/img/portfolio/<?= htmlspecialchars($product['image']) ?>" class="portfolio-lightbox" data-gallery="portfolio-gallery" title="<?= htmlspecialchars($product['name']) ?>">
-                      <img src="assets/img/portfolio/<?= htmlspecialchars($product['image']) ?>" class="img-fluid" alt="<?= htmlspecialchars($product['name']) ?>" loading="lazy">
-                    </a>
-                  </div>
-                  <div class="portfolio-info">
-                    <h3><?= htmlspecialchars($product['name']) ?></h3>
-                    <!-- === THIS IS THE CORRECTED DISPLAY LOGIC FOR CATEGORIES === -->
-                    <div class="portfolio-tags">
-                      <?php
-                        if (!empty($product['category_names'])) {
-                            $categories = explode(', ', $product['category_names']);
-                            foreach ($categories as $category):
-                      ?>
-                                <span><?= htmlspecialchars(trim($category)) ?></span>
-                      <?php
-                            endforeach;
-                        }
-                      ?>
+            <div class="swiper-wrapper">
+
+                <?php foreach ($products as $product) : ?>
+                    <div class="swiper-slide">
+                        <div class="portfolio-item-wrap">
+                            <!-- رابط يفتح الصورة في Glightbox عند النقر عليها -->
+                            <a href="assets/img/portfolio/<?= htmlspecialchars($product['image']) ?>" class="portfolio-lightbox" data-gallery="portfolio-gallery">
+                                <img src="assets/img/portfolio/<?= htmlspecialchars($product['image']) ?>" class="img-fluid" alt="<?= htmlspecialchars($product['name']) ?>">
+                            </a>
+                            
+                            <div class="portfolio-content">
+                                <h3><?= htmlspecialchars($product['name']) ?></h3>
+                                <div class="portfolio-tags">
+                                    <!-- ملاحظة: التصميم الحالي لقاعدة البيانات يسمح بتصنيف واحد فقط. سيتم عرض هذا التصنيف هنا -->
+                                    <span><?= htmlspecialchars($product['category_name']) ?></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            <?php endforeach; endif; ?>
-          </div>
-          <div class="swiper-pagination"></div>
+                <?php endforeach; ?>
+
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
         </div>
+
+        <!-- Add Navigation -->
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
       </div>

@@ -678,20 +678,18 @@ section {
 # 9. Portfolio Section (NEW Single-Slide Gallery Style)
 --------------------------------------------------------------*/
 .portfolio {
-  background-color: var(--primary-dark);
-  /* Make the section tall to center the content vertically */
-  min-height: 90vh;
-  display: flex;
-  align-items: center;
-  padding: 40px 0;
-  position: relative; /* For navigation arrows */
+  padding: 60px 0;
+  background: #111;
+  overflow: hidden;
 }
 
-.portfolio .container {
-  position: relative; /* For navigation arrows */
-  width: 100%;
+/* --- Main Slider Container --- */
+.portfolio .portfolio-slider {
+  padding-bottom: 50px; /* Space for pagination */
+  
 }
 
+/* --- Single Slide --- */
 .portfolio .swiper-slide {
   /* The fade effect makes slides overlap, so we add a transition */
  
