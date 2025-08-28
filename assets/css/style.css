@@ -116,6 +116,7 @@ html[dir="rtl"] .back-to-top {
   right: 80px;
   z-index: 997;
   padding: 0 40px;
+  
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -215,6 +216,15 @@ html[dir="rtl"] .navbar>ul>li>a:before {
 .navbar li:hover>a {
   color: var(--text-light);
 }
+.logo-img {
+  max-height: 48px; /* عدّل الحجم حسب التصميم */
+  height: auto;
+  width: auto;
+  display: block;
+}
+.logo{
+padding: 20px;
+}
 
 /* Mobile Navigation */
 .mobile-nav-toggle {
@@ -270,22 +280,6 @@ html[dir="rtl"] .navbar a i,
 html[dir="rtl"] .navbar a:focus i {
   margin-left: 0;
   margin-right: 5px;
-}
-
-/* 5. Reposition dropdown menus to open from the right */
-html[dir="rtl"] .navbar .dropdown ul {
-  left: auto;
-  right: 0;
-}
-
-/* 6. Reposition nested dropdown menus */
-html[dir="rtl"] .navbar .dropdown .dropdown ul {
-  left: auto;
-  right: calc(100% - 30px);
-}
-html[dir="rtl"] .navbar .dropdown .dropdown:hover > ul {
-  left: auto;
-  right: 100%;
 }
 
 /* Language Switcher Styling (Updated for better visibility) */

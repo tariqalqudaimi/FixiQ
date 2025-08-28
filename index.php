@@ -68,6 +68,11 @@ $features_query = $dbcon->query("SELECT * FROM features ORDER BY display_order A
   <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+  <!-- or -->
+  <link rel="stylesheet"
+  href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
   <link href="assets/css/style.css" rel="stylesheet">
 </head>
 <body>
@@ -77,10 +82,17 @@ $features_query = $dbcon->query("SELECT * FROM features ORDER BY display_order A
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex align-items-center">
     <div class="container-fluid" data-aos="fade-up">
+      
+   
+
       <div class="row justify-content-center">
         <div class="col-xl-5 col-lg-6 pt-3 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center text-center">
           <h1><?= htmlspecialchars($current_lang == 'en' ? ($settings['hero_title'] ?? '') : ($settings['hero_title_ar'] ?? '')) ?></h1>
-          <h2><?= htmlspecialchars($current_lang == 'en' ? ($settings['hero_subtitle'] ?? '') : ($settings['hero_subtitle_ar'] ?? '')) ?></h2>
+           <a href="index.php?lang=<?= $current_lang ?>">
+      <img src="<?= htmlspecialchars($settings['company_logo'] ?? 'assets/img/Asset 3.png') ?>" alt="<?= htmlspecialchars($settings['company_name'] ?? 'Logo') ?>" class="logo">
+    </a>
+          <!-- <h2><?= htmlspecialchars($current_lang == 'en' ? ($settings['hero_subtitle'] ?? '') : ($settings['hero_subtitle_ar'] ?? '')) ?></h2> -->
+          
           <div><a href="#services" class="btn-get-started scrollto"><?= $lang['get_started_btn'] ?? 'Get Started' ?></a></div>
         </div>
       </div>
@@ -125,7 +137,7 @@ $features_query = $dbcon->query("SELECT * FROM features ORDER BY display_order A
       <div class="container" data-aos="fade-up">
         <div class="section-title">
           <h2><?= $lang['features_title'] ?? 'Our Core Features' ?></h2>
-          <p><?= $lang['features_description'] ?? 'Why partners choose to work with us' ?></p>
+          <!-- <p><?= $lang['features_description'] ?? 'Why partners choose to work with us' ?></p> -->
         </div>
         <div class="row">
           <?php if ($features_query && $features_query->num_rows > 0): ?>
@@ -150,6 +162,10 @@ $features_query = $dbcon->query("SELECT * FROM features ORDER BY display_order A
     <!-- ======= Portfolio Section ======= -->
     <section id="portfolio" class="portfolio">
       <div class="container" data-aos="fade-up">
+          <div class="section-title">
+          <h2><?= $lang['portfolio_title'] ?? 'Our Core Features' ?></h2>
+          <p><?= $lang['portfolio_description'] ?? 'Why partners choose to work with us' ?></p>
+        </div>
         <div class="swiper portfolio-slider">
           <div class="swiper-wrapper">
             <?php if($products_query): foreach ($products_query as $product) : ?>
@@ -205,7 +221,7 @@ $features_query = $dbcon->query("SELECT * FROM features ORDER BY display_order A
                   <span><?= htmlspecialchars($member['position']) ?></span>
                 </div>
                 <div class="social-links">
-                  <?php if (!empty($member['twitter_url'])): ?><a href="<?= htmlspecialchars($member['twitter_url']) ?>"><i class="bi bi-twitter"></i></a><?php endif; ?>
+                  <?php if (!empty($member['twitter_url'])): ?><a href="<?= htmlspecialchars($member['twitter_url']) ?>"><i class='bx bx-twitter-x'  ></i>  </a><?php endif; ?>
                   <?php if (!empty($member['facebook_url'])): ?><a href="<?= htmlspecialchars($member['facebook_url']) ?>"><i class="bi bi-facebook"></i></a><?php endif; ?>
                   <?php if (!empty($member['instagram_url'])): ?><a href="<?= htmlspecialchars($member['instagram_url']) ?>"><i class="bi bi-instagram"></i></a><?php endif; ?>
                   <?php if (!empty($member['linkedin_url'])): ?><a href="<?= htmlspecialchars($member['linkedin_url']) ?>"><i class="bi bi-linkedin"></i></a><?php endif; ?>

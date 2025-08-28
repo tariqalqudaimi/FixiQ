@@ -37,7 +37,7 @@ $lang = [
 
     // FAQ Section
     'faq_title' => 'Frequently Asked Questions',
-    'faq_description' => 'Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.',
+    'faq_description' => 'Our team consists of experts in software development, design, marketing, and content creation, working together to achieve the best results for our clients.',
 
     // Contact Section
     'contact_title' => 'Contact',

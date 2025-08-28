@@ -1,7 +1,12 @@
 <header id="header">
   <!-- الشعار على اليسار -->
-  <h1 class="logo me-auto"><a href="index.php?lang=<?= $current_lang ?>"><?= htmlspecialchars($settings['company_name']) ?></a></h1>
-  
+  <!-- الشعار على اليسار -->
+  <!-- <h1 class="logo me-auto"><a href="index.php?lang=<?= $current_lang ?>"><?= htmlspecialchars($settings['company_name']) ?></a></h1> -->
+  <div class="logo me-auto">
+    <a href="index.php?lang=<?= $current_lang ?>">
+      <img src="<?= htmlspecialchars($settings['company_logo'] ?? 'assets/img/Asset 3.png') ?>" alt="<?= htmlspecialchars($settings['company_name'] ?? 'Logo') ?>" class="logo-img">
+    </a>
+  </div>
   <!-- قائمة التنقل الرئيسية -->
   <nav id="navbar" class="navbar order-last order-lg-0">
     <ul>
