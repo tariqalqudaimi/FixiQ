@@ -87,9 +87,12 @@ require_once "db.php";
                             <ul class="nav-second-level" aria-expanded="false">
                                 <li><a href="manage_products.php">Manage Products</a></li>
                                 <li><a href="manage_categories.php">Manage Categories</a></li>
+                                
                             </ul>
                         </li>
                         <li><a href="manage_services.php"><i class="bi bi-gear-wide-connected"></i><span class="badge badge-info badge-pill float-right"><?= $service_count ?></span> <span> Services </span></a></li>
+                       <li><a href="manage_team.php"><i class="bi bi-user"></i> <span> Team </span></a></li>
+                       <li><a href="manage_features.php"><i class="bi bi-star"></i> <span> Features </span></a></li>
                         <li><a href="manage_stats.php"><i class="bi bi-graph-up"></i> <span> Site Statistics </span></a></li>
                         <li><a href="manage_contact.php"><i class="bi bi-envelope-fill"></i> <span> Contact Info </span></a></li>
                         <li><a href="manage_messages.php"><i class="bi bi-envelope-fill"></i><span> Messages </span><?php if($unread_messages > 0): ?><span class="badge badge-danger badge-pill float-right"><?= $unread_messages ?></span><?php endif; ?></a></li>
