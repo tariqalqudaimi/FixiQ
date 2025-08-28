@@ -24,7 +24,9 @@ $settings = $dbcon->query("SELECT company_name, hero_title, hero_title_ar, hero_
 $contact = $dbcon->query("SELECT address, email, phone, map_embed_code FROM contact_information WHERE id=1")->fetch_assoc();
 $team_members_query = $dbcon->query("SELECT name, position, image_file, twitter_url, facebook_url, instagram_url, linkedin_url FROM team_members ORDER BY display_order ASC");
 
-// === THIS IS THE CORRECTED QUERY FOR PRODUCTS ===
+// ==============================================================================
+// === THIS IS THE CORRECTED QUERY FOR PRODUCTS THAT FIXES THE ERROR ON LINE 28 ===
+// ==============================================================================
 $products_query = $dbcon->query("
     SELECT 
         p.id, p.name, p.image,
@@ -40,6 +42,9 @@ $products_query = $dbcon->query("
     ORDER BY 
         p.id DESC
 ");
+// ==============================================================================
+// ==============================================================================
+
 
 $services_homepage = $dbcon->query("SELECT box_color_class, image_file, title, title_ar, description, description_ar FROM services ORDER BY id DESC LIMIT 6");
 $total_services_count = $dbcon->query("SELECT COUNT(id) as count FROM services")->fetch_assoc()['count'];
@@ -50,7 +55,7 @@ $features_query = $dbcon->query("SELECT * FROM features ORDER BY display_order A
 <html lang="<?= $current_lang ?>" dir="<?= ($current_lang == 'ar' ? 'rtl' : 'ltr') ?>">
 <head>
   <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="width=device-width, initial-scale-1.0" name="viewport">
   <title><?= htmlspecialchars($settings['company_name'] ?? 'Company Name') ?> - Home</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
@@ -146,33 +151,37 @@ $features_query = $dbcon->query("SELECT * FROM features ORDER BY display_order A
     <section id="portfolio" class="portfolio">
       <div class="container" data-aos="fade-up">
         <div class="swiper portfolio-slider">
-            <div class="swiper-wrapper">
-
-                <?php foreach ($products as $product) : ?>
-                    <div class="swiper-slide">
-                        <div class="portfolio-item-wrap">
-                            <!-- رابط يفتح الصورة في Glightbox عند النقر عليها -->
-                            <a href="assets/img/portfolio/<?= htmlspecialchars($product['image']) ?>" class="portfolio-lightbox" data-gallery="portfolio-gallery">
-                                <img src="assets/img/portfolio/<?= htmlspecialchars($product['image']) ?>" class="img-fluid" alt="<?= htmlspecialchars($product['name']) ?>">
-                            </a>
-                            
-                            <div class="portfolio-content">
-                                <h3><?= htmlspecialchars($product['name']) ?></h3>
-                                <div class="portfolio-tags">
-                                    <!-- ملاحظة: التصميم الحالي لقاعدة البيانات يسمح بتصنيف واحد فقط. سيتم عرض هذا التصنيف هنا -->
-                                    <span><?= htmlspecialchars($product['category_name']) ?></span>
-                                </div>
-                            </div>
-                        </div>
+          <div class="swiper-wrapper">
+            <?php if($products_query): foreach ($products_query as $product) : ?>
+              <div class="swiper-slide">
+                <div class="portfolio-slide-content">
+                  <div class="portfolio-item-wrap">
+                    <a href="assets/img/portfolio/<?= htmlspecialchars($product['image']) ?>" class="portfolio-lightbox" data-gallery="portfolio-gallery" title="<?= htmlspecialchars($product['name']) ?>">
+                      <img src="assets/img/portfolio/<?= htmlspecialchars($product['image']) ?>" class="img-fluid" alt="<?= htmlspecialchars($product['name']) ?>" loading="lazy">
+                    </a>
+                  </div>
+                  <div class="portfolio-info">
+                    <h3><?= htmlspecialchars($product['name']) ?></h3>
+                    <!-- === THIS IS THE CORRECTED DISPLAY LOGIC FOR CATEGORIES === -->
+                    <div class="portfolio-tags">
+                      <?php
+                        if (!empty($product['category_names'])) {
+                            $categories = explode(', ', $product['category_names']);
+                            foreach ($categories as $category):
+                      ?>
+                                <span><?= htmlspecialchars(trim($category)) ?></span>
+                      <?php
+                            endforeach;
+                        }
+                      ?>
                     </div>
-                <?php endforeach; ?>
-
-            </div>
-            <!-- Add Pagination -->
-            <div class="swiper-pagination"></div>
+                  </div>
+                </div>
+              </div>
+            <?php endforeach; endif; ?>
+          </div>
+          <div class="swiper-pagination"></div>
         </div>
-
-        <!-- Add Navigation -->
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
       </div>
