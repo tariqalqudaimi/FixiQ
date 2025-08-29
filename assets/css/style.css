@@ -183,7 +183,7 @@ html[dir="rtl"] body {
   border-radius: 50px;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
   position: fixed;
-  top: 30px; left: 20%; right: 5%;
+  top: 30px; left: 20%; right: 20%;
   z-index: 997;
   transition: all 0.3s ease;
   width: 60%;
