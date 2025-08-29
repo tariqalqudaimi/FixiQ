@@ -186,7 +186,7 @@ html[dir="rtl"] body {
   top: 30px; left: 20%; right: 5%;
   z-index: 997;
   transition: all 0.3s ease;
-  width: 970px;
+  width: 60%;
 }
 #header .container-fluid { height: 80px; padding: 0 25px; }
 #header.header-scrolled { top: 10px; background: rgba(var(--primary-dark-rgb), 0.9); }
@@ -338,6 +338,7 @@ html[dir="rtl"] body {
     right: 0;
     top: 0 !important;
     border-radius: 0;
+    width: 100%;
   }
   
   .navbar > ul {
