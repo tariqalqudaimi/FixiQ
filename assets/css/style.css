@@ -1,25 +1,24 @@
 /**
-* Website Stylesheet
-* Description: A clean, organized stylesheet matching the website's structure.
-* Version: 2.0
+* Website Stylesheet (Full & Merged)
+* Version: 5.0
 */
 
 /*--------------------------------------------------------------
 # Table of Contents
 --------------------------------------------------------------
 1. General & Variables
-2. Preloader
+2. Preloader & Animations
 3. Back to top button
-4. Header & Navigation
+4. Header & Navigation (Corrected & Merged)
 5. Hero Section
 6. Sections General
 7. Services Section
 8. Features Section
 9. Portfolio Section
-10. FAQ Section
-11. Team Section
-12. Contact Section
-13. Footer
+10. Team Section
+11. Contact Section
+12. Footer
+13. RTL Specific Adjustments
 --------------------------------------------------------------*/
 
 /*--------------------------------------------------------------
@@ -33,6 +32,7 @@
   --text-light: #FFFFFF;
   --text-muted: #B0B0B0;
   --nav-link-color: #B0B0B0;
+  --primary-dark-rgb: 24, 18, 43;
 }
 
 body {
@@ -56,12 +56,90 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-light);
 }
 
-/* RTL General Adjustments */
 html[dir="rtl"] body {
   direction: rtl;
   text-align: right;
 }
 
+/*--------------------------------------------------------------
+# 2. Preloader & Animations (SVG Line Drawing)
+--------------------------------------------------------------*/
+#preloader {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 9999; background: var(--primary-dark);
+  display: flex; justify-content: center; align-items: center;
+  transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+  opacity: 1; visibility: visible;
+}
+
+#preloader.preloader-hidden {
+  opacity: 0; visibility: hidden;
+}
+
+.preloader-logo-container {
+  max-width: 180px; /* Control logo size */
+}
+    
+.preloader-logo-container svg {
+    width: 150%;
+    overflow: visible;
+}
+
+/* --- The SVG Line Animation Logic --- */
+.logo-path, .light-flare-path {
+    stroke: var(--accent-purple);
+    stroke-width: 2; /* Adjust thickness as needed */
+    fill: transparent; /* Start with no fill */
+    stroke-dasharray: 1000; /* A large number, longer than any path */
+    stroke-dashoffset: 1000; /* Start with the path fully hidden */
+}
+
+/* Animation for drawing the logo path */
+@keyframes draw-path {
+  to {
+    stroke-dashoffset: 0; /* Draw the path */
+  }
+}
+
+/* Animation for filling the logo with color after it's drawn */
+@keyframes fill-logo {
+  to {
+    fill: var(--accent-purple); /* Fill with color */
+  }
+}
+
+/* Apply the drawing and filling animations */
+#preloader:not(.preloader-hidden) .logo-path {
+    animation: 
+        draw-path 1.5s cubic-bezier(0.65, 0, 0.35, 1) forwards,
+        fill-logo 0.5s ease-in forwards 1.6s; /* Fill after 1.6s */
+}
+
+/* --- The Light Flare Animation Logic --- */
+.light-flare-path {
+    stroke: url(#light-flare); /* Use the gradient as the stroke color */
+    stroke-width: 6; /* Make the flare thicker */
+    opacity: 0;
+}
+
+@keyframes light-flare-anim {
+  0% {
+    stroke-dashoffset: 1000;
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+/* Apply the light flare animation */
+#preloader:not(.preloader-hidden) .light-flare-path {
+    animation: light-flare-anim 1.8s ease-in-out forwards 0.2s;
+}
 /*--------------------------------------------------------------
 # 3. Back to top button
 --------------------------------------------------------------*/
@@ -87,7 +165,6 @@ html[dir="rtl"] body {
 
 .back-to-top:hover {
   background: var(--accent-purple-darker);
-  color: #fff;
 }
 
 .back-to-top.active {
@@ -95,1005 +172,522 @@ html[dir="rtl"] body {
   opacity: 1;
 }
 
-html[dir="rtl"] .back-to-top {
-  left: 15px;
-  right: auto;
-}
-
 /*--------------------------------------------------------------
-# 4. Header & Navigation
+# 4. Header & Navigation (Corrected & Merged)
 --------------------------------------------------------------*/
+/*-- Main Header Container --*/
 #header {
-  background-color: rgba(33, 24, 60, 0.5);
-  border-radius: 50px;
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+  background: rgba(var(--primary-dark-rgb), 0.5);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  width: calc(100% - 160px);
+  border-radius: 50px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
   position: fixed;
-  top: 30px;
-  left: 80px;
-  right: 80px;
+  top: 30px; left: 20%; right: 5%;
   z-index: 997;
-  padding: 0 40px;
-  
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 80px;
   transition: all 0.3s ease;
+  width: 970px;
 }
+#header .container-fluid { height: 80px; padding: 0 25px; }
+#header.header-scrolled { top: 10px; background: rgba(var(--primary-dark-rgb), 0.9); }
+#header .logo { font-size: 28px; margin: 0; font-weight: 700; width: 60px;}
+#header .logo a { color: var(--text-light); }
 
-#header.header-scrolled {
-  background-color: rgba(33, 24, 60, 0.9);
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
-  top: 10px;
+/*-- Desktop Navigation --*/
+.navbar { padding: 0; }
+.navbar ul { margin: 0; padding: 0; display: flex; list-style: none; align-items: center; }
+.navbar > ul > li { padding-left: 24px; }
+.navbar a, .navbar a:focus {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 15px; font-weight: 500; color: var(--nav-link-color);
+  white-space: nowrap; transition: 0.3s;
 }
+.navbar a i { margin-left: 5px; }
+.navbar a:hover, .navbar .active, .navbar li:hover > a { color: var(--text-light); }
+.navbar .dropdown ul {
+  display: block; position: absolute; left: 14px; top: calc(100% + 20px);
+  margin: 0; padding: 10px 0; z-index: 99; opacity: 0; visibility: hidden;
+  background: var(--primary-dark); box-shadow: 0 0 30px rgba(0,0,0,0.4);
+  transition: 0.3s; border-radius: 8px; min-width: 200px;
+}
+.navbar .dropdown:hover > ul { opacity: 1; top: 100%; visibility: visible; }
 
-#header .logo {
-  margin: 0;
+/*-- Language Switcher --*/
+.language-switcher.dropdown { position: relative; }
+.language-switcher .dropdown-toggle {
+  background: var(--accent-purple); border: 1px solid var(--accent-purple);
+  color: var(--text-light); padding: 8px 15px; font-size: 14px; font-weight: 500;
+  border-radius: 50px; transition: all 0.3s ease; display: flex; align-items: center;
 }
+.language-switcher .dropdown-toggle:hover { background: var(--accent-purple-darker); border-color: var(--accent-purple-darker); }
+.language-switcher .dropdown-toggle i { margin-right: 5px; color: var(--text-light); }
+.language-switcher .dropdown-menu { background-color: var(--secondary-dark); border: 1px solid rgba(255, 255, 255, 0.1); }
+.language-switcher .dropdown-item:hover, .language-switcher .dropdown-item.active { background-color: rgba(138, 79, 255, 0.1); color: var(--accent-purple); }
 
-.navbar {
-  padding: 0;
-}
 
-.navbar ul {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  list-style: none;
-  align-items: center;
-}
+/*--------------------------------------------------------------
+# 4. Header & Navigation (Continued)
+--------------------------------------------------------------*/
+/* ... Your existing .navbar, #header, etc., desktop styles should remain above this ... */
 
-.navbar li {
-  position: relative;
-}
-
-.navbar>ul>li {
-  padding: 10px 0 10px 30px;
-}
-
-html[dir="rtl"] .navbar>ul>li {
-  padding: 10px 30px 10px 0;
-}
-
-.navbar a,
-.navbar a:focus {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 3px;
-  font-family: "Poppins", sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--nav-link-color);
-  white-space: nowrap;
-  transition: 0.3s;
-  position: relative;
-}
-
-.navbar a i,
-.navbar a:focus i {
-  font-size: 12px;
-  line-height: 0;
-  margin-left: 5px;
-}
-
-html[dir="rtl"] .navbar a i,
-html[dir="rtl"] .navbar a:focus i {
-  margin-left: 0;
-  margin-right: 5px;
-}
-
-.navbar>ul>li>a:before {
-  content: "";
-  position: absolute;
-  width: 0%;
-  height: 2px;
-  bottom: -7px;
-  left: 0;
-  background-color: var(--accent-purple);
-  visibility: hidden;
-  transition: all 0.3s ease-in-out 0s;
-}
-
-html[dir="rtl"] .navbar>ul>li>a:before {
-  left: auto;
-  right: 0;
-}
-
-.navbar a:hover:before,
-.navbar li:hover>a:before,
-.navbar .active:before {
-  visibility: visible;
-  width: 100%;
-}
-
-.navbar a:hover,
-.navbar .active,
-.navbar .active:focus,
-.navbar li:hover>a {
-  color: var(--text-light);
-}
-.logo-img {
-  max-height: 48px; /* عدّل الحجم حسب التصميم */
-  height: auto;
-  width: auto;
-  display: block;
-}
-.logo{
-padding: 20px;
-}
-
-/* Mobile Navigation */
+/*-- Mobile Navigation --*/
 .mobile-nav-toggle {
   color: var(--text-light);
   font-size: 28px;
   cursor: pointer;
-  display: none;
+  display: none; /* Hidden on desktop */
   line-height: 0;
   transition: 0.5s;
+  z-index: 1000;
 }
 
+/* The Dropdown Panel (this is .navbar-mobile) */
+.navbar-mobile {
+  position: absolute; /* Positioned relative to the header */
+  top: 70px;      /* Position it just below the header */
+  right: 15px;      /* Align to the right */
+  left: 15px;
+  z-index: 999;
+  
+  /* Appearance */
+  background: var(--secondary-dark);
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 0;
+
+  /* Animation */
+  transition: all 0.3s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-15px);
+}
+
+/* Show the panel when the menu is active */
+.mobile-nav-active .navbar-mobile {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Lock page scrolling when menu is open */
+.mobile-nav-active {
+  overflow: hidden;
+}
+
+/* The <ul> list of menu items */
+.navbar-mobile ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Style individual links */
+.navbar-mobile a,
+.navbar-mobile a:focus {
+  display: block;
+  padding: 10px 20px;
+  color: var(--text-light);
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+/* Style for hover and active links */
+.navbar-mobile a:hover,
+.navbar-mobile .active > a,
+.navbar-mobile li:hover > a {
+  color: var(--accent-purple);
+  background: rgba(var(--primary-dark-rgb), 0.5);
+}
+
+/* Mobile Dropdown Styling */
+.navbar-mobile .dropdown ul {
+  position: static;
+  display: none;
+  margin: 10px 20px;
+  padding: 10px 0;
+  background: var(--primary-dark);
+  border-radius: 5px;
+}
+
+.navbar-mobile .dropdown > .dropdown-active {
+  display: block;
+}
+.navbar-mobile .dropdown > a.active i {
+  transform: rotate(180deg);
+}
+.navbar-mobile .mobile-actions {
+    padding: 10px 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-top: 10px;
+}
+.navbar-mobile .mobile-actions .language-switcher {
+    width: 100%;
+}
+.navbar-mobile .mobile-actions .dropdown-toggle {
+    width: 100%;
+    justify-content: space-between;
+}
+
+
+/* Media Query to switch between Desktop and Mobile nav */
 @media (max-width: 991px) {
   #header {
-    width: 100%;
-    border-radius: 0;
     left: 0;
     right: 0;
-    top: 0;
-    background: var(--primary-dark);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    padding: 12px 15px;
-    height: auto;
+    top: 0 !important;
+    border-radius: 0;
   }
-
-  .navbar {
+  
+  .navbar > ul {
     display: none;
   }
-  .mobile-nav-toggle {
+  
+  #navbar .mobile-nav-toggle {
     display: block;
   }
 }
-/*--------------------------------------------------------------
-# RTL (Right-to-Left) Specific Adjustments
---------------------------------------------------------------*/
 
-/* 1. Reverse the main header elements order */
-html[dir="rtl"] #header {
-  flex-direction: row-reverse;
-}
-
-/* 2. Reverse the navbar list items order */
-html[dir="rtl"] .navbar ul {
-  flex-direction: row-reverse;
-}
-
-/* 3. Flip padding for navbar list items */
-html[dir="rtl"] .navbar>ul>li {
-  padding: 10px 30px 10px 0;
-}
-
-/* 4. Adjust margin for dropdown icons */
-html[dir="rtl"] .navbar a i,
-html[dir="rtl"] .navbar a:focus i {
-  margin-left: 0;
-  margin-right: 5px;
-}
-
-/* Language Switcher Styling (Updated for better visibility) */
-.language-switcher.dropdown {
-  position: relative;
-  margin-left: 20px; 
-}
-html[dir="rtl"] .language-switcher.dropdown {
-  margin-left: 0;
-  margin-right: 20px;
-}
-.language-switcher .dropdown-toggle {
-  /* === NEW COLORS HERE === */
-  background: var(--accent-purple);
-  border: 1px solid var(--accent-purple);
-  color: var(--text-light);
-  /* ======================= */
-  padding: 8px 15px;
-  font-size: 14px;
-  font-weight: 500; /* Made text slightly bolder */
-  border-radius: 50px; /* Pill shape to match other buttons */
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-}
-.language-switcher .dropdown-toggle:hover {
-  /* === NEW HOVER COLORS HERE === */
-  background: var(--accent-purple-darker);
-  border-color: var(--accent-purple-darker);
-  color: var(--text-light);
-}
-.language-switcher .dropdown-toggle i {
-  margin-right: 5px;
-  color: var(--text-light); /* Ensure icon is also white */
-}
-html[dir="rtl"] .language-switcher .dropdown-toggle i {
-  margin-right: 0;
-  margin-left: 5px;
-}
-.language-switcher .dropdown-menu {
-  background-color: var(--secondary-dark);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
-}
-html[dir="rtl"] .language-switcher .dropdown-menu {
-  right: 0 !important;
-  left: auto !important;
-}
-.language-switcher .dropdown-item {
-  color: var(--text-muted);
-  padding: 8px 15px;
-  transition: all 0.2s ease;
-}
-.language-switcher .dropdown-item:hover, .language-switcher .dropdown-item.active {
-  background-color: rgba(138, 79, 255, 0.1);
-  color: var(--accent-purple);
+/*-- RTL Adjustments for Mobile Nav --*/
+html[dir="rtl"] .navbar-mobile {
+    right: 15px;
+    left: auto;
 }
 
 /*--------------------------------------------------------------
 # 5. Hero Section
 --------------------------------------------------------------*/
 #hero {
-  width: 100%;
-  height: 100vh;
-  background: var(--primary-dark);
-  padding-top: 150px;
-  display: flex;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  text-align: center;
+  width: 100%; height: 100vh; background: var(--primary-dark);
+  padding-top: 150px; display: flex; align-items: center; position: relative;
+  overflow: hidden; text-align: center;
 }
-
 #hero::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background:
-    url('data:image/svg+xml;utf8,<svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" opacity="0.03"><circle cx="10" cy="10" r="0.5" fill="%23FFFFFF"/><circle cx="30" cy="30" r="0.5" fill="%23FFFFFF"/><circle cx="50" cy="50" r="0.5" fill="%23FFFFFF"/><circle cx="70" cy="70" r="0.5" fill="%23FFFFFF"/><circle cx="90" cy="90" r="0.5" fill="%23FFFFFF"/></svg>') repeat;
-  background-size: 30px 30px;
-  z-index: 0;
-  pointer-events: none;
+  content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" opacity="0.03"><circle cx="10" cy="10" r="0.5" fill="%23FFFFFF"/><circle cx="30" cy="30" r="0.5" fill="%23FFFFFF"/><circle cx="50" cy="50" r="0.5" fill="%23FFFFFF"/><circle cx="70" cy="70" r="0.5" fill="%23FFFFFF"/><circle cx="90" cy="90" r="0.5" fill="%23FFFFFF"/></svg>') repeat;
+  background-size: 30px 30px; z-index: 0;
 }
-/* ============================================================== */
-/* START: Code for Floating Geometric Shapes Animation            */
-/* ============================================================== */
-
-/* This is the pseudo-element that will contain all our floating shapes */
 #hero::after {
-  content: "";
-  position: absolute;
-  top: -10%; 
-  left: -10%; 
-  width: 120%; 
-  height: 120%;
-  z-index: 0;
-  pointer-events: none; /* Allows clicks to go through it */
+  content: ""; position: absolute; top: -10%; left: -10%; width: 120%; height: 120%; z-index: 0;
   background-repeat: no-repeat;
-  
-  /* Defining the size of each shape's container */
-  background-size: 
-    100px 100px, /* Circle */
-    120px 120px, /* Triangle */
-    80px 40px,   /* Rounded Rectangle */
-    150px 150px; /* Diagonal Line */
-
-  /* Using inline SVG to create the shapes with the theme's accent color */
-  background-image: 
-    /* Circle Shape */
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%238A4FFF' opacity='0.15'/%3E%3C/svg%3E"),
-    /* Triangle Shape */
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cpolygon points='60,0 120,120 0,120' fill='%238A4FFF' opacity='0.15'/%3E%3C/svg%3E"),
-    /* Rounded Rectangle Shape */
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 40'%3E%3Crect x='0' y='0' width='80' height='40' rx='20' ry='20' fill='%238A4FFF' opacity='0.15'/%3E%3C/svg%3E"),
-    /* Diagonal Line Shape */
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150'%3E%3Cline x1='10' y1='140' x2='140' y2='10' stroke='%238A4FFF' stroke-width='10' stroke-linecap='round' opacity='0.2'/%3E%3C/svg%3E");
-  
-  /* Positioning each shape randomly on the screen */
-  background-position: 
-    10% 80%, /* Circle at bottom-left */
-    90% 10%, /* Triangle at top-right */
-    40% 50%, /* Rectangle at center */
-    70% 30%; /* Diagonal line at top-right-ish */
-
-  /* Applying the floating animation */
+  background-size: 100px 100px, 120px 120px, 80px 40px, 150px 150px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%238A4FFF' opacity='0.15'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Cpolygon points='60,0 120,120 0,120' fill='%238A4FFF' opacity='0.15'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 40'%3E%3Crect x='0' y='0' width='80' height='40' rx='20' ry='20' fill='%238A4FFF' opacity='0.15'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150'%3E%3Cline x1='10' y1='140' x2='140' y2='10' stroke='%238A4FFF' stroke-width='10' stroke-linecap='round' opacity='0.2'/%3E%3C/svg%3E");
+  background-position: 10% 80%, 90% 10%, 40% 50%, 70% 30%;
   animation: floatGeometricShapes 80s ease-in-out infinite alternate;
 }
-
-/* The keyframes that define the floating movement */
 @keyframes floatGeometricShapes {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  25% { transform: translate(5%, -5%) rotate(10deg); }
-  50% { transform: translate(-5%, 5%) rotate(-10deg); }
-  75% { transform: translate(3%, -3%) rotate(5deg); }
+  0% { transform: translate(0, 0) rotate(0deg); } 25% { transform: translate(5%, -5%) rotate(10deg); }
+  50% { transform: translate(-5%, 5%) rotate(-10deg); } 75% { transform: translate(3%, -3%) rotate(5deg); }
   100% { transform: translate(0, 0) rotate(0deg); }
 }
-
-/* Reduce the intensity of the animation on mobile devices for better performance */
-@media (max-width: 768px) {
-  #hero::after {
-    opacity: 0.5;
-    animation-duration: 40s;
-  }
-}
-
-/* ============================================================== */
-/* END: Code for Floating Geometric Shapes Animation              */
-/* ============================================================== */
-
-#hero .container-fluid {
-  position: relative;
-  z-index: 1;
-}
-
+@media (max-width: 768px) { #hero::after { opacity: 0.5; animation-duration: 40s; } }
+#hero .container-fluid { position: relative; z-index: 1; }
 #hero h1 {
-  margin: 0 auto;
-  font-size: 72px;
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--text-light);
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-  max-width: 800px;
+  margin: 0 auto; font-size: 72px; font-weight: 700; line-height: 1.2;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.2); max-width: 800px;
 }
-
-#hero h2 {
-  color: var(--text-muted);
-  margin: 20px auto 30px auto;
-  font-size: 24px;
-  max-width: 700px;
-}
-
+#hero h2 { color: var(--text-muted); margin: 0 auto 30px auto; font-size: 24px; max-width: 700px; }
 #hero .btn-get-started {
-  font-family: "Poppins", sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  letter-spacing: 1px;
-  display: inline-block;
-  padding: 12px 32px;
-  border-radius: 50px;
-  transition: 0.5s;
-  margin-top: 30px;
-  color: #fff;
-  background: var(--accent-purple);
-  border: 2px solid var(--accent-purple);
-  box-shadow: 0 0 15px rgba(138, 79, 255, 0.5);
+  font-family: "Poppins", sans-serif; font-weight: 500; font-size: 16px;
+  padding: 12px 32px; border-radius: 50px; transition: 0.5s; margin-top: 30px;
+  color: #fff; background: var(--accent-purple); border: 2px solid var(--accent-purple);
 }
-
-#hero .btn-get-started:hover {
-  background: transparent;
-  color: var(--accent-purple);
-  border: 2px solid var(--accent-purple);
+#hero img{
+  
+  margin: 40px;
 }
-
+#hero .btn-get-started:hover { background: transparent; }
 .hero-tag {
-  background-color: var(--accent-purple);
-  color: var(--text-light);
-  padding: 12px 30px;
-  border-radius: 50px;
-  font-size: 18px;
-  font-weight: 500;
-  position: absolute;
-  box-shadow: 0 5px 15px rgba(138, 79, 255, 0.3);
-  z-index: 1;
+  background-color: var(--accent-purple); color: var(--text-light); padding: 12px 30px;
+  border-radius: 50px; font-size: 18px; font-weight: 500; position: absolute;
+  box-shadow: 0 5px 15px rgba(138, 79, 255, 0.3); z-index: 1;
   animation: floatTag 10s ease-in-out infinite alternate;
 }
-
-.hero-tag-pos-1 { top: 30%; left: 10%; animation-delay: 0s; }
-.hero-tag-pos-2 { top: 50%; right: 15%; animation-delay: 1.5s; }
+.hero-tag-pos-1 { top: 30%; left: 10%; } .hero-tag-pos-2 { top: 50%; right: 15%; animation-delay: 1.5s; }
 .hero-tag-pos-3 { bottom: 20%; left: 25%; animation-delay: 3s; }
 .hero-tag-pos-4 { top: 70%; right: 20%; animation-delay: 2.5s; }
 .hero-tag-pos-5 { bottom: 35%; left: 5%; animation-delay: 4s; }
-
-
-@keyframes floatTag {
-  0% { transform: translateY(0px) translateX(0px); }
-  50% { transform: translateY(-10px) translateX(5px); }
-  100% { transform: translateY(0px) translateX(0px); }
-}
-
-@media (max-width: 991px) {
-  #hero { padding-top: 68px; }
-  #hero h1 { font-size: 48px; }
-  #hero h2 { font-size: 20px; }
-  .hero-tag { display: none; } /* Hide tags on mobile to avoid clutter */
-}
+@keyframes floatTag { 0% { transform: translateY(0px); } 100% { transform: translateY(-15px); } }
+@media (max-width: 991px) { #hero { padding-top: 68px; } #hero h1 { font-size: 48px; } #hero h2 { font-size: 20px; } .hero-tag { display: none; } }
 
 /*--------------------------------------------------------------
 # 6. Sections General
 --------------------------------------------------------------*/
-section {
-  padding: 80px 0;
-  overflow: hidden;
-}
-
-.section-bg {
-  background-color: var(--secondary-dark);
-}
-
-.section-title {
-  text-align: center;
-  padding-bottom: 40px;
-}
-
+section { padding: 80px 0; overflow: hidden; }
+.section-bg { background-color: var(--secondary-dark); }
+.section-title { text-align: center; padding-bottom: 40px; }
 .section-title h2 {
-  font-size: 38px;
-  font-weight: bold;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  position: relative;
-  color: var(--text-light);
+  font-size: 38px; font-weight: bold; text-transform: uppercase; margin-bottom: 20px;
+  padding-bottom: 20px; position: relative;
 }
-
 .section-title h2::after {
-  content: "";
+  content: ""; position: absolute; display: block; width: 70px; height: 4px;
+  background: var(--accent-purple); bottom: 0; left: calc(50% - 35px);
+}
+.section-title p { color: var(--text-muted); font-size: 18px; max-width: 800px; margin: 0 auto; }
+
+/*--------------------------------------------------------------
+# Hero Section - Animated Logo
+--------------------------------------------------------------*/
+.hero-logo-animation {
   position: absolute;
-  display: block;
-  width: 70px;
-  height: 4px;
-  background: var(--accent-purple);
-  bottom: 0;
-  left: calc(50% - 35px);
+  bottom: 5%; /* Position it at the bottom */
+  right: 10%;  /* and to the right */
+  width: 120px; /* Make it smaller */
+  z-index: 1;
+  opacity: 0.3; /* Make it subtle and not distracting */
 }
 
-.section-title p {
-  margin-bottom: 0;
-  color: var(--text-muted);
-  font-size: 18px;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
+.hero-logo-animation svg {
+    width: 100%;
 }
 
+/* Apply the SAME animations from the preloader, but make them INFINITE */
+.hero-logo-animation .logo-path {
+    stroke: var(--accent-purple);
+    stroke-width: 2;
+    fill: transparent;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    /* Animation loop: draw, fill, hold, then reset */
+    animation: 
+        draw-path-loop 8s ease-in-out infinite,
+        fill-logo-loop 8s ease-in-out infinite;
+}
+
+.hero-logo-animation .light-flare-path {
+    stroke: url(#light-flare); /* The gradient is already defined in your SVG */
+    stroke-width: 6;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    /* Flare animation loop */
+    animation: light-flare-loop 8s ease-in-out infinite;
+}
+
+/* Keyframes for the looping draw/fill effect */
+@keyframes draw-path-loop {
+  0% { stroke-dashoffset: 1000; } /* Start hidden */
+  25% { stroke-dashoffset: 0; }   /* Draw the path over 2 seconds */
+  100% { stroke-dashoffset: 0; }  /* Keep it drawn */
+}
+
+@keyframes fill-logo-loop {
+  0% { fill: transparent; }
+  25% { fill: transparent; } /* Wait for drawing to finish */
+  40% { fill: var(--accent-purple); } /* Fill with color */
+  80% { fill: var(--accent-purple); } /* Hold the color */
+  100% { fill: transparent; } /* Fade out fill to restart the loop */
+}
+
+/* Keyframes for the looping light flare effect */
+@keyframes light-flare-loop {
+  0% { stroke-dashoffset: 1000; opacity: 1; }
+  30% { stroke-dashoffset: 0; opacity: 0; } /* Flare finishes and fades out */
+  100% { opacity: 0; } /* Stay hidden until the next loop */
+}
+
+/*--------------------------------------------------------------
+# Floating Animated Logo
+--------------------------------------------------------------*/
+.floating-logo-animation {
+  position: fixed;   /* THIS IS THE KEY CHANGE: Makes it stay on screen */
+  bottom: 20px;      /* Position from the bottom */
+  left: 20px;        /* Position from the left */
+  width: 80px;       /* A smaller, more subtle size */
+  z-index: 995;      /* Below the back-to-top button but above content */
+  opacity: 0.5;      /* Subtle and not distracting */
+  transition: opacity 0.3s ease;
+  animation: float-effect 6s ease-in-out infinite; /* The new floating animation */
+}
+
+/* For RTL, position it on the bottom-right instead */
+html[dir="rtl"] .floating-logo-animation {
+    left: auto;
+    right: 20px;
+}
+
+.floating-logo-animation:hover {
+  opacity: 1; /* Become fully visible on hover */
+}
+
+.floating-logo-animation svg {
+    width: 100%;
+}
+
+/* The looping draw/fill animations remain the same */
+.floating-logo-animation .logo-path {
+    stroke: var(--accent-purple);
+    stroke-width: 2;
+    fill: transparent;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: 
+        draw-path-loop 8s ease-in-out infinite,
+        fill-logo-loop 8s ease-in-out infinite;
+}
+
+.floating-logo-animation .light-flare-path {
+    stroke: url(#light-flare);
+    stroke-width: 6;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: light-flare-loop 8s ease-in-out infinite;
+}
+
+/* Keyframes for the looping effects (these should already exist, but are here for completeness) */
+@keyframes draw-path-loop { 0% { stroke-dashoffset: 1000; } 25% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 0; } }
+@keyframes fill-logo-loop { 0% { fill: transparent; } 25% { fill: transparent; } 40% { fill: var(--accent-purple); } 80% { fill: var(--accent-purple); } 100% { fill: transparent; } }
+@keyframes light-flare-loop { 0% { stroke-dashoffset: 1000; opacity: 1; } 30% { stroke-dashoffset: 0; opacity: 0; } 100% { opacity: 0; } }
+
+/* Keyframes for the NEW floating effect */
+@keyframes float-effect {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); } /* Move up */
+  100% { transform: translateY(0px); } /* Move back down */
+}
 /*--------------------------------------------------------------
 # 7. Services Section
 --------------------------------------------------------------*/
 .services .icon-box {
-  text-align: center;
-  padding: 50px 20px 60px 20px;
-  transition: all ease-in-out 0.4s;
-  background: var(--primary-dark); /* Slightly different from section bg */
-  border-radius: 12px;
+  text-align: center; padding: 50px 20px; transition: all ease-in-out 0.4s;
+  background: var(--primary-dark); border-radius: 12px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(138, 79, 255, 0.1);
+  border: 1px solid rgba(138, 79, 255, 0.1); height: 100%;
 }
-
+.services .icon-box:hover { transform: translateY(-10px); }
 .services .icon-box .icon {
-  margin: 0 auto 20px auto;
-  width: 80px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: ease-in-out 0.4s;
-  border-radius: 50%;
-  background: var(--secondary-dark);
-  border: 2px solid var(--accent-purple);
+  margin: 0 auto 20px auto; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; background: var(--secondary-dark); border: 2px solid var(--accent-purple);
 }
+.services .icon-box .icon img { max-height: 40px; }
+.services .icon-box h4 a { color: var(--text-light); font-weight: 600; font-size: 22px; }
+.services .icon-box:hover h4 a { color: var(--accent-purple); }
+.services .icon-box p { line-height: 1.7; font-size: 15px; color: var(--text-muted); }
 
-.services .icon-box .icon img {
-  transition: 0.5s;
-  max-height: 40px;
-}
-
-.services .icon-box h4 {
-  font-weight: 600;
-  margin: 10px 0 15px 0;
-  font-size: 24px;
-}
-
-.services .icon-box h4 a {
-  color: var(--text-light);
-  transition: ease-in-out 0.3s;
-}
-
-.services .icon-box p {
-  line-height: 24px;
-  font-size: 15px;
-  margin-bottom: 0;
-  color: var(--text-muted);
-}
-
-.services .icon-box:hover {
-  transform: translateY(-10px);
-  border-color: var(--accent-purple-darker);
-}
-
-.services .icon-box:hover h4 a {
-  color: var(--accent-purple);
-}
 
 /*--------------------------------------------------------------
 # 8. Features Section
 --------------------------------------------------------------*/
-/*--------------------------------------------------------------
-# 8. Features Section (NEW Card-based Design)
---------------------------------------------------------------*/
-.features {
-  padding: 80px 0;
-}
-
 .features .feature-box {
-  padding: 30px;
-  background: var(--primary-dark);
-  border-radius: 12px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(138, 79, 255, 0.1);
-  transition: all 0.3s ease-in-out;
-  height: 100%; /* Make all boxes the same height */
-  position: relative;
-  overflow: hidden;
+  padding: 30px; background: var(--primary-dark); border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); border: 1px solid rgba(138, 79, 255, 0.1);
+  transition: all 0.3s ease-in-out; height: 100%;
 }
+.features .feature-box:hover { transform: translateY(-10px); border-color: var(--accent-purple); }
+.features .feature-box i { font-size: 48px; color: var(--accent-purple); margin-bottom: 20px; display: block; }
+.features .feature-box h3 { font-size: 22px; font-weight: 700; margin-bottom: 15px; }
+.features .feature-box p { font-size: 15px; line-height: 1.7; color: var(--text-muted); }
 
-.features .feature-box:hover {
-  transform: translateY(-10px);
-  border-color: var(--accent-purple);
-  box-shadow: 0 10px 30px rgba(138, 79, 255, 0.15);
-}
-
-.features .feature-box i {
-  font-size: 48px;
-  color: var(--accent-purple);
-  margin-bottom: 20px;
-  display: block;
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.features .feature-box:hover i {
-  color: var(--text-light);
-  transform: scale(1.1);
-}
-
-.features .feature-box h3 {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--text-light);
-  margin-bottom: 15px;
-}
-
-.features .feature-box p {
-  font-size: 15px;
-  line-height: 1.7;
-  color: var(--text-muted);
-  margin-bottom: 0;
-}
 /*--------------------------------------------------------------
 # 9. Portfolio Section
 --------------------------------------------------------------*/
 .portfolio {
   min-height: 90vh; display: flex; align-items: center; padding: 40px 0; position: relative;
 }
-    
-.portfolio .container {
-  position: relative; width: 100%;
-}
-
-.portfolio .swiper-slide {
-  text-align: center;
-}
-    
-.portfolio .portfolio-slide-content {
-  max-width: 900px; margin: 0 auto;
-}
-
+.portfolio .container { position: relative; width: 100%; }
+.portfolio .swiper-slide { text-align: center; }
+.portfolio .portfolio-slide-content { max-width: 900px; margin: 0 auto; }
 .portfolio .portfolio-item-wrap {
   border-radius: 15px; overflow: hidden; display: block;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
   aspect-ratio: 16 / 9; margin-bottom: 30px;
 }
-
-.portfolio .portfolio-item-wrap img {
-  width: 100%; height: 100%; object-fit: cover;
-}
-
-.portfolio .portfolio-info h3 {
-  font-size: 28px; font-weight: 700; color: var(--text-light); margin: 0 0 15px 0;
-}
-    
-.portfolio .portfolio-tags {
-  display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
-}
-
+.portfolio .portfolio-item-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.portfolio .portfolio-info h3 { font-size: 28px; font-weight: 700; margin: 0 0 15px 0; }
+.portfolio .portfolio-tags { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
 .portfolio .portfolio-tags span {
   font-size: 13px; font-weight: 500; padding: 6px 15px;
   border: 1px solid var(--accent-purple); color: var(--accent-purple);
   border-radius: 20px; background-color: rgba(138, 79, 255, 0.1);
 }
-    
-.portfolio .swiper-button-prev,
-.portfolio .swiper-button-next {
-  color: #fff; opacity: 0.5; transition: opacity 0.3s ease;
-}
-    
-.portfolio .swiper-button-prev:hover,
-.portfolio .swiper-button-next:hover {
-  opacity: 1;
-}
-
+.portfolio .swiper-button-prev, .portfolio .swiper-button-next { color: #fff; opacity: 0.5; transition: opacity 0.3s; }
+.portfolio .swiper-button-prev:hover, .portfolio .swiper-button-next:hover { opacity: 1; }
 .portfolio .swiper-button-prev { left: 0; }
 .portfolio .swiper-button-next { right: 0; }
-
-.portfolio .swiper-pagination {
-  position: static; margin-top: 30px;
-}
-
-.portfolio .swiper-pagination .swiper-pagination-bullet {
-  background-color: rgba(255, 255, 255, 0.4); opacity: 1;
-}
-
-.portfolio .swiper-pagination .swiper-pagination-bullet-active {
-  background-color: var(--accent-purple);
-}
-
+.portfolio .swiper-pagination { position: static; margin-top: 30px; }
+.portfolio .swiper-pagination .swiper-pagination-bullet-active { background-color: var(--accent-purple); }
 @media (max-width: 768px) {
-  .portfolio .swiper-button-prev { left: -10px; }
-  .portfolio .swiper-button-next { right: -10px; }
+  .portfolio .swiper-button-prev { left: -10px; } .portfolio .swiper-button-next { right: -10px; }
   .portfolio .portfolio-info h3 { font-size: 22px; }
 }
 
 
 /*--------------------------------------------------------------
-# 10. FAQ Section
+# 10. Team Section
 --------------------------------------------------------------*/
-.faq .faq-list {
-  padding: 0 100px;
+.team .member-style-2 {
+  padding: 25px; background: var(--primary-dark);
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.2); border-radius: 10px;
+  transition: all 0.3s ease-in-out; width: 100%;
 }
-
-.faq .faq-list ul {
-  padding: 0;
-  list-style: none;
+.team .member-style-2:hover { transform: translateY(-10px); }
+.team .member-style-2 img {
+  width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
+  border: 4px solid var(--secondary-dark); margin: 0 auto 20px auto;
 }
-
-.faq .faq-list li+li {
-  margin-top: 20px;
-}
-
-.faq .faq-list li {
-  padding: 30px;
-  background: var(--secondary-dark);
-  border-radius: 12px;
-  position: relative;
-}
-
-.faq .faq-list a {
-  display: block;
-  position: relative;
-  font-family: "Poppins", sans-serif;
-  font-size: 18px;
-  line-height: 28px;
-  font-weight: 600;
-  padding-right: 50px; /* Space for icons */
-  outline: none;
-  cursor: pointer;
-  color: var(--text-light);
-}
-
-html[dir="rtl"] .faq .faq-list a {
-  padding-right: 0;
-  padding-left: 50px;
-}
-
-.faq .faq-list .icon-help {
-  font-size: 28px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: var(--accent-purple);
-}
-
-html[dir="rtl"] .faq .faq-list .icon-help {
-  left: auto;
-  right: 0;
-}
-
-.faq .faq-list .icon-show,
-.faq .faq-list .icon-close {
-  font-size: 28px;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-html[dir="rtl"] .faq .faq-list .icon-show, 
-html[dir="rtl"] .faq .faq-list .icon-close {
-  left: 0;
-  right: auto;
-}
-
-.faq .faq-list p {
-  margin-bottom: 0;
-  padding: 15px 0 0 0;
-  color: var(--text-muted);
-}
-
-.faq .faq-list .icon-show {
-  display: none;
-}
-
-.faq .faq-list a.collapsed:hover {
-  color: var(--accent-purple);
-}
-
-.faq .faq-list a.collapsed .icon-show {
-  display: inline-block;
-}
-
-.faq .faq-list a.collapsed .icon-close {
-  display: none;
-}
-
-@media (max-width: 1200px) {
-  .faq .faq-list {
-    padding: 0;
-  }
-}
+.team .member-style-2 .member-info h4 { font-weight: 700; font-size: 18px; margin-bottom: 5px; }
+.team .member-style-2 .member-info span { font-style: italic; font-size: 13px; color: var(--text-muted); margin-bottom: 15px; }
+.team .member-style-2 .social-links a { color: var(--text-muted); font-size: 16px; margin: 0 7px; transition: 0.3s; }
+.team .member-style-2 .social-links a:hover { color: var(--accent-purple); }
+#team .swiper { padding-bottom: 40px; }
+#team .swiper-pagination .swiper-pagination-bullet-active { background-color: var(--accent-purple); }
+#team .swiper-slide { height: auto; }
 
 /*--------------------------------------------------------------
-# 11. Team Section
+# 11. Contact Section
 --------------------------------------------------------------*/
-.team {
-  background: var(--secondary-dark);
-}
-
-/* Style for Team Members: Professional Circle */
-.member-style-2 {
-  padding: 25px;
-  background: var(--primary-dark);
-  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  transition: all 0.3s ease-in-out;
-  margin-bottom: 30px;
-  width: 100%;
-}
-
-.member-style-2:hover {
-  transform: translateY(-10px);
-  box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.3);
-}
-
-.member-style-2 img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 4px solid var(--secondary-dark);
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  margin: 0 auto 20px auto;
-}
-
-.member-style-2 .member-info h4 {
-  font-weight: 700;
-  margin-bottom: 2px;
-  font-size: 18px;
-  color: var(--text-light);
-}
-
-.member-style-2 .member-info span {
-  font-style: italic;
-  display: block;
-  font-size: 13px;
-  color: var(--text-muted);
-  margin-bottom: 15px;
-}
-
-.member-style-2 .social-links a {
-  color: var(--text-muted);
-  font-size: 16px;
-  margin: 0 7px;
-  transition: 0.3s;
-}
-
-.member-style-2 .social-links a:hover {
-  color: var(--accent-purple);
-}
-
-/* Team Slider Enhancements */
-#team .swiper {
-  padding-bottom: 40px;
-}
-
-#team .swiper-pagination .swiper-pagination-bullet {
-  width: 12px;
-  height: 12px;
-  background-color: rgba(255, 255, 255, 0.3);
-  opacity: 1;
-}
-
-#team .swiper-pagination .swiper-pagination-bullet-active {
-  background-color: var(--accent-purple);
-}
-
-#team .swiper-slide {
-  height: auto;
-  display: flex;
-  justify-content: center;
-}
-
-/*--------------------------------------------------------------
-# 12. Contact Section
---------------------------------------------------------------*/
-.contact {
-  background-color: var(--primary-dark);
-}
-
 .contact .info-box {
-  color: var(--text-muted);
-  text-align: center;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-  padding: 30px 0 40px 0;
-  background: var(--secondary-dark);
-  border-radius: 12px;
+  text-align: center; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  padding: 30px 0 40px 0; background: var(--secondary-dark); border-radius: 12px; height: 100%;
 }
-
 .contact .info-box i {
-  font-size: 38px;
-  color: var(--accent-purple);
-  border-radius: 50%;
-  padding: 8px;
+  font-size: 38px; color: var(--accent-purple); border-radius: 50%; padding: 8px;
   background: rgba(138, 79, 255, 0.1);
 }
-
-.contact .info-box h3 {
-  font-size: 22px;
-  color: var(--text-light);
-  font-weight: 700;
-  margin: 15px 0 10px 0;
-}
-
+.contact .info-box h3 { font-size: 22px; font-weight: 700; margin: 15px 0 10px 0; }
 .contact .php-email-form {
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-  padding: 40px;
-  background: var(--secondary-dark);
-  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); padding: 40px;
+  background: var(--secondary-dark); border-radius: 12px; height: 100%;
 }
-
-.contact .php-email-form input,
-.contact .php-email-form textarea {
-  border-radius: 8px;
-  box-shadow: none;
-  font-size: 15px;
-  background: var(--primary-dark);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--text-light);
+.contact .php-email-form input, .contact .php-email-form textarea {
+  border-radius: 8px; font-size: 15px; background: var(--primary-dark);
+  border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-light);
 }
-
-.contact .php-email-form input::placeholder,
-.contact .php-email-form textarea::placeholder {
-  color: var(--text-muted);
-}
-
-.contact .php-email-form input:focus,
-.contact .php-email-form textarea:focus {
-  border-color: var(--accent-purple);
-  background: var(--primary-dark);
-}
-
+.contact .php-email-form input::placeholder, .contact .php-email-form textarea::placeholder { color: var(--text-muted); }
+.contact .php-email-form input:focus, .contact .php-email-form textarea:focus { border-color: var(--accent-purple); }
 .contact .php-email-form button[type=submit] {
-  background: var(--accent-purple);
-  border: 0;
-  padding: 12px 36px;
-  color: #fff;
-  transition: 0.4s;
-  border-radius: 50px;
-  font-weight: 600;
+  background: var(--accent-purple); border: 0; padding: 12px 36px;
+  color: #fff; transition: 0.4s; border-radius: 50px; font-weight: 600;
 }
-
-.contact .php-email-form button[type=submit]:hover {
-  background: var(--accent-purple-darker);
-}
+.contact .php-email-form button[type=submit]:hover { background: var(--accent-purple-darker); }
 
 /*--------------------------------------------------------------
-# 13. Footer
+# 12. Footer
 --------------------------------------------------------------*/
-#footer {
-  color: var(--text-muted);
-  font-size: 14px;
-  background: var(--secondary-dark);
-  position: relative;
-}
-
-#footer .footer-top {
-  padding: 60px 0 30px 0;
-  position: relative;
-  z-index: 1;
-}
-
-#footer .footer-top .footer-contact {
-  margin-bottom: 30px;
-}
-
-#footer .footer-top .footer-contact h3 {
-  font-size: 28px;
-  margin: 0 0 30px 0;
-  line-height: 1;
-  font-weight: 500;
-  color: var(--text-light);
-}
-
-#footer .footer-top h4 {
-  font-size: 18px;
-  font-weight: bold;
-  position: relative;
-  padding-bottom: 15px;
-  color: var(--text-light);
-}
-
-#footer .footer-top .footer-links {
-  margin-bottom: 30px;
-}
-
-#footer .footer-top .footer-links ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-#footer .footer-top .footer-links ul i {
-  padding-right: 2px;
-  color: var(--accent-purple);
-  font-size: 18px;
-  line-height: 1;
-}
-
-html[dir="rtl"] #footer .footer-top .footer-links ul i {
-  padding-right: 0;
-  padding-left: 2px;
-}
-
-#footer .footer-top .footer-links ul li {
-  padding: 10px 0;
-  display: flex;
-  align-items: center;
-}
-
-#footer .footer-top .footer-links ul a {
-  color: var(--text-muted);
-  transition: 0.3s;
-}
-
-#footer .footer-top .footer-links ul a:hover {
-  color: var(--accent-purple);
-}
-
-#footer .copyright-wrap {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 20px;
-  margin-top: 30px;
-}
-
-#footer .credits {
-  padding-top: 5px;
-  font-size: 13px;
-}
-
+#footer { color: var(--text-muted); font-size: 14px; background: var(--secondary-dark); }
+#footer .footer-top { padding: 60px 0 30px 0; }
+#footer .footer-top .footer-contact h3 { font-size: 28px; margin: 0 0 30px 0; line-height: 1; font-weight: 500; }
+#footer .footer-top h4 { font-size: 18px; font-weight: bold; padding-bottom: 15px; }
+#footer .footer-top .footer-links ul { list-style: none; padding: 0; margin: 0; }
+#footer .footer-top .footer-links ul i { padding-right: 5px; color: var(--accent-purple); }
+#footer .footer-top .footer-links ul li { padding: 10px 0; }
+#footer .footer-top .footer-links ul a:hover { color: var(--accent-purple); }
+#footer .copyright-wrap { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 20px; margin-top: 20px; }
 #footer .social-links a {
-  font-size: 20px;
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--text-light);
-  line-height: 1;
-  padding: 10px 0;
-  margin-right: 8px;
-  border-radius: 50%;
-  text-align: center;
-  width: 40px;
-  height: 40px;
-  transition: 0.3s;
+  font-size: 20px; display: inline-block; background: rgba(255, 255, 255, 0.08);
+  color: var(--text-light); padding: 10px 0; margin-right: 8px; border-radius: 50%;
+  text-align: center; width: 40px; height: 40px; transition: 0.3s;
 }
+#footer .social-links a:hover { background: var(--accent-purple); transform: translateY(-3px); }
 
-#footer .social-links a:hover {
-  background: var(--accent-purple);
-  color: #fff;
-  transform: translateY(-3px);
-}
+
+/*--------------------------------------------------------------
+# 13. RTL Specific Adjustments
+--------------------------------------------------------------*/
+html[dir="rtl"] #header { flex-direction: row-reverse; }
+html[dir="rtl"] .navbar > ul > li { padding-left: 0; padding-right: 24px; }
+html[dir="rtl"] .navbar a i { margin-left: 0; margin-right: 5px; }
+html[dir="rtl"] .navbar .dropdown ul { left: auto; right: 14px; }
+html[dir="rtl"] .language-switcher .dropdown-toggle i { margin-right: 0; margin-left: 5px; }
+html[dir="rtl"] .navbar-mobile .mobile-nav-toggle { right: auto; left: 25px; }
