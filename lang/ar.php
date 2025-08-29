@@ -5,6 +5,8 @@ $lang = [
     'services_link' => 'خدماتنا',
     'portfolio_link' => 'أعمالنا',
     'team_link' => 'فريقنا',
+    'about_link' => 'عنا',
+    'features_link' => 'المميزات',
     'contact_link' => 'اتصل بنا',
     'lang' => 'اللغة',
 

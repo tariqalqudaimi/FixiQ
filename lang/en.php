@@ -5,6 +5,8 @@ $lang = [
     'services_link' => 'Services',
     'portfolio_link' => 'Portfolio',
     'team_link' => 'Team',
+    'about_link' => 'About',
+    'features_link' => 'Features',
     'contact_link' => 'Contact',
     'lang' => 'Language',
 
