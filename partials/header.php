@@ -3,7 +3,7 @@
     <div class="container-fluid d-flex align-items-center justify-content-between">
 
         <!-- 1. الشعار -->
-        <h1 class="logo"><a href="index.php?lang=<?= $current_lang ?>">     <img src="<?= htmlspecialchars($settings['company_logo'] ?? 'assets/img/Asset 3.png') ?>" alt="<?= htmlspecialchars($settings['company_name'] ?? 'Logo') ?>" class="logo">
+        <h1 class="logo"><a href="index.php?lang=<?= $current_lang ?>">     <img src="<?= htmlspecialchars($settings['company_logo'] ?? 'assets\img\Artboard 8-8.png') ?>" alt="<?= htmlspecialchars($settings['company_name'] ?? 'Logo') ?>" class="logo">
   </a></h1>
 
         <!-- 2. قائمة التنقل (تحتوي على قائمة الحاسوب وزر الهاتف) -->

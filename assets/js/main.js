@@ -112,7 +112,7 @@
 if (preloader) {
   // Set a fixed time for the animation to play, then start the hiding process.
   // This is more reliable than trying to sync JS with CSS animations.
-  const animationDisplayTime = 2000; // 2 seconds
+  const animationDisplayTime = 1000; // 2 seconds
 
   setTimeout(() => {
     // Add the class that triggers the CSS fade-out transition

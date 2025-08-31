@@ -65,60 +65,79 @@ html[dir="rtl"] body {
 # 2. Preloader & Animations (SVG Line Drawing)
 --------------------------------------------------------------*/
 #preloader {
-  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  z-index: 9999; background: var(--primary-dark);
-  display: flex; justify-content: center; align-items: center;
+  position: fixed; /* تثبيت العنصر ليغطي الشاشة بأكملها */
+  top: 0px;
+  left: 0;
+  right: 0px;
+  bottom: 0px;
+  
+  z-index: 9999; /* التأكد من أن أداة التحميل فوق كل شيء آخر */
+  background: var(--primary-dark);
+
+  /* الأسطر التالية هي المسؤولة عن توسيط المحتوى بداخل أداة التحميل */
+  display: flex;             /* استخدام نظام Flexbox للتخطيط */
+  justify-content: center; /* التوسيط الأفقي */
+  align-items: center;     /* التوسيط العمودي */
+
   transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
-  opacity: 1; visibility: visible;
+  opacity: 1;
+  visibility: visible;
 }
 
 #preloader.preloader-hidden {
-  opacity: 0; visibility: hidden;
+  opacity: 0;
+  visibility: hidden;
 }
 
 .preloader-logo-container {
-  max-width: 180px; /* Control logo size */
+  max-width: 180px; /* للتحكم في حجم الشعار */
 }
     
 .preloader-logo-container svg {
-    width: 150%;
+    width: 100%;
     overflow: visible;
+      position: fixed; /* تثبيت العنصر ليغطي الشاشة بأكملها */
+  top: 0px;
+  left: 0;
+  right: 0px;
+  bottom: 1000px;
+  
 }
 
 /* --- The SVG Line Animation Logic --- */
 .logo-path, .light-flare-path {
     stroke: var(--accent-purple);
-    stroke-width: 2; /* Adjust thickness as needed */
-    fill: transparent; /* Start with no fill */
-    stroke-dasharray: 1000; /* A large number, longer than any path */
-    stroke-dashoffset: 1000; /* Start with the path fully hidden */
+    stroke-width: 2; /* تعديل سماكة الخط حسب الحاجة */
+    fill: transparent; /* البدء بدون تعبئة */
+    stroke-dasharray: 1000; /* رقم كبير، أطول من أي مسار */
+    stroke-dashoffset: 1000; /* البدء بإخفاء المسار بالكامل */
 }
 
-/* Animation for drawing the logo path */
+/* حركة رسم مسار الشعار */
 @keyframes draw-path {
   to {
-    stroke-dashoffset: 0; /* Draw the path */
+    stroke-dashoffset: 0; /* رسم المسار */
   }
 }
 
-/* Animation for filling the logo with color after it's drawn */
+/* حركة تعبئة الشعار باللون بعد رسمه */
 @keyframes fill-logo {
   to {
-    fill: var(--accent-purple); /* Fill with color */
+    fill: var(--accent-purple); /* التعبئة باللون */
   }
 }
 
-/* Apply the drawing and filling animations */
+/* تطبيق حركات الرسم والتعبئة */
 #preloader:not(.preloader-hidden) .logo-path {
     animation: 
         draw-path 1.5s cubic-bezier(0.65, 0, 0.35, 1) forwards,
-        fill-logo 0.5s ease-in forwards 1.6s; /* Fill after 1.6s */
+        fill-logo 0.5s ease-in forwards 1.6s; /* التعبئة بعد 1.6 ثانية */
 }
 
 /* --- The Light Flare Animation Logic --- */
 .light-flare-path {
-    stroke: url(#light-flare); /* Use the gradient as the stroke color */
-    stroke-width: 6; /* Make the flare thicker */
+    stroke: url(#light-flare); /* استخدام التدرج اللوني للخط */
+    stroke-width: 6; /* جعل الوهج أكثر سماكة */
     opacity: 0;
 }
 
@@ -136,7 +155,7 @@ html[dir="rtl"] body {
   }
 }
 
-/* Apply the light flare animation */
+/* تطبيق حركة الوهج الضوئي */
 #preloader:not(.preloader-hidden) .light-flare-path {
     animation: light-flare-anim 1.8s ease-in-out forwards 0.2s;
 }
@@ -396,7 +415,9 @@ html[dir="rtl"] .navbar-mobile {
 }
 #hero img{
   
-  margin: 40px;
+ padding: 0;
+ width: 400px;
+ height: 400px;
 }
 #hero .btn-get-started:hover { background: transparent; }
 .hero-tag {
@@ -493,7 +514,7 @@ section { padding: 80px 0; overflow: hidden; }
 --------------------------------------------------------------*/
 .floating-logo-animation {
   position: fixed;   /* THIS IS THE KEY CHANGE: Makes it stay on screen */
-  bottom: 20px;      /* Position from the bottom */
+  bottom: 80px;      /* Position from the bottom */
   left: 20px;        /* Position from the left */
   width: 80px;       /* A smaller, more subtle size */
   z-index: 995;      /* Below the back-to-top button but above content */
