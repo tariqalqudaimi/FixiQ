@@ -24,7 +24,7 @@
         <div class="header-right-actions">
             <div class="language-switcher dropdown">
                 <a href="#" class="btn btn-sm dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-globe"></i> <span class="d-none d-lg-inline"><?= $lang['lang'] ?? 'Language' ?></span>
+                    <i class="bi bi-globe"></i> <span class="d-none d-lg-inline"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
                     <li><a class="dropdown-item" href="?lang=en">English</a></li>
