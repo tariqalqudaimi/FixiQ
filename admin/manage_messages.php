@@ -4,7 +4,6 @@ $title = "Contact Messages";
 require_once "header.php";
 require_once "db.php";
 
-// Fetch all messages, newest first
 $messages_result = $dbcon->query("SELECT * FROM contact_messages ORDER BY received_at DESC");
 ?>
 
@@ -62,9 +61,7 @@ require_once "footer.php";
 ?>
 
 <script>
-// This script will mark a message as "read" when you open it, without a page reload.
 document.addEventListener('DOMContentLoaded', function () {
-    // Find all the message toggles
     var messageToggles = document.querySelectorAll('[data-toggle="collapse"]');
 
     messageToggles.forEach(function (toggle) {
@@ -72,18 +69,13 @@ document.addEventListener('DOMContentLoaded', function () {
             var messageId = this.getAttribute('data-message-id');
             var messageItem = this.closest('.message-item');
 
-            // Only run if the message is unread
             if (messageItem.classList.contains('unread')) {
-                // Instantly update the UI
                 messageItem.classList.remove('unread');
-                // You can also update the unread count in the sidebar here if needed
 
-                // Send a request to the server to update the database
                 fetch('message_mark_read.php?id=' + messageId)
                     .then(response => {
                         if (!response.ok) {
                            console.error('Failed to mark message as read.');
-                           // Optionally, add the 'unread' class back if the server fails
                            messageItem.classList.add('unread');
                         }
                     });

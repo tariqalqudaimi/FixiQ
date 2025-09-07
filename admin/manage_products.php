@@ -1,16 +1,12 @@
 <?php
-// STEP 1: All includes and form processing logic goes at the very top.
 require_once "user_auth.php";
 require_once "db.php";
 
-// Handle Add Product form submission BEFORE any HTML is sent.
 if(isset($_POST['add_product'])) {
     $name = $_POST['name'];
     $details_url = $_POST['details_url'];
-    // CHANGED: We now receive an array of category IDs
-    $category_ids = $_POST['category_ids']; // This will be an array
+    $category_ids = $_POST['category_ids']; 
 
-    // Handle image upload
     $image_name = 'default.png';
     if(isset($_FILES['image']) && $_FILES['image']['error'] == 0){
         $target_dir = "../assets/img/portfolio/";
@@ -20,15 +16,12 @@ if(isset($_POST['add_product'])) {
         move_uploaded_file($_FILES['image']['tmp_name'], $target_dir . $image_name);
     }
 
-    // NEW LOGIC: Step 1 - Insert into products table (without category_id)
     $stmt = $dbcon->prepare("INSERT INTO products (name, image, details_url) VALUES (?, ?, ?)");
     $stmt->bind_param("sss", $name, $image_name, $details_url);
     $stmt->execute();
     
-    // NEW LOGIC: Step 2 - Get the ID of the product we just created
     $new_product_id = $dbcon->insert_id;
 
-    // NEW LOGIC: Step 3 - Loop through selected categories and insert into the map table
     if(!empty($category_ids) && $new_product_id) {
         $map_stmt = $dbcon->prepare("INSERT INTO product_category_map (product_id, category_id) VALUES (?, ?)");
         foreach($category_ids as $category_id) {
@@ -41,10 +34,8 @@ if(isset($_POST['add_product'])) {
     exit();
 }
 
-// Fetch categories for the dropdown
 $categories_result = $dbcon->query("SELECT * FROM product_categories ORDER BY name ASC");
 
-// CHANGED: Updated query to fetch multiple category names using GROUP_CONCAT
 $products_result = $dbcon->query("
     SELECT 
         p.*, 
@@ -61,12 +52,10 @@ $products_result = $dbcon->query("
         p.id DESC
 ");
 
-// STEP 2: Start the HTML page.
 $title = "Manage Products";
 require_once "header.php";
 ?>
 
-<!-- STEP 3: The rest of the file is just the HTML for displaying the page. -->
 
 <div class="card mb-4">
     <div class="card-header"><h4 class="card-title">Add New Product</h4></div>
@@ -78,7 +67,6 @@ require_once "header.php";
             </div>
             <div class="form-group">
                 <label>Product Categories (Hold Ctrl/Cmd to select multiple)</label>
-                <!-- CHANGED: select is now 'multiple' and name is an array 'category_ids[]' -->
                 <select name="category_ids[]" class="form-control" required multiple size="5">
                     <?php while($cat = $categories_result->fetch_assoc()): ?>
                         <option value="<?= $cat['id'] ?>"><?= htmlspecialchars($cat['name']) ?></option>
@@ -109,10 +97,8 @@ require_once "header.php";
                     <tr>
                         <td><img src="../assets/img/portfolio/<?= htmlspecialchars($product['image']) ?>" alt="" style="width: 80px;"></td>
                         <td><?= htmlspecialchars($product['name']) ?></td>
-                        <!-- CHANGED: Displaying the concatenated category names -->
                         <td><?= htmlspecialchars($product['category_names'] ?? 'N/A') ?></td>
                         <td>
-                            <!-- Add an Edit button here later if needed -->
                             <a href="product_delete.php?id=<?= $product['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Sure?');">Delete</a>
                         </td>
                     </tr>

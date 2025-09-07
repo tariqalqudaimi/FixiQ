@@ -1,12 +1,9 @@
 <?php
-// STEP 1: All PHP logic goes first.
 require_once "user_auth.php";
 require_once "db.php";
 ob_start();
 
-// Handle form submission for updating contact info
 if (isset($_POST['submit'])) {
-    // This UPDATE query now uses the 'map_embed_code' column
     $stmt = $dbcon->prepare("UPDATE contact_information SET
         address = ?,
         email = ?,
@@ -14,14 +11,19 @@ if (isset($_POST['submit'])) {
         map_embed_code = ?
         WHERE id=1");
 
-    // The bind_param now has 4 's' for 4 string values
-    $stmt->bind_param("ssss",
+    // Sanitize the map embed code to only allow iframes
+    $map_embed_code = $_POST['map_embed_code'];
+    if (!empty($map_embed_code)) {
+        $map_embed_code = strip_tags($map_embed_code, '<iframe>');
+    }
+
+    $stmt->bind_param(
+        "ssss",
         $_POST['address'],
         $_POST['email'],
         $_POST['phone'],
-        $_POST['map_embed_code'] // Use the correct POST variable
+        $map_embed_code
     );
-
     if ($stmt->execute()) {
         $_SESSION['update_success'] = "Contact information updated successfully!";
     } else {
@@ -32,18 +34,17 @@ if (isset($_POST['submit'])) {
     exit();
 }
 
-// Fetch the existing contact data to pre-fill the form
 $contact = $dbcon->query("SELECT * FROM contact_information WHERE id=1")->fetch_assoc();
 
 
-// STEP 2: Now we can start the HTML page.
 $title = "Manage Contact Page";
 require_once "header.php";
 ?>
 
-<!-- STEP 3: HTML content -->
 <div class="card">
-    <div class="card-header"><h4 class="card-title">Edit Contact Page Details</h4></div>
+    <div class="card-header">
+        <h4 class="card-title">Edit Contact Page Details</h4>
+    </div>
     <div class="card-body">
 
         <?php if (isset($_SESSION['update_success'])) : ?>
@@ -70,7 +71,7 @@ require_once "header.php";
                 <label>Phone</label>
                 <input type="text" class="form-control" name="phone" value="<?= htmlspecialchars($contact['phone'] ?? '') ?>">
             </div>
-            
+
             <hr>
             <h5 class="mt-3">Google Maps Embed</h5>
             <div class="form-group">

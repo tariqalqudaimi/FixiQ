@@ -10,7 +10,6 @@ if (isset($_GET['id'])) {
     $stmt->execute();
 }
 
-// Redirect back to the inbox
 header('location: manage_messages.php');
 exit();
 ?>

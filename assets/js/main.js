@@ -1,15 +1,11 @@
-/**
-* Final Website JavaScript File
-* Version: 5.0 - Final Mobile Navigation Fix
-*/
-(function() {
+
+(function () {
   "use strict";
 
   /**
  * Preloader
  */
- 
-  // Helper functions
+
   const select = (el, all = false) => el.trim() ? (all ? [...document.querySelectorAll(el)] : document.querySelector(el)) : null;
   const on = (type, el, listener, all = false) => {
     let selectEl = select(el, all);
@@ -42,10 +38,9 @@
     window.addEventListener('load', toggleBacktotop);
     onscroll(document, toggleBacktotop);
   }
-  
+
   /* --- All Mobile Navigation Logic (START) --- */
 
-  // 1. CLONE THE NAVIGATION: Copy main nav and actions to mobile container
   const mobileNavContainer = select('.navbar-mobile');
   if (mobileNavContainer) {
     const navContent = select('#navbar ul').outerHTML;
@@ -58,37 +53,34 @@
       </div>
     `;
 
-    // Clone the toggle button to act as the close button
     const closeButton = select('#navbar .mobile-nav-toggle').cloneNode(true);
     closeButton.classList.remove('bi-list');
     closeButton.classList.add('bi-x');
     mobileNavContainer.appendChild(closeButton);
   }
 
-  // 2. TOGGLE THE MENU: Open/close mobile nav when any toggle is clicked
-  on('click', '.mobile-nav-toggle', function(e) {
+  on('click', '.mobile-nav-toggle', function (e) {
     select('body').classList.toggle('mobile-nav-active');
-    
-    // Reset the original header toggle icon if it exists
+
     const originalToggle = select('#navbar .mobile-nav-toggle');
-    if(select('body').classList.contains('mobile-nav-active')) {
-        originalToggle.classList.remove('bi-list');
-        originalToggle.classList.add('bi-x');
+    if (select('body').classList.contains('mobile-nav-active')) {
+      originalToggle.classList.remove('bi-list');
+      originalToggle.classList.add('bi-x');
     } else {
-        originalToggle.classList.remove('bi-x');
-        originalToggle.classList.add('bi-list');
+      originalToggle.classList.remove('bi-x');
+      originalToggle.classList.add('bi-list');
     }
   }, true);
 
   // 3. ACTIVATE DROPDOWNS: Handle clicks inside mobile nav
-  on('click', '.navbar-mobile .dropdown > a', function(e) {
+  on('click', '.navbar-mobile .dropdown > a', function (e) {
     if (this.nextElementSibling) e.preventDefault();
     this.nextElementSibling.classList.toggle('dropdown-active');
     this.classList.toggle('active');
   }, true);
 
   // 4. SCROLL & CLOSE: Close mobile nav when a link is clicked
-  on('click', '.navbar-mobile a.scrollto', function(e) {
+  on('click', '.navbar-mobile a.scrollto', function (e) {
     if (select(this.hash)) {
       e.preventDefault();
       // Directly call the toggle click handler to ensure everything closes correctly
@@ -96,50 +88,32 @@
       scrollto(this.hash);
     }
   }, true);
-  
-  /* --- All Mobile Navigation Logic (END) --- */
-  
-  /* --- All Mobile Navigation Logic (END) --- */
-  
+
   // All functions to run after page has fully loaded
   window.addEventListener('load', () => {
-    // Preloader
     let preloader = select('#preloader');
-  /**
- * Preloader (Final & Bug-Free)
- */
 
-if (preloader) {
-  // Set a fixed time for the animation to play, then start the hiding process.
-  // This is more reliable than trying to sync JS with CSS animations.
-  const animationDisplayTime = 2000; // 2 seconds
+    if (preloader) {
+      const animationDisplayTime = 2000;
 
-  setTimeout(() => {
-    // Add the class that triggers the CSS fade-out transition
-    preloader.classList.add('preloader-hidden');
+      setTimeout(() => {
+        preloader.classList.add('preloader-hidden');
+        setTimeout(() => {
+          preloader.remove();
+        }, 600);
 
-    // After the fade-out is complete, remove the element entirely from the page
-    // The delay here (600ms) should be slightly longer than the CSS transition (0.5s)
-    setTimeout(() => {
-      preloader.remove();
-    }, 600);
-    
-  }, animationDisplayTime);
-}
-    
-  
-    // Scroll to hash on page load
+      }, animationDisplayTime);
+    }
+
+
     if (window.location.hash && select(window.location.hash)) {
       scrollto(window.location.hash);
     }
 
-    // GLightbox
     GLightbox({ selector: '.portfolio-lightbox' });
-    
-    // AOS (Animation on Scroll)
+
     AOS.init({ duration: 1000, easing: 'ease-in-out', once: true, mirror: false });
 
-    // Initialize ALL Swiper Sliders
     new Swiper('.portfolio-slider', {
       speed: 600, loop: true, slidesPerView: 1, spaceBetween: 30,
       autoplay: { delay: 5000, disableOnInteraction: false },
@@ -153,9 +127,25 @@ if (preloader) {
     });
   });
 
-})(); // End of IIFE
 
-// Particles.js (runs on its own)
+    /**
+   * Contact Page Animated Swap
+   */
+  const show_info_btn = select("#show-info-btn");
+  const show_form_btn = select("#show-form-btn");
+  const container = select(".contact-page-container");
+
+  if (container && show_info_btn && show_form_btn) {
+    show_info_btn.addEventListener('click', () => {
+        container.classList.add("show-info-mode");
+    });
+
+    show_form_btn.addEventListener('click', () => {
+        container.classList.remove("show-info-mode");
+    });
+  }
+})();
+
 if (document.getElementById('particles-js')) {
-  particlesJS("particles-js", {"particles":{"number":{"value":80,"density":{"enable":true,"value_area":800}},"color":{"value":"#8A4FFF"},"shape":{"type":"circle"},"opacity":{"value":0.5},"size":{"value":3,"random":true},"line_linked":{"enable":true,"distance":150,"color":"#8A4FFF","opacity":0.4,"width":1},"move":{"enable":true,"speed":4,"direction":"none","out_mode":"out"}},"interactivity":{"events":{"onhover":{"enable":true,"mode":"repulse"},"onclick":{"enable":true,"mode":"push"}},"modes":{"repulse":{"distance":100},"push":{"particles_nb":4}}},"retina_detect":true});
+  particlesJS("particles-js", { "particles": { "number": { "value": 80, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#8A4FFF" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5 }, "size": { "value": 3, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#8A4FFF", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 4, "direction": "none", "out_mode": "out" } }, "interactivity": { "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" } }, "modes": { "repulse": { "distance": 100 }, "push": { "particles_nb": 4 } } }, "retina_detect": true });
 }

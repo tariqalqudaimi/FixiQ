@@ -1,11 +1,8 @@
 <?php
-// STEP 1: Includes and form processing logic
 require_once "user_auth.php";
 require_once "db.php";
 
-// Handle Add Team Member form
 if (isset($_POST['add_member'])) {
-    // ... (Your existing 'add_member' code remains unchanged)
     $name = $_POST['name'];
     $position = $_POST['position'];
     $twitter_url = $_POST['twitter_url'];
@@ -30,7 +27,6 @@ if (isset($_POST['add_member'])) {
     exit();
 }
 
-// Handle Edit Team Member form
 if (isset($_POST['edit_member'])) {
     $member_id = $_POST['member_id'];
     $name = $_POST['name'];
@@ -40,9 +36,7 @@ if (isset($_POST['edit_member'])) {
     $instagram_url = $_POST['instagram_url'];
     $linkedin_url = $_POST['linkedin_url'];
 
-    // Handle image update
     if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-        // (Optional but recommended) Delete old image
         $old_img_stmt = $dbcon->prepare("SELECT image_file FROM team_members WHERE id = ?");
         $old_img_stmt->bind_param('i', $member_id);
         $old_img_stmt->execute();
@@ -52,7 +46,6 @@ if (isset($_POST['edit_member'])) {
         }
         $old_img_stmt->close();
         
-        // Upload new image
         $target_dir = "../assets/img/team/";
         $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
         $image_name = "team_updated_" . time() . "." . $ext;
@@ -61,7 +54,6 @@ if (isset($_POST['edit_member'])) {
         $stmt = $dbcon->prepare("UPDATE team_members SET name=?, position=?, image_file=?, twitter_url=?, facebook_url=?, instagram_url=?, linkedin_url=? WHERE id=?");
         $stmt->bind_param("sssssssi", $name, $position, $image_name, $twitter_url, $facebook_url, $instagram_url, $linkedin_url, $member_id);
     } else {
-        // Update without changing the image
         $stmt = $dbcon->prepare("UPDATE team_members SET name=?, position=?, twitter_url=?, facebook_url=?, instagram_url=?, linkedin_url=? WHERE id=?");
         $stmt->bind_param("ssssssi", $name, $position, $twitter_url, $facebook_url, $instagram_url, $linkedin_url, $member_id);
     }
@@ -71,18 +63,14 @@ if (isset($_POST['edit_member'])) {
     exit();
 }
 
-// Fetch all team members
 $team_members_result = $dbcon->query("SELECT * FROM team_members ORDER BY display_order ASC, id DESC");
 
 
-// STEP 2: Start the HTML page
 $title = "Manage Team";
 require_once "header.php";
 ?>
 
-<!-- Add New Member Card (no changes needed here) -->
 <div class="card mb-4">
-    <!-- ... Your existing "Add New Team Member" form ... -->
     <div class="card-header"><h4 class="card-title">Add New Team Member</h4></div>
     <div class="card-body">
         <form action="" method="post" enctype="multipart/form-data">
@@ -102,7 +90,6 @@ require_once "header.php";
     </div>
 </div>
 
-<!-- Existing Members Table -->
 <div class="card">
     <div class="card-header"><h4 class="card-title">Existing Team Members</h4></div>
     <div class="card-body">
@@ -115,7 +102,6 @@ require_once "header.php";
                         <td><?= htmlspecialchars($member['name']) ?></td>
                         <td><?= htmlspecialchars($member['position']) ?></td>
                         <td>
-                            <!-- EDIT BUTTON that triggers the modal -->
                             <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#editTeamModal-<?= $member['id'] ?>">
                                 Edit
                             </button>
@@ -123,7 +109,6 @@ require_once "header.php";
                         </td>
                     </tr>
 
-                    <!-- EDIT MODAL for each team member -->
                     <div class="modal fade" id="editTeamModal-<?= $member['id'] ?>" tabindex="-1" role="dialog">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">

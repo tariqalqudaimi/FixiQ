@@ -2,7 +2,6 @@
 <html lang="en">
 
     
-<!-- Mirrored from coderthemes.com/highdmin/vertical/page-logout.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Apr 2019 06:52:57 GMT -->
 <head>
         <meta charset="utf-8" />
         <title>Logout</title>
@@ -11,10 +10,8 @@
         <meta content="Coderthemes" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-        <!-- App favicon -->
         <link rel="shortcut icon" href="assets/images/favicon.ico">
 
-        <!-- App css -->
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/metismenu.min.css" rel="stylesheet" type="text/css" />
@@ -27,7 +24,6 @@
 
     <body class="account-pages">
 
-        <!-- Begin page -->
         <div class="accountbg" style="background: url('assets/images/bg-1.jpg');background-size: cover;background-position: center;"></div>
 
         <div class="wrapper-page account-page-full">
@@ -95,5 +91,4 @@
 
     </body>
 
-<!-- Mirrored from coderthemes.com/highdmin/vertical/page-logout.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Apr 2019 06:52:57 GMT -->
 </html>

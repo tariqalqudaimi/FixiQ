@@ -1,12 +1,7 @@
-<!-- ======= Header ======= -->
 <header id="header">
     <div class="container-fluid d-flex align-items-center justify-content-between">
-
-        <!-- 1. الشعار -->
-        <h1 class="logo"><a href="index.php?lang=<?= $current_lang ?>">     <img src="<?= htmlspecialchars($settings['company_logo'] ?? 'assets\img\Artboard 8-8.png') ?>" alt="<?= htmlspecialchars($settings['company_name'] ?? 'Logo') ?>" class="logo">
-  </a></h1>
-
-        <!-- 2. قائمة التنقل (تحتوي على قائمة الحاسوب وزر الهاتف) -->
+        <h1 class="logo"><a href="index.php?lang=<?= $current_lang ?>"> <img src="<?= htmlspecialchars($settings['company_logo'] ?? 'assets\img\Artboard 8-8.png') ?>" alt="<?= htmlspecialchars($settings['company_name'] ?? 'Logo') ?>" class="logo">
+            </a></h1>
         <nav id="navbar" class="navbar">
             <ul>
                 <li><a class="nav-link scrollto active" href="#hero"><?= $lang['home_link'] ?? 'Home' ?></a></li>
@@ -20,16 +15,12 @@
                 <li><a class="nav-link scrollto" href="#portfolio"><?= $lang['portfolio_link'] ?? 'Portfolio' ?></a></li>
                 <li><a class="nav-link scrollto" href="#contact"><?= $lang['contact_link'] ?? 'Contact' ?></a></li>
             </ul>
-            
-            <!-- زر الهمبرجر: يتم إظهاره وإخفاؤه عبر CSS -->
+
             <i class="bi bi-list mobile-nav-toggle"></i>
 
-        </nav><!-- .navbar -->
-        
-        <!-- هذا الصندوق الفارغ سيستقبل قائمة الهاتف ديناميكيًا -->
-        <div class="navbar-mobile"></div>
+        </nav>
 
-        <!-- 3. العناصر اليمنى (محدد اللغة) -->
+        <div class="navbar-mobile"></div>
         <div class="header-right-actions">
             <div class="language-switcher dropdown">
                 <a href="#" class="btn btn-sm dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -43,4 +34,4 @@
         </div>
 
     </div>
-</header><!-- End Header -->
+</header>

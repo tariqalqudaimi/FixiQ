@@ -1,9 +1,7 @@
 <?php
-// STEP 1: All PHP logic goes first.
 require_once "user_auth.php";
 require_once "db.php";
 
-// ACTION 1: Handle Add Service form submission.
 if (isset($_POST['add_service'])) {
     $title = $_POST['title'];
     $title_ar = $_POST['title_ar'];
@@ -30,7 +28,6 @@ if (isset($_POST['add_service'])) {
     exit();
 }
 
-// ACTION 2: Handle Update Service form submission (from the modal).
 if (isset($_POST['update_service'])) {
     $id = (int)$_POST['id'];
     $title = $_POST['title'];
@@ -65,7 +62,6 @@ if (isset($_POST['update_service'])) {
     exit();
 }
 
-// ACTION 3: Handle Delete request.
 if (isset($_GET['delete_id'])) {
     $id = (int)$_GET['delete_id'];
     
@@ -92,7 +88,6 @@ $title = "Manage Services";
 require_once "header.php";
 ?>
 
-<!-- Add Service Form Card -->
 <div class="card mb-4">
     <div class="card-header"><h4 class="card-title">Add New Service</h4></div>
     <div class="card-body">
@@ -112,7 +107,6 @@ require_once "header.php";
     </div>
 </div>
 
-<!-- Existing Services Table -->
 <div class="card">
     <div class="card-header"><h4 class="card-title">Existing Services</h4></div>
     <div class="card-body">
@@ -125,7 +119,6 @@ require_once "header.php";
                         <td><?= htmlspecialchars($service['title']) ?></td>
                         <td><?= htmlspecialchars($service['description']) ?></td>
                         <td>
-                            <!-- *** CORRECTION HERE: Using Bootstrap 4 attributes *** -->
                             <button type="button" class="btn btn-sm btn-info edit-btn" 
                                     data-toggle="modal" 
                                     data-target="#editServiceModal"
@@ -147,7 +140,6 @@ require_once "header.php";
     </div>
 </div>
 
-<!-- EDIT SERVICE MODAL (POPUP) -->
 <div class="modal fade" id="editServiceModal" tabindex="-1" aria-labelledby="editServiceModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -192,16 +184,12 @@ require_once "header.php";
 require_once "footer.php";
 ?>
 
-<!-- JAVASCRIPT TO POWER THE MODAL -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // This script works for both Bootstrap 4 and 5, but the HTML attributes must match your Bootstrap version.
     
-    // Use jQuery for Bootstrap 4 event handling, as it's more reliable with older templates.
     $('#editServiceModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Button that triggered the modal
+        var button = $(event.relatedTarget); 
 
-        // Extract data from data-* attributes
         var id = button.data('id');
         var title = button.data('title');
         var titleAr = button.data('title-ar');
@@ -210,7 +198,6 @@ document.addEventListener('DOMContentLoaded', function () {
         var color = button.data('color');
         var imageUrl = button.data('image');
 
-        // Update the modal's content.
         var modal = $(this);
         modal.find('#edit-id').val(id);
         modal.find('#edit-title').val(title);

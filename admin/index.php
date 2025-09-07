@@ -4,17 +4,14 @@ $title = "Dashboard";
 require_once "header.php";
 require_once "db.php";
 
-// Fetch Logged-in User Data
 $email = $_SESSION['user_email'];
 $stmt = $dbcon->prepare("SELECT * FROM users WHERE email=?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
 $user_data = $stmt->get_result()->fetch_assoc();
 
-// Fetch Company Settings
 $settings_data = $dbcon->query("SELECT * FROM company_settings WHERE id=1")->fetch_assoc();
 
-// Fetch Stats for Widgets
 $total_users = $dbcon->query("SELECT COUNT(*) AS total FROM users")->fetch_assoc()['total'];
 $total_services = $dbcon->query("SELECT COUNT(*) AS total FROM services")->fetch_assoc()['total'];
 $total_products = $dbcon->query("SELECT COUNT(*) AS total FROM products")->fetch_assoc()['total'];

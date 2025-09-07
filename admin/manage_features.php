@@ -1,11 +1,8 @@
 <?php
-// STEP 1: Includes and form processing logic
 require_once "user_auth.php";
 require_once "db.php";
 
-// Handle Add Feature form
 if (isset($_POST['add_feature'])) {
-    // ... (Your existing 'add_feature' code remains unchanged)
     $title_en = $_POST['title_en'];
     $title_ar = $_POST['title_ar'];
     $description_en = $_POST['description_en'];
@@ -20,7 +17,6 @@ if (isset($_POST['add_feature'])) {
     exit();
 }
 
-// Handle Edit Feature form
 if (isset($_POST['edit_feature'])) {
     $feature_id = $_POST['feature_id'];
     $title_en = $_POST['title_en'];
@@ -37,19 +33,13 @@ if (isset($_POST['edit_feature'])) {
     exit();
 }
 
-
-// Fetch all features
 $features_result = $dbcon->query("SELECT * FROM features ORDER BY display_order ASC, id DESC");
 
-
-// STEP 2: Start the HTML page
 $title = "Manage Features";
 require_once "header.php";
 ?>
 
-<!-- Add New Feature Card (no changes needed) -->
 <div class="card mb-4">
-    <!-- ... Your existing "Add New Feature" form ... -->
     <div class="card-header"><h4 class="card-title">Add New Feature</h4></div>
     <div class="card-body">
         <form action="" method="post">
@@ -67,7 +57,6 @@ require_once "header.php";
     </div>
 </div>
 
-<!-- Existing Features Table -->
 <div class="card">
     <div class="card-header"><h4 class="card-title">Existing Features</h4></div>
     <div class="card-body">
@@ -80,7 +69,6 @@ require_once "header.php";
                         <td><?= htmlspecialchars($feature['title_en']) ?></td>
                         <td><?= htmlspecialchars(substr($feature['description_en'], 0, 100)) ?>...</td>
                         <td>
-                            <!-- EDIT BUTTON that triggers the modal -->
                             <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#editFeatureModal-<?= $feature['id'] ?>">
                                 Edit
                             </button>
@@ -88,7 +76,6 @@ require_once "header.php";
                         </td>
                     </tr>
 
-                    <!-- EDIT MODAL for each feature -->
                     <div class="modal fade" id="editFeatureModal-<?= $feature['id'] ?>" tabindex="-1" role="dialog">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">

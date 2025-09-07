@@ -6,7 +6,6 @@ require_once "db.php";
 
 $email = $_SESSION['user_email'];
 
-// SECURE QUERY
 $stmt = $dbcon->prepare("SELECT * FROM users WHERE email=?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
@@ -15,13 +14,10 @@ $row = $result->fetch_assoc();
 $id = $row['id'];
 ?>
 <div class="row">
-    <!-- content row  -->
     <div class="col-md-7">
-        <!-- first col -->
         <div class="card text-dark mb-3">
             <div class="card-header bg-success text-center"><h2>Profile</h2></div>
             <div class="card-body">
-                <!-- table start here -->
                 <table class="table table-bordered table-striped text-center mx-auto">
                     <tr>
                         <td colspan="2"><img src="image/users/<?= htmlspecialchars($row['photo']) ?>" alt="" width="100"></td>
@@ -43,11 +39,8 @@ $id = $row['id'];
             </div>
         </div>
     </div>
-    <!-- first col end -->
 
-    <!-- photo col start -->
     <div class="col-md-5">
-        <!-- photo empty alert -->
         <?php if(isset($_SESSION['profile_photo_emty'])): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <strong><?= $_SESSION['profile_photo_emty'] ?></strong>
@@ -56,9 +49,7 @@ $id = $row['id'];
             <?php unset($_SESSION['profile_photo_emty']); ?>
         <?php endif; ?>
 
-        <!-- ... other alerts ... -->
         
-        <!-- photo upload successfully alert -->
         <?php if(isset($_SESSION['profile_photo_success'])): ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong><?= $_SESSION['profile_photo_success'] ?></strong>
@@ -82,9 +73,7 @@ $id = $row['id'];
             </div>
         </div>
     </div>
-    <!-- photo column end -->
 </div>
-<!-- divider row end -->
 <?php 
 require_once "footer.php";
 ?>
