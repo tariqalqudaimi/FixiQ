@@ -37,7 +37,7 @@ $settings = $data_from_db->fetch_assoc();
             <h4>Hero Section</h4>
             <div class="form-group"><label>Hero Title</label><input type="text" class="form-control" name="hero_title" value="<?= htmlspecialchars($settings['hero_title'] ?? '') ?>"></div>
             <div class="form-group"><label>Hero Title Arabic</label><input type="text" class="form-control" name="hero_title_ar" value="<?= htmlspecialchars($settings['hero_title_ar'] ?? '') ?>"></div>
-           <div class="form-group"><label>Hero Subtitle </label><textarea name="hero_subtitle" class="form-control"><?= htmlspecialchars($settings['hero_subtitle'] ?? '') ?></textarea></div>
+            <div class="form-group"><label>Hero Subtitle </label><textarea name="hero_subtitle" class="form-control"><?= htmlspecialchars($settings['hero_subtitle'] ?? '') ?></textarea></div>
             <div class="form-group"><label>Hero Subtitle Arabic</label><textarea name="hero_subtitle_ar" class="form-control"><?= htmlspecialchars($settings['hero_subtitle_ar'] ?? '') ?></textarea></div>
             <div class="form-group"><label>Hero Image</label><input type="file" class="form-control-file" name="hero_image"><small>Current: <?= htmlspecialchars($settings['hero_image']) ?></small></div>
             <hr>
@@ -46,16 +46,13 @@ $settings = $data_from_db->fetch_assoc();
             <h4>About Section</h4>
             <div class="form-group"><label>About Title</label><input type="text" class="form-control" name="about_title" value="<?= htmlspecialchars($settings['about_title'] ?? '') ?>"></div>
             <div class="form-group"><label>About Subtitle</label><textarea name="about_subtitle" class="form-control"><?= htmlspecialchars($settings['about_subtitle'] ?? '') ?></textarea></div>
-            <div class="form-group"><label>About Bullet Point 1</label><input type="text" class="form-control" name="about_bullet1" value="<?= htmlspecialchars($settings['about_bullet1'] ?? '') ?>"></div>
-            <div class="form-group"><label>About Bullet Point 2</label><input type="text" class="form-control" name="about_bullet2" value="<?= htmlspecialchars($settings['about_bullet2'] ?? '') ?>"></div>
-            <div class="form-group"><label>About Bullet Point 3</label><input type="text" class="form-control" name="about_bullet3" value="<?= htmlspecialchars($settings['about_bullet3'] ?? '') ?>"></div>
             <div class="form-group"><label>About Image</label><input type="file" class="form-control-file" name="about_image"><small>Current: <?= htmlspecialchars($settings['about_image']) ?></small></div>
             <hr>
 
             <!-- Social Links -->
             <h4>Social Links (for Footer)</h4>
             <div class="form-group"><label>Facebook Link</label><input type="url" class="form-control" name="fb_link" value="<?= htmlspecialchars($settings['fb_link'] ?? '') ?>"></div>
-            <div class="form-group"><label>Twitter Link</label><input type="url" class="form-control" name="twitter_link" value="<?= htmlspecialchars($settings['twitter_link'] ?? '') ?>"></div>
+            <div class="form-group"><label>WhatsApp Number</label><input type="text" class="form-control" name="whatsapp_number" placeholder="e.g., +15551234567" value="<?= htmlspecialchars($settings['whatsapp_number'] ?? '') ?>"><small class="form-text text-muted">Include the country code (e.g., +1, +44).</small></div>
             <div class="form-group"><label>Instagram Link</label><input type="url" class="form-control" name="instagram_link" value="<?= htmlspecialchars($settings['instagram_link'] ?? '') ?>"></div>
             <div class="form-group"><label>LinkedIn Link</label><input type="url" class="form-control" name="linkedin_link" value="<?= htmlspecialchars($settings['linkedin_link'] ?? '') ?>"></div>
 

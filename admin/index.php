@@ -23,15 +23,30 @@ $total_products = $dbcon->query("SELECT COUNT(*) AS total FROM products")->fetch
         <div class="card-box">
             <h4 class="header-title mt-1">Company Information</h4>
             <hr>
-            <p class="text-muted font-13"><strong>Company Name:</strong> <?= htmlspecialchars($settings_data['company_name']) ?></p>
-            <p class="text-muted font-13"><strong>Hero Title:</strong> <?= htmlspecialchars($settings_data['hero_title']) ?></p>
+            <p class="text-muted font-13"><strong>Company Name:</strong> <?= htmlspecialchars($settings_data['company_name'] ?? '') ?></p>
+            <p class="text-muted font-13"><strong>Hero Title:</strong> <?= htmlspecialchars($settings_data['hero_title'] ?? '') ?></p>
             <hr/>
+
+            
             <ul class="social-links list-inline mt-4 mb-0 mx-auto">
-                <li class="list-inline-item"><a title="Facebook" href="<?= htmlspecialchars($settings_data['fb_link']) ?>"><i class="fab fa-facebook-f"></i></a></li>
-                <li class="list-inline-item"><a title="Twitter" href="<?= htmlspecialchars($settings_data['twitter_link']) ?>"><i class="fab fa-twitter"></i></a></li>
-                <li class="list-inline-item"><a title="Instagram" href="<?= htmlspecialchars($settings_data['instagram_link']) ?>"><i class="fab fa-instagram"></i></a></li>
-                <li class="list-inline-item"><a title="Linkedin" href="<?= htmlspecialchars($settings_data['linkedin_link']) ?>"><i class="fab fa-linkedin"></i></a></li>
+                <?php if (!empty($settings_data['fb_link'])): ?>
+                    <li class="list-inline-item"><a title="Facebook" href="<?= htmlspecialchars($settings_data['fb_link']) ?>" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                <?php endif; ?>
+                
+                
+                <?php if (!empty($settings_data['whatsapp_number'])): ?>
+                    <li class="list-inline-item"><a title="WhatsApp" href="https://wa.me/<?= htmlspecialchars(preg_replace('/[^0-9]/', '', $settings_data['whatsapp_number'])) ?>" target="_blank"><i class="fab fa-whatsapp"></i></a></li>
+                <?php endif; ?>
+
+                <?php if (!empty($settings_data['instagram_link'])): ?>
+                    <li class="list-inline-item"><a title="Instagram" href="<?= htmlspecialchars($settings_data['instagram_link']) ?>" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                <?php endif; ?>
+
+                <?php if (!empty($settings_data['linkedin_link'])): ?>
+                    <li class="list-inline-item"><a title="Linkedin" href="<?= htmlspecialchars($settings_data['linkedin_link']) ?>" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                <?php endif; ?>
             </ul>
+      
             <br>
             <a class="btn btn-sm btn-block btn-success" href="edit_company_info.php">Edit Website Content</a>
         </div>

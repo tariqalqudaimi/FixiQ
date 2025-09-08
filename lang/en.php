@@ -52,6 +52,16 @@ $lang = [
     'contact_form_subject_placeholder' => 'Subject',
     'contact_form_message_placeholder' => 'Message',
     'contact_form_send_btn' => 'Send Message',
+    'contact_form_title' => 'Send a Message',
+    'contact_info_title' => 'Our Information',
+    'contact_panel_details_title' => 'Contact Details',
+    'contact_panel_details_desc' => 'Need our address or phone number? Find all of our contact information here.',
+    'contact_panel_show_info_btn' => 'Show Info',
+    'contact_panel_question_title' => 'Have a Question?',
+    'contact_panel_question_desc' => 'Fill out our contact form and our team will get back to you as soon as possible.',
+    'contact_panel_message_us_btn' => 'Message Us',
+    'form_loading' => 'Loading',
+    'form_sent_message' => 'Your message has been sent. Thank you!',
 
     // Footer
     'footer_useful_links' => 'Useful Links',
@@ -61,4 +71,3 @@ $lang = [
     'footer_subscribe_btn' => 'Subscribe',
     'footer_designed_by' => 'Designed by'
 ];
-?>

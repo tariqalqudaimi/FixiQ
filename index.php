@@ -19,7 +19,7 @@ if (file_exists('lang/' . $current_lang . '.php')) {
 }
 
 
-$settings = $dbcon->query("SELECT company_name, hero_title, hero_title_ar, hero_subtitle, hero_subtitle_ar FROM company_settings WHERE id=1")->fetch_assoc();
+$settings = $dbcon->query("SELECT * FROM company_settings WHERE id=1")->fetch_assoc();
 $contact = $dbcon->query("SELECT address, email, phone, map_embed_code FROM contact_information WHERE id=1")->fetch_assoc();
 $team_members_query = $dbcon->query("SELECT name, position, image_file, twitter_url, facebook_url, instagram_url, linkedin_url FROM team_members ORDER BY display_order ASC");
 
@@ -250,94 +250,106 @@ $features_query = $dbcon->query("SELECT * FROM features ORDER BY display_order A
       </div>
     </section><!-- End Team Section -->
 
-   <!-- ======= Contact Section (Animated Swap Style) ======= -->
-<section id="contact" class="contact">
-    <div class="container" data-aos="fade-up">
+    <!-- ======= Contact Section (Animated Swap Style) ======= -->
+    <section id="contact" class="contact">
+      <div class="container" data-aos="fade-up">
         <div class="section-title">
-            <h2><?= $lang['contact_title'] ?? 'Contact' ?></h2>
-            <p><?= $lang['contact_description'] ?? '' ?></p>
+          <h2><?= $lang['contact_title'] ?? 'Contact' ?></h2>
+          <p><?= $lang['contact_description'] ?? '' ?></p>
         </div>
 
         <div class="contact-page-container">
-            <div class="forms-container">
-                <div class="contact-info-swap">
+          <div class="forms-container">
+            <div class="contact-info-swap">
 
-                    <form action="forms/contact.php" method="POST" class="contact-form-main php-email-form">
-                        <h2 class="title">Send a Message</h2>
-                        <div class="input-field">
-                            <i class="bx bxs-user"></i>
-                            <input type="text" name="name" placeholder="Full Name" required>
-                        </div>
-                        <div class="input-field">
-                            <i class='bx bx-envelope'></i>
-                            <input type="email" name="email" placeholder="Email" required>
-                        </div>
-                        <div class="input-field">
-                            <i class='bx bxs-pen'></i>
-                            <input type="text" name="subject" placeholder="Subject" required>
-                        </div>
-                        <div class="input-field textarea-field">
-                            <i class='bx bxs-comment-dots'></i>
-                            <textarea name="message" placeholder="Your Message" required></textarea>
-                        </div>
-                        
-                        <div class="my-3">
-                          <div class="loading">Loading</div>
-                          <div class="error-message"></div>
-                          <div class="sent-message">Your message has been sent. Thank you!</div>
-                        </div>
-
-                        <input type="submit" value="Send" class="btns solid">
-                    </form>
-
-                    <!-- The Contact Info Panel -->
-                    <div class="contact-info-panel">
-                        <h2 class="title">Our Information</h2>
-                        <div class="info-item">
-                            <i class='bx bxs-map-pin'></i>
-                            <p><?= htmlspecialchars($contact['address'] ?? 'Address not available') ?></p>
-                        </div>
-                         <div class="info-item">
-                            <i class='bx bxs-phone-call'></i>
-                            <p><?= htmlspecialchars($contact['phone'] ?? 'Phone not available') ?></p>
-                        </div>
-                         <div class="info-item">
-                            <i class='bx bxs-paper-plane'></i>
-                            <p><?= htmlspecialchars($contact['email'] ?? 'Email not available') ?></p>
-                        </div>
-                        <div class="info-social-links">
-                            <a href="<?= htmlspecialchars($settings['twitter_link'] ?? '#') ?>" class="social-icon"><i class="bx bxl-twitter"></i></a>
-                            <a href="<?= htmlspecialchars($settings['fb_link'] ?? '#') ?>" class="social-icon"><i class="bx bxl-facebook"></i></a>
-                            <a href="<?= htmlspecialchars($settings['instagram_link'] ?? '#') ?>" class="social-icon"><i class="bx bxl-instagram"></i></a>
-                            <a href="<?= htmlspecialchars($settings['linkedin_link'] ?? '#') ?>" class="social-icon"><i class="bx bxl-linkedin"></i></a>
-                        </div>
-                    </div>
-
+              <!-- The Contact Form -->
+              <form action="forms/contact.php" method="POST" class="contact-form-main animated-contact-form">
+                <h2 class="title"><?= $lang['contact_form_title'] ?? 'Send a Message' ?></h2>
+                <div class="input-field">
+                  <i class="bx bxs-user"></i>
+                  <input type="text" name="name" placeholder="<?= $lang['contact_form_name_placeholder'] ?? 'Full Name' ?>" required>
                 </div>
+                <div class="input-field">
+                  <i class='bx bx-envelope'></i>
+                  <input type="email" name="email" placeholder="<?= $lang['contact_form_email_placeholder'] ?? 'Email' ?>" required>
+                </div>
+                <div class="input-field">
+                  <i class='bx bxs-pen'></i>
+                  <input type="text" name="subject" placeholder="<?= $lang['contact_form_subject_placeholder'] ?? 'Subject' ?>" required>
+                </div>
+                <div class="input-field textarea-field">
+                  <i class='bx bxs-comment-dots'></i>
+                  <textarea name="message" placeholder="<?= $lang['contact_form_message_placeholder'] ?? 'Your Message' ?>" required></textarea>
+                </div>
+
+                <div class="my-3">
+                  <div class="loading"><?= $lang['form_loading'] ?? 'Loading' ?></div>
+                  <div class="error-message"></div> <!-- This is correctly left empty, as JavaScript fills it with the specific error -->
+                  <div class="sent-message"><?= $lang['form_sent_message'] ?? 'Your message has been sent. Thank you!' ?></div>
+                </div>
+
+                <input type="submit" value="<?= $lang['contact_form_send_btn'] ?? 'Send' ?>" class="btns solid">
+              </form>
+
+              <!-- The Contact Info Panel -->
+              <div class="contact-info-panel">
+                <h2 class="title"><?= $lang['contact_info_title'] ?? 'Our Information' ?></h2>
+                <div class="info-item">
+                  <i class='bx bxs-map-pin'></i>
+                  <p><?= htmlspecialchars($contact['address'] ?? 'Address not available') ?></p>
+                </div>
+                <div class="info-item">
+                  <i class='bx bxs-phone-call'></i>
+                  <p><?= htmlspecialchars($contact['phone'] ?? 'Phone not available') ?></p>
+                </div>
+                <div class="info-item">
+                  <i class='bx bxs-paper-plane'></i>
+                  <p><?= htmlspecialchars($contact['email'] ?? 'Email not available') ?></p>
+                </div>
+                <div class="info-social-links">
+                  <?php if (!empty($settings['whatsapp_number'])): ?>
+                    <a href="https://wa.me/<?= htmlspecialchars(preg_replace('/[^0-9]/', '', $settings['whatsapp_number'])) ?>" target="_blank" class="social-icon"><i class="bx bxl-whatsapp"></i></a>
+                  <?php endif; ?>
+
+                  <?php if (!empty($settings['fb_link'])): ?>
+                    <a href="<?= htmlspecialchars($settings['fb_link']) ?>" target="_blank" class="social-icon"><i class="bx bxl-facebook"></i></a>
+                  <?php endif; ?>
+
+                  <?php if (!empty($settings['instagram_link'])): ?>
+                    <a href="<?= htmlspecialchars($settings['instagram_link']) ?>" target="_blank" class="social-icon"><i class="bx bxl-instagram"></i></a>
+                  <?php endif; ?>
+
+                  <?php if (!empty($settings['linkedin_link'])): ?>
+                    <a href="<?= htmlspecialchars($settings['linkedin_link']) ?>" target="_blank" class="social-icon"><i class="bx bxl-linkedin"></i></a>
+                  <?php endif; ?>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="panels-container">
+            <div class="panel left-panel">
+              <div class="content">
+                <h3><?= $lang['contact_panel_details_title'] ?? 'Contact Details' ?></h3>
+                <p><?= $lang['contact_panel_details_desc'] ?? 'Need our address or phone number? Find all of our contact information here.' ?></p>
+                <button class="btns transparent" id="show-info-btn"><?= $lang['contact_panel_show_info_btn'] ?? 'Show Info' ?></button>
+              </div>
+              <img src="assets/img/contact/info.png" class="image" alt="Contact Info Illustration">
             </div>
 
-            <div class="panels-container">
-                <div class="panel left-panel">
-                    <div class="content">
-                        <h3>Contact Details</h3>
-                        <p>Need our address or phone number? Find all of our contact information here.</p>
-                        <button class="btns transparent" id="show-info-btn">Show Info</button>
-                    </div>
-                    <img src="assets/img/contact/info.png" class="image" alt="Contact Info Illustration">
-                </div>
-
-                <div class="panel right-panel">
-                    <div class="content">
-                        <h3>Have a Question?</h3>
-                        <p>Fill out our contact form and our team will get back to you as soon as possible.</p>
-                        <button class="btns transparent" id="show-form-btn">Message Us</button>
-                    </div>
-                    <img src="assets/img/contact/form.png" class="image" alt="Contact Form Illustration">
-                </div>
+            <div class="panel right-panel">
+              <div class="content">
+                <h3><?= $lang['contact_panel_question_title'] ?? 'Have a Question?' ?></h3>
+                <p><?= $lang['contact_panel_question_desc'] ?? 'Fill out our contact form and our team will get back to you as soon as possible.' ?></p>
+                <button class="btns transparent" id="show-form-btn"><?= $lang['contact_panel_message_us_btn'] ?? 'Message Us' ?></button>
+              </div>
+              <img src="assets/img/contact/form.png" class="image" alt="Contact Form Illustration">
             </div>
+          </div>
         </div>
-    </div>
-</section><!-- End Contact Section -->
+      </div>
+    </section><!-- End Contact Section -->
   </main><!-- End #main -->
   </main>
 

@@ -34,39 +34,34 @@ if (isset($_POST['submit'])) {
     $new_hero_image_name = handleUpload('hero_image', $hero_image_name, $upload_dir, 'hero');
     $new_about_image_name = handleUpload('about_image', $about_image_name, $upload_dir, 'about');
 
-
     $hero_title = $_POST['hero_title'];
     $hero_title_ar = $_POST['hero_title_ar'];
     $hero_subtitle = $_POST['hero_subtitle'];
     $hero_subtitle_ar = $_POST['hero_subtitle_ar'];
     $about_title = $_POST['about_title'];
     $about_subtitle = $_POST['about_subtitle'];
-    $about_bullet1 = $_POST['about_bullet1'];
-    $about_bullet2 = $_POST['about_bullet2'];
-    $about_bullet3 = $_POST['about_bullet3'];
+    
+    
     $fb_link = $_POST['fb_link'];
-    $twitter_link = $_POST['twitter_link'];
+    $whatsapp_number = $_POST['whatsapp_number']; 
     $instagram_link = $_POST['instagram_link'];
     $linkedin_link = $_POST['linkedin_link'];
     
-
-
-      $stmt = $dbcon->prepare(
+    $stmt = $dbcon->prepare(
         "UPDATE company_settings SET 
-            hero_title = ?,hero_title_ar = ? ,hero_subtitle = ?,hero_subtitle_ar = ?, hero_image = ?,
+            hero_title = ?, hero_title_ar = ?, hero_subtitle = ?, hero_subtitle_ar = ?, hero_image = ?,
             about_title = ?, about_subtitle = ?, about_image = ?,
-            about_bullet1 = ?, about_bullet2 = ?, about_bullet3 = ?,
-            fb_link = ?, twitter_link = ?, instagram_link = ?, linkedin_link = ?
+            fb_link = ?, whatsapp_number = ?, instagram_link = ?, linkedin_link = ? -- CHANGED: twitter_link to whatsapp_number
         WHERE id=1"
     );
 
-$stmt->bind_param( 
-    "sssssssssssssss", 
-    $hero_title, $hero_title_ar, $hero_subtitle, $hero_subtitle_ar, $new_hero_image_name,
-    $about_title, $about_subtitle, $new_about_image_name,
-    $about_bullet1, $about_bullet2, $about_bullet3,
-    $fb_link, $twitter_link, $instagram_link, $linkedin_link
-);
+    $stmt->bind_param( 
+        "ssssssssssss", 
+        $hero_title, $hero_title_ar, $hero_subtitle, $hero_subtitle_ar, $new_hero_image_name,
+        $about_title, $about_subtitle, $new_about_image_name,
+        $fb_link, $whatsapp_number, $instagram_link, $linkedin_link 
+    );
+
     if ($stmt->execute()) {
         $_SESSION['update_success'] = "Website settings updated successfully!";
     } else {

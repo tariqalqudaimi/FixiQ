@@ -144,6 +144,56 @@
         container.classList.remove("show-info-mode");
     });
   }
+
+  /**
+   * Custom AJAX handler for the Animated Contact Form (Corrected Selectors)
+   */
+  const animatedContactForm = select('#contact .animated-contact-form');
+  if (animatedContactForm) {
+    animatedContactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      let form = this;
+      let loading = form.querySelector('.my-3 .loading');
+      let errorMessage = form.querySelector('.my-3 .error-message');
+      let sentMessage = form.querySelector('.my-3 .sent-message');
+
+      loading.style.display = 'block';
+      errorMessage.style.display = 'none';
+      sentMessage.style.display = 'none';
+
+      fetch(form.action, {
+        method: form.method,
+        body: new FormData(form),
+        headers: {'X-Requested-With': 'XMLHttpRequest'}
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.text(); 
+        } else {
+          return response.text().then(text => {
+            throw new Error(text || 'Server responded with an error.');
+          });
+        }
+      })
+      .then(data => {
+        loading.style.display = 'none';
+        sentMessage.style.display = 'block';
+        form.reset(); 
+      })
+      .catch(error => {
+        loading.style.display = 'none';
+        errorMessage.textContent = error.message;
+        errorMessage.style.display = 'block';
+      })
+      .finally(() => {
+        setTimeout(() => {
+          sentMessage.style.display = 'none';
+          errorMessage.style.display = 'none';
+        }, 3000); 
+      });
+    });
+  }
 })();
 
 if (document.getElementById('particles-js')) {

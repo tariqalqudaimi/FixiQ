@@ -52,6 +52,16 @@ $lang = [
     'contact_form_subject_placeholder' => 'الموضوع',
     'contact_form_message_placeholder' => 'رسالتك',
     'contact_form_send_btn' => 'إرسال الرسالة',
+    'contact_form_title' => 'أرسل رسالة',
+    'contact_info_title' => 'معلوماتنا',
+    'contact_panel_details_title' => 'تفاصيل الاتصال',
+    'contact_panel_details_desc' => 'هل تحتاج إلى عنواننا أو رقم هاتفنا؟ تجد جميع معلومات الاتصال الخاصة بنا هنا.',
+    'contact_panel_show_info_btn' => 'عرض المعلومات',
+    'contact_panel_question_title' => 'هل لديك سؤال؟',
+    'contact_panel_question_desc' => 'املأ نموذج الاتصال الخاص بنا وسيقوم فريقنا بالرد عليك في أقرب وقت ممكن.',
+    'contact_panel_message_us_btn' => 'راسلنا',
+    'form_loading' => 'جاري التحميل',
+    'form_sent_message' => 'تم إرسال رسالتك. شكراً لك!',
 
     // Footer
     'footer_useful_links' => 'روابط مفيدة',
@@ -61,4 +71,3 @@ $lang = [
     'footer_subscribe_btn' => 'اشتراك',
     'footer_designed_by' => 'تصميم'
 ];
-?>
