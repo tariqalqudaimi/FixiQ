@@ -1,6 +1,6 @@
 <?php
 require_once 'error_handler.php';
-require_once 'admin/db.php';
+require_once 'admin/Database/db.php';
 
 session_start();
 
@@ -18,11 +18,12 @@ if (file_exists('lang/' . $current_lang . '.php')) {
   include 'lang/en.php';
 }
 
-
 $settings = $dbcon->query("SELECT * FROM company_settings WHERE id=1")->fetch_assoc();
-$contact = $dbcon->query("SELECT address, email, phone, map_embed_code FROM contact_information WHERE id=1")->fetch_assoc();
-$team_members_query = $dbcon->query("SELECT name, position, image_file, twitter_url, facebook_url, instagram_url, linkedin_url FROM team_members ORDER BY display_order ASC");
-
+$contact = $dbcon->query("SELECT * FROM contact_information WHERE id=1")->fetch_assoc();
+$team_members_query = $dbcon->query("SELECT name, position, image_file, website_url, facebook_url, instagram_url, linkedin_url FROM team_members ORDER BY display_order ASC");
+$services_homepage = $dbcon->query("SELECT box_color_class, image_file, title, title_ar, description, description_ar FROM services ORDER BY id DESC LIMIT 6");
+$total_services_count = $dbcon->query("SELECT COUNT(id) as count FROM services")->fetch_assoc()['count'];
+$features_query = $dbcon->query("SELECT * FROM features ORDER BY display_order ASC");
 $products_query = $dbcon->query("
     SELECT 
         p.id, p.name, p.image,
@@ -39,9 +40,7 @@ $products_query = $dbcon->query("
         p.id DESC
 ");
 
-$services_homepage = $dbcon->query("SELECT box_color_class, image_file, title, title_ar, description, description_ar FROM services ORDER BY id DESC LIMIT 6");
-$total_services_count = $dbcon->query("SELECT COUNT(id) as count FROM services")->fetch_assoc()['count'];
-$features_query = $dbcon->query("SELECT * FROM features ORDER BY display_order ASC");
+
 
 ?>
 <!DOCTYPE html>
@@ -55,7 +54,7 @@ $features_query = $dbcon->query("SELECT * FROM features ORDER BY display_order A
   <meta content="" name="keywords">
   <link href="assets/img/Artboard 8-8.png" rel="icon">
   <link href="assets/img/Artboard 8-8.png" rel="aArtboard 8-8">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Sora:300,300i,400,400i,500,500i,600,600i,700,700i|Tajwal:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -67,6 +66,12 @@ $features_query = $dbcon->query("SELECT * FROM features ORDER BY display_order A
   <link rel="stylesheet"
     href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
   <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- ========== NEW FONTS (SORA & TAJAWAL) ========== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- =================================================== -->
 </head>
 
 <body>
@@ -74,7 +79,7 @@ $features_query = $dbcon->query("SELECT * FROM features ORDER BY display_order A
 
   <div id="preloader">
     <div class="preloader-logo-container">
-      <svg width="40" height="40" viewBox="0 0 236 97" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="40" height="40" viewBox="0 0 1000 97" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="light-flare" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stop-color="rgba(138, 79, 255, 0)" />
@@ -82,7 +87,7 @@ $features_query = $dbcon->query("SELECT * FROM features ORDER BY display_order A
             <stop offset="100%" stop-color="rgba(138, 79, 255, 0)" />
           </linearGradient>
         </defs>
-        <path class="logo-path light-flare-path " d="M519.74,326.75l-88.51,166.5c-9.29,17.48-34.53,16.89-43-1l-78-164.81a24.07,24.07,0,0,0-21.75-13.77H275.23a24.07,24.07,0,0,0-21.87,34.12L387.48,639.57c8.48,18.44,34.57,18.75,43.49.52L555.28,385.78a24.07,24.07,0,0,1,21-13.49l96.43-2.61-.36.77-76.05,163c-8.6,18.44-34.79,18.54-43.54.17l-4.86-10.2c-9-18.8-35.93-18.13-43.94,1.09h0a24.07,24.07,0,0,0,.72,20.07l50.91,101.17a24.07,24.07,0,0,0,42.84.31l154.91-297.1a24.07,24.07,0,0,0-21.37-35.19L541,314A24.07,24.07,0,0,0,519.74,326.75ZM694.82,344v0h0Zm0-13.43h0Z" />
+        <path class="logo-path light-flare-path " d="M516.74,326.75l-88.5,166.51c-9.3,17.47-34.54,16.89-43-1l-78-164.81a24.06,24.06,0,0,0-21.75-13.77H272.23a24.07,24.07,0,0,0-21.87,34.12L384.48,639.57c8.48,18.44,34.58,18.75,43.49.51l124.31-254.3a24.07,24.07,0,0,1,21-13.49l96.43-2.61-.36.77-76.05,163c-8.61,18.44-34.79,18.54-43.54.17l-4.85-10.2c-9-18.8-35.94-18.13-43.95,1.09h0a24.06,24.06,0,0,0,.72,20.07l50.91,101.17a24.07,24.07,0,0,0,42.84.31l154.91-297.1a24.07,24.07,0,0,0-21.38-35.2L538,314A24.07,24.07,0,0,0,516.74,326.75ZM691.82,344v0h0Zm0-13.43h0Z" />
       </svg>
     </div>
   </div>
@@ -235,7 +240,7 @@ $features_query = $dbcon->query("SELECT * FROM features ORDER BY display_order A
                       <span><?= htmlspecialchars($member['position']) ?></span>
                     </div>
                     <div class="social-links">
-                      <?php if (!empty($member['twitter_url'])): ?><a href="<?= htmlspecialchars($member['twitter_url']) ?>"><i class='bx bx-twitter-x'></i> </a><?php endif; ?>
+                      <?php if (!empty($member['website_url'])): ?><a href="<?= htmlspecialchars($member['website_url']) ?>"><i class='bi bi-globe'></i> </a><?php endif; ?>
                       <?php if (!empty($member['facebook_url'])): ?><a href="<?= htmlspecialchars($member['facebook_url']) ?>"><i class="bi bi-facebook"></i></a><?php endif; ?>
                       <?php if (!empty($member['instagram_url'])): ?><a href="<?= htmlspecialchars($member['instagram_url']) ?>"><i class="bi bi-instagram"></i></a><?php endif; ?>
                       <?php if (!empty($member['linkedin_url'])): ?><a href="<?= htmlspecialchars($member['linkedin_url']) ?>"><i class="bi bi-linkedin"></i></a><?php endif; ?>
@@ -258,7 +263,7 @@ $features_query = $dbcon->query("SELECT * FROM features ORDER BY display_order A
           <p><?= $lang['contact_description'] ?? '' ?></p>
         </div>
 
-        <div class="contact-page-container">
+        <div class="contact-page-container show-info-mode">
           <div class="forms-container">
             <div class="contact-info-swap">
 
@@ -284,19 +289,26 @@ $features_query = $dbcon->query("SELECT * FROM features ORDER BY display_order A
 
                 <div class="my-3">
                   <div class="loading"><?= $lang['form_loading'] ?? 'Loading' ?></div>
-                  <div class="error-message"></div> <!-- This is correctly left empty, as JavaScript fills it with the specific error -->
+                  <div class="error-message"></div> 
                   <div class="sent-message"><?= $lang['form_sent_message'] ?? 'Your message has been sent. Thank you!' ?></div>
                 </div>
 
                 <input type="submit" value="<?= $lang['contact_form_send_btn'] ?? 'Send' ?>" class="btns solid">
               </form>
 
-              <!-- The Contact Info Panel -->
               <div class="contact-info-panel">
                 <h2 class="title"><?= $lang['contact_info_title'] ?? 'Our Information' ?></h2>
                 <div class="info-item">
                   <i class='bx bxs-map-pin'></i>
-                  <p><?= htmlspecialchars($contact['address'] ?? 'Address not available') ?></p>
+                  <p>
+                    <?php
+                    if ($current_lang == 'ar' && !empty($contact['address_ar'])) {
+                      echo htmlspecialchars($contact['address_ar']);
+                    } else {
+                      echo htmlspecialchars($contact['address'] ?? 'Address not available');
+                    }
+                    ?>
+                  </p>
                 </div>
                 <div class="info-item">
                   <i class='bx bxs-phone-call'></i>

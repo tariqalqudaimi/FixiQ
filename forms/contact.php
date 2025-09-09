@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../admin/db.php';
+require_once __DIR__ . '/../admin/Database/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
