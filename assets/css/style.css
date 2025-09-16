@@ -2000,3 +2000,13 @@ html[dir="rtl"] {
   margin-left: 15px;
 }
 }
+
+/*--------------------------------------------------------------
+# 14. RTL Specific Adjustments
+--------------------------------------------------------------*/
+
+html[dir="rtl"] .neural-node.active {
+  right: 50% !important;
+  left: auto !important;
+  transform: translateX(50%) scale(1) !important;
+}
