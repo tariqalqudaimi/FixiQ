@@ -1,11 +1,9 @@
-
 (function () {
   "use strict";
 
   /**
- * Preloader
- */
-
+   * Helper Functions from your original file
+   */
   const select = (el, all = false) => el.trim() ? (all ? [...document.querySelectorAll(el)] : document.querySelector(el)) : null;
   const on = (type, el, listener, all = false) => {
     let selectEl = select(el, all);
@@ -23,7 +21,9 @@
     window.scrollTo({ top: elementPos - offset, behavior: 'smooth' });
   };
 
-  // Header scroll class
+  /**
+   * Header scroll class
+   */
   let selectHeader = select('#header');
   if (selectHeader) {
     const headerScrolled = () => window.scrollY > 100 ? selectHeader.classList.add('header-scrolled') : selectHeader.classList.remove('header-scrolled');
@@ -31,7 +31,9 @@
     onscroll(document, headerScrolled);
   }
 
-  // Back to top button
+  /**
+   * Back to top button
+   */
   let backtotop = select('.back-to-top');
   if (backtotop) {
     const toggleBacktotop = () => window.scrollY > 100 ? backtotop.classList.add('active') : backtotop.classList.remove('active');
@@ -39,12 +41,120 @@
     onscroll(document, toggleBacktotop);
   }
 
-  /* --- All Mobile Navigation Logic (START) --- */
+  // =================================================================================
+  // START: BEYOND IMAGINATION JAVASCRIPT FUNCTIONS
+  // These are the new functions for the amazing effects.
+  // =================================================================================
 
+  /**
+   * BEYOND IMAGINATION: 3D Tilt Effect for Services and Team sections
+   */
+  function init3DTiltEffect() {
+    // We target both services and team cards with one function
+    const tiltElements = document.querySelectorAll('.services .icon-box, .team .member-style-2');
+
+    tiltElements.forEach(element => {
+      element.addEventListener('mousemove', (e) => {
+        const rect = element.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const width = element.offsetWidth;
+        const height = element.offsetHeight;
+        const rotateX = -((height / 2) - y) / 20; // rotation strength
+        const rotateY = ((width / 2) - x) / 20;
+
+        element.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+
+        // For services card's inner glow effect
+        if (element.classList.contains('icon-box')) {
+          element.style.setProperty('--mouse-x', `${x}px`);
+          element.style.setProperty('--mouse-y', `${y}px`);
+        }
+      });
+
+      element.addEventListener('mouseleave', () => {
+        element.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      });
+    });
+  }
+
+  /**
+   * BEYOND IMAGINATION: Spotlight Effect for Features section
+   */
+  function initFeaturesSpotlight() {
+    const featuresSection = document.querySelector('#features');
+    if (featuresSection) {
+      featuresSection.addEventListener('mousemove', e => {
+        const rect = featuresSection.getBoundingClientRect();
+        // We set CSS variables that are used by the #features::before pseudo-element
+        featuresSection.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+        featuresSection.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+      });
+    }
+  }
+
+  // =================================================================================
+  // END: BEYOND IMAGINATION JAVASCRIPT FUNCTIONS
+  // =================================================================================
+
+
+  /**
+   * Your original DOMContentLoaded listener, now with new function calls
+   */
+  document.addEventListener('DOMContentLoaded', function () {
+    /**
+     * Your existing Neural Nebula Particle Background Script
+     */
+    const canvas = document.getElementById('particle-canvas');
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+      const particleCount = 70;
+      const setCanvasSize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+      setCanvasSize();
+
+      class Particle {
+        constructor() {
+          this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height;
+          this.vx = (Math.random() - 0.5) * 0.3; this.vy = (Math.random() - 0.5) * 0.3;
+          this.radius = Math.random() * 1.5 + 0.5;
+        }
+        draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2); ctx.fillStyle = 'rgba(138, 79, 255, 0.7)'; ctx.fill(); }
+        update() {
+          this.x += this.vx; this.y += this.vy;
+          if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+          if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        }
+      }
+      const init = () => { particles = []; for (let i = 0; i < particleCount; i++) particles.push(new Particle()); };
+      const connectParticles = () => {
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const distance = Math.sqrt(Math.pow(particles[i].x - particles[j].x, 2) + Math.pow(particles[i].y - particles[j].y, 2));
+            if (distance < 120) {
+              ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = `rgba(138, 79, 255, ${1 - distance / 120})`; ctx.lineWidth = 0.5; ctx.stroke();
+            }
+          }
+        }
+      };
+      const animate = () => { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); connectParticles(); requestAnimationFrame(animate); };
+      window.addEventListener('resize', () => { setCanvasSize(); init(); });
+      init(); animate();
+    }
+
+    // Initialize the new effects once the DOM is ready
+    init3DTiltEffect();
+    initFeaturesSpotlight();
+  });
+
+  /**
+   * Your original Mobile Navigation Logic
+   */
   const mobileNavContainer = select('.navbar-mobile');
   if (mobileNavContainer) {
     const navContent = select('#navbar ul').outerHTML;
-    const actionsContent = select('.header-right-actions').innerHTML;
+    const actionsContent = select('.header-right-actions') ? select('.header-right-actions').innerHTML : '';
 
     mobileNavContainer.innerHTML = `
       <div class="navbar-mobile-content">
@@ -58,78 +168,97 @@
     closeButton.classList.add('bi-x');
     mobileNavContainer.appendChild(closeButton);
   }
-
   on('click', '.mobile-nav-toggle', function (e) {
     select('body').classList.toggle('mobile-nav-active');
-
     const originalToggle = select('#navbar .mobile-nav-toggle');
-    if (select('body').classList.contains('mobile-nav-active')) {
-      originalToggle.classList.remove('bi-list');
-      originalToggle.classList.add('bi-x');
-    } else {
-      originalToggle.classList.remove('bi-x');
-      originalToggle.classList.add('bi-list');
-    }
+    originalToggle.classList.toggle('bi-list');
+    originalToggle.classList.toggle('bi-x');
   }, true);
-
-  // 3. ACTIVATE DROPDOWNS: Handle clicks inside mobile nav
   on('click', '.navbar-mobile .dropdown > a', function (e) {
     if (this.nextElementSibling) e.preventDefault();
     this.nextElementSibling.classList.toggle('dropdown-active');
     this.classList.toggle('active');
   }, true);
-
-  // 4. SCROLL & CLOSE: Close mobile nav when a link is clicked
   on('click', '.navbar-mobile a.scrollto', function (e) {
     if (select(this.hash)) {
       e.preventDefault();
-      // Directly call the toggle click handler to ensure everything closes correctly
       select('.mobile-nav-toggle').click();
       scrollto(this.hash);
     }
   }, true);
 
-  // All functions to run after page has fully loaded
+  /**
+   * All functions to run after page has fully loaded
+   */
   window.addEventListener('load', () => {
+    // Your preloader logic
     let preloader = select('#preloader');
-
     if (preloader) {
       const animationDisplayTime = 2000;
-
       setTimeout(() => {
         preloader.classList.add('preloader-hidden');
         setTimeout(() => {
           preloader.remove();
         }, 600);
-
       }, animationDisplayTime);
     }
 
-
+    // Your scroll-to-hash logic
     if (window.location.hash && select(window.location.hash)) {
       scrollto(window.location.hash);
     }
 
+    // GLightbox Initialization
     GLightbox({ selector: '.portfolio-lightbox' });
 
+    // AOS Initialization
     AOS.init({ duration: 1000, easing: 'ease-in-out', once: true, mirror: false });
 
+    // --- REPLACED SWIPER INITIALIZATIONS ---
+
+    /**
+     * BEYOND IMAGINATION: Portfolio Swiper with 3D Coverflow Effect
+     */
     new Swiper('.portfolio-slider', {
-      speed: 600, loop: true, slidesPerView: 1, spaceBetween: 30,
+      effect: 'coverflow',
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: 'auto',
+      loop: true,
       autoplay: { delay: 5000, disableOnInteraction: false },
-      pagination: { el: '.portfolio .swiper-pagination', clickable: true },
-      navigation: { nextEl: '.portfolio .swiper-button-next', prevEl: '.portfolio .swiper-button-prev' },
+      coverflowEffect: {
+        rotate: 50,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows: true,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
     });
+
+    /**
+     * BEYOND IMAGINATION: Team Swiper (Enhanced version)
+     */
     new Swiper('.team-slider', {
-      speed: 600, loop: true, autoplay: { delay: 5000, disableOnInteraction: false },
-      slidesPerView: 'auto', pagination: { el: '#team .swiper-pagination', clickable: true }, spaceBetween: 30,
-      breakpoints: { 320: { slidesPerView: 1 }, 768: { slidesPerView: 2 }, 1200: { slidesPerView: 4 } }
+      speed: 600,
+      loop: true,
+      autoplay: { delay: 5000, disableOnInteraction: false },
+      slidesPerView: 'auto',
+      pagination: { el: '#team .swiper-pagination', clickable: true },
+      spaceBetween: 30,
+      breakpoints: {
+        320: { slidesPerView: 1, spaceBetween: 20 },
+        768: { slidesPerView: 2, spaceBetween: 30 },
+        1200: { slidesPerView: 4, spaceBetween: 40 }
+      }
     });
   });
 
-
-    /**
-   * Contact Page Animated Swap
+  /**
+   * Your existing Contact Page Animated Swap logic
    */
   const show_info_btn = select("#show-info-btn");
   const show_form_btn = select("#show-form-btn");
@@ -137,20 +266,19 @@
 
   if (container && show_info_btn && show_form_btn) {
     show_info_btn.addEventListener('click', () => {
-        container.classList.add("show-info-mode");
+      container.classList.add("show-info-mode");
     });
-
     show_form_btn.addEventListener('click', () => {
-        container.classList.remove("show-info-mode");
+      container.classList.remove("show-info-mode");
     });
   }
 
   /**
-   * Custom AJAX handler for the Animated Contact Form (Corrected Selectors)
+   * Your existing AJAX handler for the Animated Contact Form
    */
   const animatedContactForm = select('#contact .animated-contact-form');
   if (animatedContactForm) {
-    animatedContactForm.addEventListener('submit', function(e) {
+    animatedContactForm.addEventListener('submit', function (e) {
       e.preventDefault();
 
       let form = this;
@@ -165,11 +293,11 @@
       fetch(form.action, {
         method: form.method,
         body: new FormData(form),
-        headers: {'X-Requested-With': 'XMLHttpRequest'}
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
       })
       .then(response => {
         if (response.ok) {
-          return response.text(); 
+          return response.text();
         } else {
           return response.text().then(text => {
             throw new Error(text || 'Server responded with an error.');
@@ -179,7 +307,7 @@
       .then(data => {
         loading.style.display = 'none';
         sentMessage.style.display = 'block';
-        form.reset(); 
+        form.reset();
       })
       .catch(error => {
         loading.style.display = 'none';
@@ -190,12 +318,9 @@
         setTimeout(() => {
           sentMessage.style.display = 'none';
           errorMessage.style.display = 'none';
-        }, 3000); 
+        }, 3000);
       });
     });
   }
-})();
 
-if (document.getElementById('particles-js')) {
-  particlesJS("particles-js", { "particles": { "number": { "value": 80, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#8A4FFF" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5 }, "size": { "value": 3, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#8A4FFF", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 4, "direction": "none", "out_mode": "out" } }, "interactivity": { "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" } }, "modes": { "repulse": { "distance": 100 }, "push": { "particles_nb": 4 } } }, "retina_detect": true });
-}
+})();

@@ -1,6 +1,6 @@
 /**
 * Website Stylesheet (Full & Merged)
-* Version: 5.0
+* Version: 6.0 (BEYOND IMAGINATION UPDATE)
 */
 
 /*--------------------------------------------------------------
@@ -9,16 +9,17 @@
 1. General & Variables
 2. Preloader & Animations
 3. Back to top button
-4. Header & Navigation (Corrected & Merged)
+4. Header & Navigation
 5. Hero Section
 6. Sections General
-7. Services Section
-8. Features Section
-9. Portfolio Section
-10. Team Section
-11. Contact Section
-12. Footer
-13. RTL Specific Adjustments
+7. About Us Section (NEURAL NEBULA)
+8. Services Section (BEYOND IMAGINATION)
+9. Features Section (BEYOND IMAGINATION)
+10. Portfolio Section (BEYOND IMAGINATION)
+11. Team Section (BEYOND IMAGINATION)
+12. Contact Section
+13. Footer
+14. RTL Specific Adjustments
 --------------------------------------------------------------*/
 
 /*--------------------------------------------------------------
@@ -897,43 +898,362 @@ html[dir="rtl"] .floating-logo-animation {
 }
 
 /*--------------------------------------------------------------
-# 7. Services Section
+# 7. About Us Section (Neural Nebula Version)
 --------------------------------------------------------------*/
-.services .icon-box {
-  text-align: center;
-  padding: 50px 20px;
-  transition: all ease-in-out 0.4s;
+.about .about-us-container {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  min-height: 650px;
+  margin: 40px auto 0;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(138, 79, 255, 0.2);
   background: var(--primary-dark);
-  border-radius: 12px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(138, 79, 255, 0.1);
-  height: 100%;
+  transition: min-height 0.6s ease-in-out;
 }
 
-.services .icon-box:hover {
-  transform: translateY(-10px);
+#particle-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.neural-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 120px;
+  height: 120px;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  animation: core-appear 1s forwards 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.neural-core .core-glow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-purple) 0%, rgba(138, 79, 255, 0) 70%);
+  animation: core-pulse 3s infinite ease-in-out;
+}
+
+@keyframes core-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+.neural-core i {
+  font-size: 60px;
+  color: #fff;
+  z-index: 11;
+}
+
+.about .container[data-aos="fade-up"].aos-animate .neural-core {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+.neural-node {
+  position: absolute;
+  z-index: 5;
+  width: 250px;
+  transform: scale(0);
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 0.5s ease, transform 0.5s ease, top 0.6s ease, left 0.6s ease, width 0.6s ease;
+}
+
+/* Positioning the nodes */
+.neural-node.pos-1 { top: 60px; left: 80px; }
+.neural-node.pos-2 { top: 60px; right: 80px; }
+.neural-node.pos-3 { bottom: 60px; left: 80px; }
+.neural-node.pos-4 { bottom: 60px; right: 80px; }
+
+/* Animate nodes appearing */
+.about .container[data-aos="fade-up"].aos-animate .neural-node {
+  transform: scale(1);
+  opacity: 1;
+}
+.about .container[data-aos="fade-up"].aos-animate .pos-1 { transition-delay: 1.0s; }
+.about .container[data-aos="fade-up"].aos-animate .pos-2 { transition-delay: 1.2s; }
+.about .container[data-aos="fade-up"].aos-animate .pos-3 { transition-delay: 1.4s; }
+.about .container[data-aos="fade-up"].aos-animate .pos-4 { transition-delay: 1.6s; }
+
+.node-content {
+  padding: 20px;
+  background: rgba(var(--primary-dark-rgb), 0.5);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  border: 1px solid rgba(138, 79, 255, 0.3);
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.neural-node:not(.active):hover .node-content {
+  transform: translateY(-5px);
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 25px rgba(138, 79, 255, 0.3);
+}
+
+.node-content i {
+  font-size: 38px;
+  color: var(--accent-purple);
+  margin-bottom: 10px;
+}
+.node-content h4 { font-size: 18px; margin-bottom: 8px; }
+.node-content p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+/* --- START: Interactive State Styles --- */
+.node-content .close-node-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, color 0.3s ease, visibility 0.3s;
+  z-index: 15;
+}
+html[dir="rtl"] .node-content .close-node-btn {
+  right: auto;
+  left: 10px;
+}
+
+.node-content .close-node-btn:hover {
+  color: var(--text-light);
+}
+
+.neural-node.active .close-node-btn {
+  opacity: 1;
+  visibility: visible;
+}
+
+.node-details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.6s ease-in-out, margin-top 0.6s ease-in-out;
+  text-align: left;
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.7;
+}
+html[dir="rtl"] .node-details {
+  text-align: right;
+}
+
+.neural-node.active .node-details {
+  max-height: 300px;
+  margin-top: 15px;
+}
+
+.neural-node.active {
+  cursor: default;
+}
+
+.neural-node.active .node-content {
+  cursor: default;
+}
+
+/* Main container state when a node is active */
+.about-us-container.node-active-mode .neural-core,
+.about-us-container.node-active-mode .neural-node:not(.active) {
+  opacity: 0.1 !important; /* Use important to override AOS styles */
+  pointer-events: none;
+  transform: scale(0.9);
+}
+.about-us-container.node-active-mode .synapse-path {
+  opacity: 0.1 !important;
+}
+
+.neural-node.active {
+  top: 30px !important;
+  left: 50% !important;
+  transform: translateX(-50%) scale(1) !important;
+  width: 90%;
+  max-width: 700px;
+  z-index: 20;
+}
+
+.neural-node.active .synapse-path {
+  display: none;
+}
+/* --- END: Interactive State Styles --- */
+
+
+/* Synapse paths and pulses */
+.synapse-path {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  background: linear-gradient(to right, var(--accent-purple), rgba(138, 79, 255, 0));
+  height: 2px;
+  transform-origin: left;
+  opacity: 0.3;
+}
+
+.neural-node:hover .synapse-path { opacity: 0.8; }
+
+/* Path transformations for each node */
+.pos-1 .synapse-path { width: 230px; transform: rotate(135deg) translate(-10px, -10px); }
+.pos-2 .synapse-path { width: 230px; transform: rotate(225deg) translate(-10px, 10px); }
+.pos-3 .synapse-path { width: 230px; transform: rotate(45deg) translate(10px, -10px); }
+.pos-4 .synapse-path { width: 230px; transform: rotate(-45deg) translate(10px, 10px); }
+
+.synapse-pulse {
+  position: absolute;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 15px 5px #fff;
+  transform: translateY(-4px);
+  opacity: 0;
+}
+
+/* Trigger pulse animation */
+.about .container[data-aos="fade-up"].aos-animate .synapse-pulse {
+  animation: travel-pulse 3s infinite ease-out;
+}
+.about .container[data-aos="fade-up"].aos-animate .pos-1 .synapse-pulse { animation-delay: 1.0s; }
+.about .container[data-aos="fade-up"].aos-animate .pos-2 .synapse-pulse { animation-delay: 1.2s; }
+.about .container[data-aos="fade-up"].aos-animate .pos-3 .synapse-pulse { animation-delay: 1.4s; }
+.about .container[data-aos="fade-up"].aos-animate .pos-4 .synapse-pulse { animation-delay: 1.6s; }
+.neural-node:hover .synapse-pulse { animation-duration: 1.5s; }
+
+@keyframes travel-pulse {
+  0% { transform: translateX(0) translateY(-4px) scale(0.8); opacity: 1; }
+  90% { transform: translateX(220px) translateY(-4px) scale(0.5); opacity: 1; }
+  100% { transform: translateX(230px) translateY(-4px) scale(0); opacity: 0; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  .about .about-us-container {
+    height: auto;
+    min-height: 0;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .neural-core {
+    position: relative;
+    transform: translate(0, 0) scale(1) !important;
+    opacity: 1 !important;
+    margin-bottom: 40px;
+    animation: none;
+  }
+  .neural-node {
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+    margin-bottom: 25px;
+    top: auto !important; left: auto !important; right: auto !important; bottom: auto !important;
+    transform: scale(1) !important;
+    opacity: 1 !important;
+    cursor: pointer;
+  }
+  .synapse-path { display: none; }
+  
+  /* On mobile, disable the complex "active mode" visuals */
+  .about-us-container.node-active-mode .neural-core,
+  .about-us-container.node-active-mode .neural-node:not(.active) {
+    opacity: 1 !important;
+    pointer-events: auto;
+    transform: scale(1);
+  }
+  /* Ensure other nodes collapse when one becomes active */
+  .about-us-container.node-active-mode .neural-node:not(.active) .node-details {
+     max-height: 0;
+     margin-top: 0;
+   }
+}
+
+
+/*--------------------------------------------------------------
+# 8. Services Section (BEYOND IMAGINATION)
+--------------------------------------------------------------*/
+.services .icon-box {
+  background-color: var(--secondary-dark);
+  padding: 40px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  transform-style: preserve-3d; /* Essential for 3D effect */
+}
+
+.services .icon-box > * {
+  transform: translateZ(20px); /* Bring content forward */
+}
+
+.services .icon-box::before {
+  content: "";
+  position: absolute;
+  left: var(--mouse-x);
+  top: var(--mouse-y);
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, var(--accent-purple) 0%, rgba(138, 79, 255, 0) 70%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.services .icon-box:hover::before {
+  opacity: 0.5;
 }
 
 .services .icon-box .icon {
-  margin: 0 auto 20px auto;
-  width: 80px;
-  height: 80px;
+  margin: 0 auto 25px auto;
+  width: 70px;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: var(--secondary-dark);
+  background: var(--primary-dark);
   border: 2px solid var(--accent-purple);
+  transition: all 0.3s ease;
+  z-index: 1;
+  position: relative;
+  transform: translateZ(50px); /* Icon pops out more */
+}
+
+.services .icon-box:hover .icon {
+  box-shadow: 0 0 25px var(--accent-purple);
 }
 
 .services .icon-box .icon img {
-  max-height: 40px;
+  max-height: 35px;
 }
 
 .services .icon-box h4 a {
   color: var(--text-light);
   font-weight: 600;
   font-size: 22px;
+  transition: color 0.3s ease;
 }
 
 .services .icon-box:hover h4 a {
@@ -944,25 +1264,59 @@ html[dir="rtl"] .floating-logo-animation {
   line-height: 1.7;
   font-size: 15px;
   color: var(--text-muted);
+  transition: color 0.3s ease;
 }
 
-
 /*--------------------------------------------------------------
-# 8. Features Section
+# 9. Features Section (BEYOND IMAGINATION)
 --------------------------------------------------------------*/
+#features {
+  position: relative;
+  background-color: var(--primary-dark);
+  overflow: visible; /* Important for the spotlight */
+}
+
+#features::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle 350px at var(--mouse-x) var(--mouse-y),
+    rgba(138, 79, 255, 0.15),
+    transparent 80%
+  );
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none; /* Allows clicking through the overlay */
+}
+
+#features:hover::before {
+  opacity: 1;
+}
+
+.features .features-grid {
+  position: relative;
+  z-index: 2;
+}
+
 .features .feature-box {
   padding: 30px;
-  background: var(--primary-dark);
+  background: rgba(33, 24, 60, 0.5); /* Semi-transparent */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   border-radius: 12px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(138, 79, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease-in-out;
   height: 100%;
 }
 
 .features .feature-box:hover {
-  transform: translateY(-10px);
-  border-color: var(--accent-purple);
+  transform: translateY(-8px);
+  background: rgba(33, 24, 60, 0.8);
+  border-color: rgba(138, 79, 255, 0.5);
 }
 
 .features .feature-box i {
@@ -970,6 +1324,7 @@ html[dir="rtl"] .floating-logo-animation {
   color: var(--accent-purple);
   margin-bottom: 20px;
   display: block;
+  text-shadow: 0 0 15px rgba(138, 79, 255, 0.5);
 }
 
 .features .feature-box h3 {
@@ -985,345 +1340,196 @@ html[dir="rtl"] .floating-logo-animation {
 }
 
 /*--------------------------------------------------------------
-# 9. Portfolio Section
+# START: BEYOND IMAGINATION Portfolio Section (3D Coverflow)
 --------------------------------------------------------------*/
-.portfolio {
-  min-height: 90vh;
-  display: flex;
-  align-items: center;
-  padding: 40px 0;
+#portfolio {
+  padding: 80px 0;
+  overflow: hidden;
   position: relative;
+  background: radial-gradient(circle at 50% 100%, var(--secondary-dark), var(--primary-dark) 80%);
 }
 
-.portfolio .container {
-  position: relative;
+.portfolio-slider {
   width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
-.portfolio .swiper-slide {
-  text-align: center;
-}
-
-.portfolio .portfolio-slide-content {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.portfolio .portfolio-item-wrap {
+.portfolio-slider .swiper-slide {
+  width: 65%; /* عرض الشريحة النشطة */
+  max-width: 700px;
+  aspect-ratio: 16/9;
   border-radius: 15px;
   overflow: hidden;
-  display: block;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
-  aspect-ratio: 16 / 9;
-  margin-bottom: 30px;
+  transition: transform 0.5s ease, opacity 0.5s ease, filter 0.5s ease;
+  -webkit-box-reflect: below 1px linear-gradient(transparent, transparent, #0004); /* تأثير الانعكاس */
 }
 
-.portfolio .portfolio-item-wrap img {
+/* التأثيرات على الشرائح غير النشطة */
+.portfolio-slider .swiper-slide:not(.swiper-slide-active) {
+  filter: blur(2px) grayscale(50%);
+  opacity: 0.7;
+}
+
+.portfolio-slider .swiper-slide-active {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* تأثير الإضاءة حول الشريحة النشطة */
+.portfolio-slider .swiper-slide-active::after {
+  content: '';
+  position: absolute;
+  top: -5%; left: -5%;
+  width: 110%; height: 110%;
+  z-index: -1;
+  background: radial-gradient(circle, rgba(138, 79, 255, 0.5) 0%, transparent 70%);
+  animation: pulse-glow 4s infinite ease-in-out;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+
+.portfolio-slider .swiper-slide img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.portfolio .portfolio-info h3 {
-  font-size: 28px;
-  font-weight: 700;
-  margin: 0 0 15px 0;
+.portfolio .portfolio-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(18, 12, 35, 0.9) 20%, transparent 100%);
+  padding: 50px 30px 30px 30px;
+  border-radius: 0 0 20px 20px;
+  text-align: left;
+  opacity: 0; /* إخفاء النص بشكل افتراضي */
+  transform: translateY(20px);
+  transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s;
 }
 
-.portfolio .portfolio-tags {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
+html[dir="rtl"] .portfolio .portfolio-info {
+  text-align: right;
+}
+
+/* إظهار النص فقط في الشريحة النشطة */
+.portfolio .swiper-slide-active .portfolio-info {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.portfolio .portfolio-info h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  color: var(--text-light);
 }
 
 .portfolio .portfolio-tags span {
-  font-size: 13px;
-  font-weight: 500;
-  padding: 6px 15px;
-  border: 1px solid var(--accent-purple);
-  color: var(--accent-purple);
+  font-size: 12px;
+  padding: 5px 12px;
+  border: 1px solid rgba(138, 79, 255, 0.5);
+  color: var(--text-light);
   border-radius: 20px;
-  background-color: rgba(138, 79, 255, 0.1);
+  background-color: rgba(138, 79, 255, 0.2);
+  margin-right: 5px;
+  margin-bottom: 5px;
+  display: inline-block;
 }
 
+/* إعادة تصميم أزرار التنقل */
 .portfolio .swiper-button-prev,
 .portfolio .swiper-button-next {
-  color: #fff;
-  opacity: 0.5;
-  transition: opacity 0.3s;
+  width: 50px;
+  height: 50px;
+  background-color: rgba(var(--primary-dark-rgb), 0.5);
+  backdrop-filter: blur(5px);
+  border-radius: 50%;
+  color: var(--accent-purple);
+  transition: all 0.3s ease;
 }
 
 .portfolio .swiper-button-prev:hover,
 .portfolio .swiper-button-next:hover {
-  opacity: 1;
-}
-
-.portfolio .swiper-button-prev {
-  left: 0;
-}
-
-.portfolio .swiper-button-next {
-  right: 0;
-}
-
-.portfolio .swiper-pagination {
-  position: static;
-  margin-top: 30px;
-}
-
-.portfolio .swiper-pagination .swiper-pagination-bullet-active {
   background-color: var(--accent-purple);
+  color: var(--text-light);
 }
 
-@media (max-width: 768px) {
-  .portfolio .swiper-button-prev {
-    left: -10px;
-  }
-
-  .portfolio .swiper-button-next {
-    right: -10px;
-  }
-
-  .portfolio .portfolio-info h3 {
-    font-size: 22px;
-  }
+.portfolio .swiper-button-prev::after,
+.portfolio .swiper-button-next::after {
+  font-size: 20px;
+  font-weight: bold;
 }
-
-
 /*--------------------------------------------------------------
-# 10. Team Section
+# END: BEYOND IMAGINATION Portfolio Section
 --------------------------------------------------------------*/
-.team .member-style-2 {
-  padding: 25px;
-  background: var(--primary-dark);
-  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  transition: all 0.3s ease-in-out;
-  width: 100%;
-}
-
-.team .member-style-2:hover {
-  transform: translateY(-10px);
-}
-
-.team .member-style-2 img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 4px solid var(--secondary-dark);
-  margin: 0 auto 20px auto;
-}
-
-.team .member-style-2 .member-info h4 {
-  font-weight: 700;
-  font-size: 18px;
-  margin-bottom: 5px;
-}
-
-.team .member-style-2 .member-info span {
-  font-style: italic;
-  font-size: 13px;
-  color: var(--text-muted);
-  margin-bottom: 15px;
-}
-
-.team .member-style-2 .social-links a {
-  color: var(--text-muted);
-  font-size: 16px;
-  margin: 0 7px;
-  transition: 0.3s;
-}
-
-.team .member-style-2 .social-links a:hover {
-  color: var(--accent-purple);
-}
-
-#team .swiper {
-  padding-bottom: 40px;
-}
-
-#team .swiper-pagination .swiper-pagination-bullet-active {
-  background-color: var(--accent-purple);
-}
-
+/*--------------------------------------------------------------
+# 11. Team Section (Celestial Profiles)
+--------------------------------------------------------------*/
 #team .swiper-slide {
   height: auto;
+  padding: 20px 0;
 }
-
-/*--------------------------------------------------------------
-# 11. Contact Section
---------------------------------------------------------------*/
-.contact .info-box {
+.celestial-profile {
   text-align: center;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-  padding: 30px 0 40px 0;
-  background: var(--secondary-dark);
-  border-radius: 12px;
-  height: 100%;
+  position: relative;
+  padding: 30px 20px;
+  background: rgba(33, 24, 60, 0.3);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(158, 79, 255, 0.2);
+  border-radius: 20px;
+  transition: all 0.4s ease;
 }
-
-.contact .info-box i {
-  font-size: 38px;
-  color: var(--accent-purple);
+.celestial-profile:hover {
+  border-color: var(--accent-cyan);
+  background: rgba(33, 24, 60, 0.6);
+}
+.profile-image-wrapper {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  margin: 0 auto 25px auto;
+}
+.orbital-ring {
+  position: absolute;
+  inset: -5px;
+  border: 2px solid transparent;
+  border-top-color: var(--accent-cyan);
+  border-right-color: var(--accent-cyan);
   border-radius: 50%;
-  padding: 8px;
-  background: rgba(138, 79, 255, 0.1);
+  transition: transform 0.5s ease;
 }
-
-.contact .info-box h3 {
-  font-size: 22px;
-  font-weight: 700;
-  margin: 15px 0 10px 0;
+.celestial-profile:hover .orbital-ring {
+  animation: spin 2s linear infinite;
 }
-
-.contact .php-email-form {
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-  padding: 40px;
-  background: var(--secondary-dark);
-  border-radius: 12px;
-  height: 100%;
-}
-
-.contact .php-email-form input,
-.contact .php-email-form textarea {
-  border-radius: 8px;
-  font-size: 15px;
-  background: var(--primary-dark);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--text-light);
-}
-
-.contact .php-email-form input::placeholder,
-.contact .php-email-form textarea::placeholder {
-  color: var(--text-muted);
-}
-
-.contact .php-email-form input:focus,
-.contact .php-email-form textarea:focus {
-  border-color: var(--accent-purple);
-}
-
-.contact .php-email-form button[type=submit] {
-  background: var(--accent-purple);
-  border: 0;
-  padding: 12px 36px;
-  color: #fff;
-  transition: 0.4s;
-  border-radius: 50px;
-  font-weight: 600;
-}
-
-.contact .php-email-form button[type=submit]:hover {
-  background: var(--accent-purple-darker);
-}
-
-/*--------------------------------------------------------------
-# 12. Footer
---------------------------------------------------------------*/
-#footer {
-  color: var(--text-muted);
-  font-size: 14px;
-  background: var(--secondary-dark);
-}
-
-#footer .footer-top {
-  padding: 60px 0 30px 0;
-}
-
-#footer .footer-top .footer-contact h3 {
-  font-size: 28px;
-  margin: 0 0 30px 0;
-  line-height: 1;
-  font-weight: 500;
-}
-
-#footer .footer-top h4 {
-  font-size: 18px;
-  font-weight: bold;
-  padding-bottom: 15px;
-}
-
-#footer .footer-top .footer-links ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-#footer .footer-top .footer-links ul i {
-  padding-right: 5px;
-  color: var(--accent-purple);
-}
-
-#footer .footer-top .footer-links ul li {
-  padding: 10px 0;
-}
-
-#footer .footer-top .footer-links ul a:hover {
-  color: var(--accent-purple);
-}
-
-#footer .copyright-wrap {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 20px;
-  margin-top: 20px;
-}
-
-#footer .social-links a {
-  font-size: 20px;
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--text-light);
-  padding: 10px 0;
-  margin-right: 8px;
+.profile-image-wrapper img {
+  width: 100%; height: 100%;
   border-radius: 50%;
-  text-align: center;
-  width: 40px;
-  height: 40px;
-  transition: 0.3s;
+  object-fit: cover;
+  border: 4px solid var(--primary-dark);
 }
-
-#footer .social-links a:hover {
-  background: var(--accent-purple);
-  transform: translateY(-3px);
+.member-info h4 { font-weight: 700; font-size: 18px; margin-bottom: 5px; }
+.member-info span { font-size: 13px; color: var(--accent-purple); display: block; }
+.social-links {
+  margin-top: 15px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
+.celestial-profile:hover .social-links {
+  opacity: 1;
+  transform: translateY(0);
+}
+.social-links a { color: var(--text-muted); font-size: 18px; margin: 0 10px; }
 
 
 /*--------------------------------------------------------------
-# 13. RTL Specific Adjustments
---------------------------------------------------------------*/
-html[dir="rtl"] #header {
-  flex-direction: row-reverse;
-}
-
-html[dir="rtl"] .navbar>ul>li {
-  padding-left: 0;
-  padding-right: 24px;
-}
-
-html[dir="rtl"] .navbar a i {
-  margin-left: 0;
-  margin-right: 5px;
-}
-
-html[dir="rtl"] .navbar .dropdown ul {
-  left: auto;
-  right: 14px;
-}
-
-html[dir="rtl"] .language-switcher .dropdown-toggle i {
-  margin-right: 0;
-  margin-left: 5px;
-}
-
-html[dir="rtl"] .navbar-mobile .mobile-nav-toggle {
-  right: auto;
-  left: 25px;
-}
-
-/*--------------------------------------------------------------
-# 11. Contact Section (Integrated Animated Swap Style)
+# 12. Contact Section (Integrated Animated Swap Style)
 --------------------------------------------------------------*/
 .contact-page-container {
   position: relative;
@@ -1781,7 +1987,7 @@ html[dir="rtl"] .navbar-mobile .mobile-nav-toggle {
 }
 
 /*--------------------------------------------------------------
-# RTL Adjustments for Animated Contact Section
+# 13. RTL Adjustments
 --------------------------------------------------------------*/
 
 html[dir="rtl"] {

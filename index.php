@@ -48,7 +48,7 @@ $products_query = $dbcon->query("
 
 <head>
   <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale-1.0" name="viewport">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title><?= htmlspecialchars($settings['company_name'] ?? 'Company Name') ?> - Home</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
@@ -91,7 +91,7 @@ $products_query = $dbcon->query("
       </svg>
     </div>
   </div>
-
+ <canvas id="particle-canvas"></canvas>
   <?php include 'partials/header.php'; ?>
 
   <!-- ======= Hero Section ======= -->
@@ -110,7 +110,7 @@ $products_query = $dbcon->query("
           </a>
           <!-- <h2><?= htmlspecialchars($current_lang == 'en' ? ($settings['hero_subtitle'] ?? '') : ($settings['hero_subtitle_ar'] ?? '')) ?></h2> -->
 
-          <div><a href="#services" class="btn-get-started scrollto"><?= $lang['get_started_btn'] ?? 'Get Started' ?></a></div>
+          <div><a href="#about" class="btn-get-started scrollto"><?= $lang['get_started_btn'] ?? 'Get Started' ?></a></div>
         </div>
       </div>
     </div>
@@ -123,7 +123,93 @@ $products_query = $dbcon->query("
   </section><!-- End Hero -->
 
   <main id="main">
+<!-- ======= About Us Section (NEURAL NEBULA VERSION) ======= -->
+<section id="about" class="about section-bg">
+  <div class="container" data-aos="fade-up">
 
+    <div class="section-title">
+      <h2><?= $lang['about_us_title'] ?? 'About Us' ?></h2>
+      <p><?= $lang['about_us_description'] ?? 'Explore the core of our identity' ?></p>
+    </div>
+
+    <div class="about-us-container">
+      <!-- Animated Particle Background -->
+      <canvas id="particle-canvas"></canvas>
+
+      <!-- The Neural Core -->
+      <div class="neural-core">
+        <div class="core-glow"></div>
+        <i class='bx bxs-brain'></i>
+      </div>
+
+      <!-- Connecting Synapses and Nodes -->
+      <!-- Node 1: About -->
+      <div class="neural-node pos-1">
+        <div class="synapse-path">
+          <div class="synapse-pulse"></div>
+        </div>
+        <div class="node-content">
+          <button class="close-node-btn"><i class='bx bx-x'></i></button>
+          <i class="bx bx-buildings"></i>
+          <h4><?= $lang['about_company_title'] ?? 'About' ?></h4>
+          <p><?= $lang['about_company_text'] ?? 'A brief description of the company.' ?></p>
+          <div class="node-details">
+            <p><?= $lang['about_company_details'] ?? 'Here is the full, detailed information about our company. We explore our history, our core values, and the foundational principles that guide every decision we make. Our journey began with a simple idea, and through dedication and a commitment to excellence, we have grown into a leader in our industry.' ?></p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Node 2: Goals -->
+      <div class="neural-node pos-2">
+        <div class="synapse-path">
+          <div class="synapse-pulse"></div>
+        </div>
+        <div class="node-content">
+          <button class="close-node-btn"><i class='bx bx-x'></i></button>
+          <i class="bx bx-bullseye-arrow"></i>
+          <h4><?= $lang['about_goals_title'] ?? 'Goals' ?></h4>
+          <p><?= $lang['about_goals_text'] ?? 'Our key objectives and targets.' ?></p>
+          <div class="node-details">
+            <p><?= $lang['about_goals_details'] ?? 'Our goals are centered around innovation, customer satisfaction, and sustainable growth. We aim to continuously push the boundaries of what is possible, delivering exceptional value to our clients while fostering a positive impact on the community and the environment. We have set clear, measurable objectives for the coming years.' ?></p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Node 3: Vision -->
+      <div class="neural-node pos-3">
+        <div class="synapse-path">
+          <div class="synapse-pulse"></div>
+        </div>
+        <div class="node-content">
+          <button class="close-node-btn"><i class='bx bx-x'></i></button>
+          <i class="bx bx-show"></i>
+          <h4><?= $lang['about_vision_title'] ?? 'Vision' ?></h4>
+          <p><?= $lang['about_vision_text'] ?? 'Our long-term aspirations.' ?></p>
+          <div class="node-details">
+            <p><?= $lang['about_vision_details'] ?? 'Our vision is to be the globally recognized leader in our field, renowned for our innovative solutions and our transformative impact on technology and society. We aspire to create a future where our work empowers individuals and organizations to achieve their full potential, making the world a more connected and efficient place.' ?></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Node 4: Mission -->
+      <div class="neural-node pos-4">
+        <div class="synapse-path">
+          <div class="synapse-pulse"></div>
+        </div>
+        <div class="node-content">
+          <button class="close-node-btn"><i class='bx bx-x'></i></button>
+          <i class="bx bx-paper-plane"></i>
+          <h4><?= $lang['about_mission_title'] ?? 'Mission' ?></h4>
+          <p><?= $lang['about_mission_text'] ?? 'Our purpose and what we stand for.' ?></p>
+          <div class="node-details">
+            <p><?= $lang['about_mission_details'] ?? 'Our mission is to deliver superior, cutting-edge products and services that solve complex challenges for our clients. We are committed to operating with integrity, fostering a culture of collaboration and continuous improvement, and building lasting relationships based on trust and mutual success. We strive to be a trusted partner in our clients\' journeys.' ?></p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section><!-- End About Us Section -->
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
@@ -222,33 +308,35 @@ $products_query = $dbcon->query("
       </div>
     </section><!-- End Portfolio Section -->
 
-    <!-- ======= Team Section ======= -->
+  <!-- ======= Team Section ======= -->
     <section id="team" class="team section-bg">
       <div class="container" data-aos="fade-up">
         <div class="section-title">
           <h2><?= $lang['team_title'] ?? 'Team' ?></h2>
-          <p><?= $lang['team_description'] ?? 'Our hardworking team' ?></p>
+          <p><?= $lang['team_description'] ?? 'Our Constellation of Experts' ?></p>
         </div>
         <div class="swiper team-slider">
           <div class="swiper-wrapper">
             <?php if ($team_members_query && $team_members_query->num_rows > 0): foreach ($team_members_query as $member): ?>
                 <div class="swiper-slide">
-                  <div class="member-style-2 text-center">
-                    <img src="assets/img/team/<?= htmlspecialchars($member['image_file']) ?>" class="img-fluid" alt="<?= htmlspecialchars($member['name']) ?>" loading="lazy">
+                  <div class="celestial-profile">
+                    <div class="profile-image-wrapper">
+                       <div class="orbital-ring"></div>
+                       <img src="assets/img/team/<?= htmlspecialchars($member['image_file']) ?>" class="img-fluid" alt="<?= htmlspecialchars($member['name']) ?>" loading="lazy">
+                    </div>
                     <div class="member-info">
                       <h4><?= htmlspecialchars($member['name']) ?></h4>
                       <span><?= htmlspecialchars($member['position']) ?></span>
                     </div>
                     <div class="social-links">
-                      <?php if (!empty($member['website_url'])): ?><a href="<?= htmlspecialchars($member['website_url']) ?>"><i class='bi bi-globe'></i> </a><?php endif; ?>
+                      <?php if (!empty($member['website_url'])): ?><a href="<?= htmlspecialchars($member['website_url']) ?>"><i class='bi bi-globe'></i></a><?php endif; ?>
                       <?php if (!empty($member['facebook_url'])): ?><a href="<?= htmlspecialchars($member['facebook_url']) ?>"><i class="bi bi-facebook"></i></a><?php endif; ?>
                       <?php if (!empty($member['instagram_url'])): ?><a href="<?= htmlspecialchars($member['instagram_url']) ?>"><i class="bi bi-instagram"></i></a><?php endif; ?>
                       <?php if (!empty($member['linkedin_url'])): ?><a href="<?= htmlspecialchars($member['linkedin_url']) ?>"><i class="bi bi-linkedin"></i></a><?php endif; ?>
                     </div>
                   </div>
                 </div>
-            <?php endforeach;
-            endif; ?>
+            <?php endforeach; endif; ?>
           </div>
           <div class="swiper-pagination"></div>
         </div>
@@ -392,6 +480,50 @@ $products_query = $dbcon->query("
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <script>
+    /**
+     * Interactive "About Us" Section Logic
+     */
+    document.addEventListener('DOMContentLoaded', () => {
+      const aboutContainer = document.querySelector('.about-us-container');
+      if (aboutContainer) {
+        const nodes = aboutContainer.querySelectorAll('.neural-node');
+
+        const resetNodes = (exceptNode = null) => {
+          aboutContainer.classList.remove('node-active-mode');
+          nodes.forEach(n => {
+            if (n !== exceptNode) {
+              n.classList.remove('active');
+            }
+          });
+        };
+
+        nodes.forEach(node => {
+          const closeBtn = node.querySelector('.close-node-btn');
+
+          node.addEventListener('click', (e) => {
+            // Do nothing if the close button was clicked or if the node is already active
+            if ((closeBtn && closeBtn.contains(e.target)) || node.classList.contains('active')) {
+              return;
+            }
+            // Reset other nodes and activate the clicked one
+            resetNodes(node); 
+            aboutContainer.classList.add('node-active-mode');
+            node.classList.add('active');
+          });
+
+          if (closeBtn) {
+            closeBtn.addEventListener('click', (e) => {
+              e.stopPropagation(); // Prevent the node's click event from firing
+              resetNodes(); // Resets all nodes, including the current one
+            });
+          }
+        });
+      }
+    });
+  </script>
+
   <script src="assets/js/main.js"></script>
 </body>
 
