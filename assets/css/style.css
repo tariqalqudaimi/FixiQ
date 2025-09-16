@@ -1127,8 +1127,6 @@ html[dir="rtl"] .node-details {
 }
 
 .neural-node.active {
-  left: 50% !important;
-  transform: translateX(-50%) scale(1) !important;
   width: 90%;
   max-width: 700px;
   z-index: 20;
@@ -1283,6 +1281,10 @@ html[dir="rtl"] .node-details {
     left: auto !important;
     transform: none !important;
   }
+
+  html[dir="rtl"] .neural-node.active {
+  right: 45% ;
+}
 
   /* Ensure other nodes collapse when one becomes active */
   .about-us-container.node-active-mode .neural-node:not(.active) .node-details {
@@ -2153,7 +2155,5 @@ html[dir="rtl"] {
 --------------------------------------------------------------*/
 
 html[dir="rtl"] .neural-node.active {
-  right: 50% !important;
-  left: auto !important;
-  transform: translateX(50%) scale(1) !important;
+  transform: translateX(50%) scale(1);
 }
