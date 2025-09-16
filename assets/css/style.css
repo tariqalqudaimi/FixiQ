@@ -1449,149 +1449,61 @@ html[dir="rtl"] .node-details {
 }
 
 /*--------------------------------------------------------------
-# START: BEYOND IMAGINATION Portfolio Section (3D Coverflow)
+# 10. Portfolio Section (THE KINETIC WALL v19.2)
 --------------------------------------------------------------*/
-#portfolio {
-  padding: 80px 0;
-  overflow: hidden;
-  position: relative;
-  background: radial-gradient(circle at 50% 100%, var(--secondary-dark), var(--primary-dark) 80%);
+.kinetic-portfolio { padding: 80px 0; background-color: var(--primary-dark); position: relative; }
+
+/* --- DESKTOP STYLES (for screens wider than 991px) --- */
+@media (min-width: 992px) {
+  .mobile-load-more-container { display: none; } /* Hide mobile button on desktop */
+  .kinetic-wall-container { width: 100%; margin-top: 50px; overflow: hidden; -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); }
+  .kinetic-track { display: flex; width: max-content; animation: kinetic-scroll var(--scroll-duration, 60s) linear infinite; }
+  html[dir="rtl"] .kinetic-track { animation-name: kinetic-scroll-rtl; }
+  .kinetic-wall-container:hover .kinetic-track { animation-play-state: paused; }
+  @keyframes kinetic-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes kinetic-scroll-rtl { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+  .wall-item { position: relative; width: 30vw; max-width: 400px; min-width: 280px; margin: 0 20px; transition: transform 0.5s ease, opacity 0.5s ease; }
+  .item-image-container { aspect-ratio: 16 / 10; border-radius: 12px; overflow: hidden; position: relative; border: 1px solid rgba(255, 255, 255, 0.1); }
+  .item-bg { width: 100%; height: 100%; background-size: cover; background-position: center; transition: transform 0.6s ease; }
+  .item-bg-prism { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; mix-blend-mode: screen; filter: blur(5px); transform: scale(1.1); transition: opacity 0.4s ease, transform 0.4s ease; }
+  .wall-item:hover .item-bg-prism { opacity: 1; transform: scale(1) translate(var(--mouse-x, 0), var(--mouse-y, 0)); }
+  .kinetic-wall-container:hover .wall-item:not(:hover) { opacity: 0.5; }
+  .wall-item:hover { transform: scale(1.05); }
+  .wall-item:hover .item-bg { transform: scale(1.1); }
+  .item-info-panel { position: absolute; top: 50%; left: 0; transform: translate(-105%, -50%); width: 280px; background: rgba(25, 20, 40, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 10px; padding: 20px; text-align: left; opacity: 0; pointer-events: none; transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.5s ease; }
+  .wall-item:hover .item-info-panel { opacity: 1; pointer-events: all; transform: translate(-110%, -50%); }
+  html[dir="rtl"] .item-info-panel { left: auto; right: 0; transform: translate(105%, -50%); text-align: right; }
+  html[dir="rtl"] .wall-item:hover .item-info-panel { transform: translate(110%, -50%); }
+  .info-title { font-size: 1.5rem; color: var(--accent-purple); }
+  .info-categories { margin: 10px 0; }
+  .info-categories span { font-size: 0.8rem; padding: 3px 10px; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; margin-right: 5px; display: inline-block; }
+  html[dir="rtl"] .info-categories span { margin-right: 0; margin-left: 5px; }
+  .info-link { margin-top: 15px; }
 }
 
-.portfolio-slider {
-  width: 100%;
-  padding-top: 50px;
-  padding-bottom: 50px;
+/* --- MOBILE STYLES (for screens 991px and smaller) --- */
+@media (max-width: 991px) {
+  .kinetic-portfolio .container-fluid { padding: 0; }
+  .kinetic-wall-container { margin-top: 30px; }
+  .kinetic-track { display: grid; grid-template-columns: 1fr; gap: 25px; padding: 0 15px; }
+  .wall-item { width: 100%; }
+  .item-image-container { aspect-ratio: 16 / 10; border-radius: 12px; overflow: hidden; }
+  .item-bg { width: 100%; height: 100%; background-size: cover; background-position: center; }
+  .item-bg-prism { display: none; }
+  .item-info-panel { position: relative; background: var(--secondary-dark); padding: 20px; border-radius: 0 0 12px 12px; margin-top: -5px; text-align: left; }
+  html[dir="rtl"] .item-info-panel { text-align: right; }
+  .info-title { font-size: 1.5rem; color: #fff; }
+  .info-categories { margin: 10px 0; }
+  .info-categories span { font-size: 0.8rem; padding: 3px 10px; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; margin-right: 5px; display: inline-block; }
+  html[dir="rtl"] .info-categories span { margin-right: 0; margin-left: 5px; }
+  .info-link { margin-top: 15px; color: var(--accent-purple); font-weight: bold; }
+
+  /* **التحسين**: منطق إخفاء وإظهار العناصر وزر التحميل */
+  .wall-item.is-hidden-mobile { display: none; }
+  .mobile-load-more-container { text-align: center; margin-top: 30px; padding: 0 15px; }
+  .btn-load-more { background: transparent; border: 2px solid var(--accent-purple); color: var(--accent-purple); padding: 12px 35px; font-weight: 600; font-size: 16px; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; }
+  .btn-load-more:hover { background: var(--accent-purple); color: #fff; }
 }
-
-.portfolio-slider .swiper-slide {
-  width: 65%;
-  /* عرض الشريحة النشطة */
-  max-width: 700px;
-  aspect-ratio: 16/9;
-  border-radius: 15px;
-  overflow: hidden;
-  transition: transform 0.5s ease, opacity 0.5s ease, filter 0.5s ease;
-  -webkit-box-reflect: below 1px linear-gradient(transparent, transparent, #0004);
-  /* تأثير الانعكاس */
-}
-
-/* التأثيرات على الشرائح غير النشطة */
-.portfolio-slider .swiper-slide:not(.swiper-slide-active) {
-  filter: blur(2px) grayscale(50%);
-  opacity: 0.7;
-}
-
-.portfolio-slider .swiper-slide-active {
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-}
-
-/* تأثير الإضاءة حول الشريحة النشطة */
-.portfolio-slider .swiper-slide-active::after {
-  content: '';
-  position: absolute;
-  top: -5%;
-  left: -5%;
-  width: 110%;
-  height: 110%;
-  z-index: -1;
-  background: radial-gradient(circle, rgba(138, 79, 255, 0.5) 0%, transparent 70%);
-  animation: pulse-glow 4s infinite ease-in-out;
-}
-
-@keyframes pulse-glow {
-
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.5;
-  }
-
-  50% {
-    transform: scale(1.05);
-    opacity: 0.8;
-  }
-}
-
-
-.portfolio-slider .swiper-slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.portfolio .portfolio-info {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(to top, rgba(18, 12, 35, 0.9) 20%, transparent 100%);
-  padding: 50px 30px 30px 30px;
-  border-radius: 0 0 20px 20px;
-  text-align: left;
-  opacity: 0;
-  /* إخفاء النص بشكل افتراضي */
-  transform: translateY(20px);
-  transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s;
-}
-
-html[dir="rtl"] .portfolio .portfolio-info {
-  text-align: right;
-}
-
-/* إظهار النص فقط في الشريحة النشطة */
-.portfolio .swiper-slide-active .portfolio-info {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.portfolio .portfolio-info h3 {
-  font-size: 24px;
-  font-weight: 700;
-  margin: 0 0 10px 0;
-  color: var(--text-light);
-}
-
-.portfolio .portfolio-tags span {
-  font-size: 12px;
-  padding: 5px 12px;
-  border: 1px solid rgba(138, 79, 255, 0.5);
-  color: var(--text-light);
-  border-radius: 20px;
-  background-color: rgba(138, 79, 255, 0.2);
-  margin-right: 5px;
-  margin-bottom: 5px;
-  display: inline-block;
-}
-
-/* إعادة تصميم أزرار التنقل */
-.portfolio .swiper-button-prev,
-.portfolio .swiper-button-next {
-  width: 50px;
-  height: 50px;
-  background-color: rgba(var(--primary-dark-rgb), 0.5);
-  backdrop-filter: blur(5px);
-  border-radius: 50%;
-  color: var(--accent-purple);
-  transition: all 0.3s ease;
-}
-
-.portfolio .swiper-button-prev:hover,
-.portfolio .swiper-button-next:hover {
-  background-color: var(--accent-purple);
-  color: var(--text-light);
-}
-
-.portfolio .swiper-button-prev::after,
-.portfolio .swiper-button-next::after {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-/*--------------------------------------------------------------
-# END: BEYOND IMAGINATION Portfolio Section
---------------------------------------------------------------*/
 /*--------------------------------------------------------------
 # 11. Team Section (Celestial Profiles)
 --------------------------------------------------------------*/

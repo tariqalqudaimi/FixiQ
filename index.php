@@ -264,49 +264,68 @@ $products_query = $dbcon->query("
       </div>
     </section><!-- End Features Section -->
 
-    <!-- ======= Portfolio Section ======= -->
-    <section id="portfolio" class="portfolio">
-      <div class="container" data-aos="fade-up">
+ <!-- ======= Portfolio Section (THE KINETIC WALL v19.2 - MOBILE LOAD MORE) ======= -->
+<section id="portfolio" class="kinetic-portfolio">
+    <div class="container-fluid" data-aos="fade-up">
         <div class="section-title">
-          <h2><?= $lang['portfolio_title'] ?? 'Our Core Features' ?></h2>
-          <p><?= $lang['portfolio_description'] ?? 'Why partners choose to work with us' ?></p>
+            <h2><?= $lang['portfolio_title'] ?? 'Our Works' ?></h2>
+            <p><?= $lang['portfolio_description'] ?? 'An endless stream of our creative projects.' ?></p>
         </div>
-        <div class="swiper portfolio-slider">
-          <div class="swiper-wrapper">
-            <?php if ($products_query): foreach ($products_query as $product) : ?>
-                <div class="swiper-slide">
-                  <div class="portfolio-slide-content">
-                    <div class="portfolio-item-wrap">
-                      <a href="assets/img/portfolio/<?= htmlspecialchars($product['image']) ?>" class="portfolio-lightbox" data-gallery="portfolio-gallery" title="<?= htmlspecialchars($product['name']) ?>">
-                        <img src="assets/img/portfolio/<?= htmlspecialchars($product['image']) ?>" class="img-fluid" alt="<?= htmlspecialchars($product['name']) ?>" loading="lazy">
-                      </a>
+    </div>
+    
+    <div class="kinetic-wall-container">
+        <div class="kinetic-track">
+            <?php
+            if ($products_query && $products_query->num_rows > 0) :
+                mysqli_data_seek($products_query, 0);
+                $mobile_initial_limit = 3; // **الحد الأولي للهاتف**
+                $counter = 0;
+                while ($product = $products_query->fetch_assoc()) :
+                    $counter++;
+                    // إضافة كلاس الإخفاء للمشاريع الزائدة عن الحد في الهاتف
+                    $mobile_visibility_class = ($counter > $mobile_initial_limit) ? 'is-hidden-mobile' : '';
+                    
+                    $product_name = ($current_lang == 'ar' && !empty($product['name_ar'])) ? $product['name_ar'] : $product['name'];
+                    $product_desc = ($current_lang == 'ar' && !empty($product['description_ar'])) ? $product['description_ar'] : ($product['description'] ?? 'Default description.');
+            ?>
+                    <div class="wall-item <?= $mobile_visibility_class ?>">
+                        <div class="item-image-container">
+                            <div class="item-bg" style="background-image: url('assets/img/portfolio/<?= htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8') ?>');"></div>
+                            <div class="item-bg-prism" style="background-image: url('assets/img/portfolio/<?= htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8') ?>');"></div>
+                        </div>
+                        
+                        <div class="item-info-panel">
+                            <h3 class="info-title"><?= htmlspecialchars($product_name) ?></h3>
+                            <div class="info-categories">
+                                <?php
+                                if (!empty($product['category_names'])) {
+                                    $categories = explode(', ', $product['category_names']);
+                                    foreach ($categories as $category):
+                                        echo "<span>" . htmlspecialchars(trim($category)) . "</span>";
+                                    endforeach;
+                                }
+                                ?>
+                            </div>
+                            <a href="<?= htmlspecialchars($product['project_url'] ?? '#', ENT_QUOTES, 'UTF-8') ?>" class="info-link btn-visit-website" target="_blank">
+                                <?= $lang['visit_website_btn'] ?? 'Visit Website' ?>
+                            </a>
+                        </div>
                     </div>
-                    <div class="portfolio-info">
-                      <h3><?= htmlspecialchars($product['name']) ?></h3>
-                      <div class="portfolio-tags">
-                        <?php
-                        if (!empty($product['category_names'])) {
-                          $categories = explode(', ', $product['category_names']);
-                          foreach ($categories as $category):
-                        ?>
-                            <span><?= htmlspecialchars(trim($category)) ?></span>
-                        <?php
-                          endforeach;
-                        }
-                        ?>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            <?php endforeach;
-            endif; ?>
-          </div>
-          <div class="swiper-pagination"></div>
+            <?php
+                endwhile;
+            endif;
+            ?>
         </div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
-      </div>
-    </section><!-- End Portfolio Section -->
+        
+        <!-- **التحسين**: زر "تحميل المزيد" الذي سيظهر فقط في الهاتف -->
+        <?php if (isset($counter) && $counter > $mobile_initial_limit) : ?>
+            <div class="mobile-load-more-container">
+                <button id="mobile-load-more-btn" class="btn-load-more"><?= $lang['load_more_btn'] ?? 'Load More' ?></button>
+            </div>
+        <?php endif; ?>
+
+    </div>
+</section>
 
   <!-- ======= Team Section ======= -->
     <section id="team" class="team section-bg">

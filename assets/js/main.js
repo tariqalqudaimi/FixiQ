@@ -217,28 +217,79 @@
     // --- REPLACED SWIPER INITIALIZATIONS ---
 
     /**
-     * BEYOND IMAGINATION: Portfolio Swiper with 3D Coverflow Effect
-     */
-    new Swiper('.portfolio-slider', {
-      effect: 'coverflow',
-      grabCursor: true,
-      centeredSlides: true,
-      slidesPerView: 'auto',
-      loop: true,
-      autoplay: { delay: 5000, disableOnInteraction: false },
-      coverflowEffect: {
-        rotate: 50,
-        stretch: 0,
-        depth: 100,
-        modifier: 1,
-        slideShadows: true,
-      },
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-    });
+ * BEYOND IMAGINATION v4: Pro Masonry Portfolio with Load More & Hero Modal
+ */
+ try {
+        const portfolio = document.querySelector('.kinetic-portfolio');
+        if (!portfolio) return;
 
+        const isMobile = window.matchMedia("(max-width: 991px)").matches;
+
+        if (isMobile) {
+            // --- MOBILE LOGIC ---
+            console.log("Kinetic Wall: Mobile view activated.");
+            
+            const loadMoreBtn = document.getElementById('mobile-load-more-btn');
+            if(loadMoreBtn) {
+                const itemsPerLoad = 3; // عدد المشاريع التي ستظهر في كل مرة
+
+                loadMoreBtn.addEventListener('click', () => {
+                    const hiddenItems = portfolio.querySelectorAll('.wall-item.is-hidden-mobile');
+                    const itemsToShow = Array.from(hiddenItems).slice(0, itemsPerLoad);
+
+                    itemsToShow.forEach(item => {
+                        item.style.display = 'block'; // Make it visible
+                        // Optional: add an animation class
+                        item.classList.remove('is-hidden-mobile');
+                    });
+
+                    // إخفاء الزر إذا لم يتبقَ مشاريع
+                    if (portfolio.querySelectorAll('.wall-item.is-hidden-mobile').length === 0) {
+                        loadMoreBtn.style.display = 'none';
+                    }
+                });
+            }
+
+        } else {
+            // --- DESKTOP LOGIC ---
+            const track = portfolio.querySelector('.kinetic-track');
+            if (!track || track.children.length === 0) return;
+
+            // 1. Infinite Scroll Logic
+            const originalItems = Array.from(track.children);
+            if (originalItems.length > 0) {
+                 originalItems.forEach(item => {
+                    const clone = item.cloneNode(true);
+                    track.appendChild(clone);
+                });
+            }
+
+            // 2. Dynamic Animation Speed
+            const itemCount = originalItems.length;
+            const duration = itemCount * 8;
+            track.style.setProperty('--scroll-duration', `${duration}s`);
+
+            // 3. Prism Effect Logic
+            const allItems = portfolio.querySelectorAll('.wall-item');
+            allItems.forEach(item => {
+                const prismImage = item.querySelector('.item-bg-prism');
+                item.addEventListener('mousemove', (e) => {
+                    const rect = item.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const moveX = (x / rect.width - 0.5) * 20;
+                    const moveY = (y / rect.height - 0.5) * 20;
+                    if(prismImage) {
+                         prismImage.style.setProperty('--mouse-x', `${moveX}px`);
+                         prismImage.style.setProperty('--mouse-y', `${moveY}px`);
+                    }
+                });
+            });
+        }
+
+    } catch (error) {
+        console.error("A critical error occurred in the Kinetic Wall script:", error);
+    }
     /**
      * BEYOND IMAGINATION: Team Swiper (Enhanced version)
      */
