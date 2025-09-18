@@ -68,7 +68,7 @@ $lang = [
 
     // Team Section
     'team_title' => 'Team',
-    'team_description' => 'Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.',
+    'team_description' => 'Our team consists of experts in software development, design, marketing, and content creation, working together to achieve the best results for our clients.',
 
     // FAQ Section
     'faq_title' => 'Frequently Asked Questions',

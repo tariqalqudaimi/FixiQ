@@ -1462,9 +1462,9 @@ html[dir="rtl"] .node-details {
 @media (min-width: 992px) {
   .mobile-load-more-container { display: none; }
   .kinetic-wall-container { width: 100%; margin-top: 50px; overflow: hidden; -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); }
-  .kinetic-track { display: flex; width: max-content; animation: kinetic-scroll var(--scroll-duration, 150s) linear infinite; }
+  .kinetic-track { display: flex; width: max-content; animation: kinetic-scroll var(--scroll-duration, 10s) alternate infinite; }
   html[dir="rtl"] .kinetic-track { animation-name: kinetic-scroll-rtl; }
-  .kinetic-wall-container:hover .kinetic-track { animation-play-state: paused; }
+  .kinetic-wall-container:hover .kinetic-track { animation-play-state: paused;  }
   @keyframes kinetic-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   @keyframes kinetic-scroll-rtl { from { transform: translateX(-50%); } to { transform: translateX(0); } }
   .wall-item { position: relative; width: 30vw; max-width: 400px; min-width: 280px; margin: 0 20px; transition: transform 0.5s ease, opacity 0.5s ease; }

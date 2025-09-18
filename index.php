@@ -297,7 +297,7 @@ $products_query = $dbcon->query("
                          data-image="assets/img/portfolio/<?= htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8') ?>"
                          data-title="<?= htmlspecialchars($product_name) ?>"
                          data-description="<?= htmlspecialchars($product_desc) ?>"
-                         data-url="<?= htmlspecialchars($product['details_url'] ?? '#', ENT_QUOTES, 'UTF-8') ?>"
+                         data-url="<?= htmlspecialchars($product['details_url'] , ENT_QUOTES, 'UTF-8') ?>"
                          data-categories="<?= htmlspecialchars(json_encode($categories)) ?>">
                         
                         <div class="item-image-container">
