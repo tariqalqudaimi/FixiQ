@@ -1108,12 +1108,16 @@ html[dir="rtl"] .node-details {
 .neural-node.active .node-details {
   max-height: 300px;
   margin-top: 15px;
+  overflow: auto;
+ 
+  
 }
 
 .neural-node.active,
 .neural-node.active .node-content {
   cursor: default;
 }
+
 
 .about-us-container.node-active-mode .neural-core,
 .about-us-container.node-active-mode .neural-node:not(.active) {
@@ -1290,6 +1294,7 @@ html[dir="rtl"] .node-details {
   .about-us-container.node-active-mode .neural-node:not(.active) .node-details {
     max-height: 0;
     margin-top: 0;
+    
   }
 }
 
@@ -1447,17 +1452,17 @@ html[dir="rtl"] .node-details {
   line-height: 1.7;
   color: var(--text-muted);
 }
-
 /*--------------------------------------------------------------
-# 10. Portfolio Section (THE KINETIC WALL v19.2)
+# 10. Portfolio Section (THE KINETIC WALL v20.0 - MODAL VIEW)
 --------------------------------------------------------------*/
 .kinetic-portfolio { padding: 80px 0; background-color: var(--primary-dark); position: relative; }
+.wall-item { cursor: pointer; } /* جعل جميع العناصر قابلة للنقر */
 
 /* --- DESKTOP STYLES (for screens wider than 991px) --- */
 @media (min-width: 992px) {
-  .mobile-load-more-container { display: none; } /* Hide mobile button on desktop */
+  .mobile-load-more-container { display: none; }
   .kinetic-wall-container { width: 100%; margin-top: 50px; overflow: hidden; -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%); }
-  .kinetic-track { display: flex; width: max-content; animation: kinetic-scroll var(--scroll-duration, 60s) linear infinite; }
+  .kinetic-track { display: flex; width: max-content; animation: kinetic-scroll var(--scroll-duration, 150s) linear infinite; }
   html[dir="rtl"] .kinetic-track { animation-name: kinetic-scroll-rtl; }
   .kinetic-wall-container:hover .kinetic-track { animation-play-state: paused; }
   @keyframes kinetic-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
@@ -1470,15 +1475,7 @@ html[dir="rtl"] .node-details {
   .kinetic-wall-container:hover .wall-item:not(:hover) { opacity: 0.5; }
   .wall-item:hover { transform: scale(1.05); }
   .wall-item:hover .item-bg { transform: scale(1.1); }
-  .item-info-panel { position: absolute; top: 50%; left: 0; transform: translate(-105%, -50%); width: 280px; background: rgba(25, 20, 40, 0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 10px; padding: 20px; text-align: left; opacity: 0; pointer-events: none; transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.5s ease; }
-  .wall-item:hover .item-info-panel { opacity: 1; pointer-events: all; transform: translate(-110%, -50%); }
-  html[dir="rtl"] .item-info-panel { left: auto; right: 0; transform: translate(105%, -50%); text-align: right; }
-  html[dir="rtl"] .wall-item:hover .item-info-panel { transform: translate(110%, -50%); }
-  .info-title { font-size: 1.5rem; color: var(--accent-purple); }
-  .info-categories { margin: 10px 0; }
-  .info-categories span { font-size: 0.8rem; padding: 3px 10px; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; margin-right: 5px; display: inline-block; }
-  html[dir="rtl"] .info-categories span { margin-right: 0; margin-left: 5px; }
-  .info-link { margin-top: 15px; }
+  /* تم إزالة item-info-panel من هنا لأنه لم يعد يظهر عند التمرير */
 }
 
 /* --- MOBILE STYLES (for screens 991px and smaller) --- */
@@ -1487,29 +1484,103 @@ html[dir="rtl"] .node-details {
   .kinetic-wall-container { margin-top: 30px; }
   .kinetic-track { display: grid; grid-template-columns: 1fr; gap: 25px; padding: 0 15px; }
   .wall-item { width: 100%; }
-  .item-image-container { aspect-ratio: 16 / 10; border-radius: 12px; overflow: hidden; }
+  .item-image-container { aspect-ratio: 16 / 10; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); }
   .item-bg { width: 100%; height: 100%; background-size: cover; background-position: center; }
   .item-bg-prism { display: none; }
-  .item-info-panel { position: relative; background: var(--secondary-dark); padding: 20px; border-radius: 0 0 12px 12px; margin-top: -5px; text-align: left; }
-  html[dir="rtl"] .item-info-panel { text-align: right; }
-  .info-title { font-size: 1.5rem; color: #fff; }
-  .info-categories { margin: 10px 0; }
-  .info-categories span { font-size: 0.8rem; padding: 3px 10px; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; margin-right: 5px; display: inline-block; }
-  html[dir="rtl"] .info-categories span { margin-right: 0; margin-left: 5px; }
-  .info-link { margin-top: 15px; color: var(--accent-purple); font-weight: bold; }
-
-  /* **التحسين**: منطق إخفاء وإظهار العناصر وزر التحميل */
   .wall-item.is-hidden-mobile { display: none; }
   .mobile-load-more-container { text-align: center; margin-top: 30px; padding: 0 15px; }
   .btn-load-more { background: transparent; border: 2px solid var(--accent-purple); color: var(--accent-purple); padding: 12px 35px; font-weight: 600; font-size: 16px; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; }
   .btn-load-more:hover { background: var(--accent-purple); color: #fff; }
+}
+
+/* ===== PORTFOLIO MODAL STYLES (NEW) ===== */
+.portfolio-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+.portfolio-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 5, 20, 0.8);
+  backdrop-filter: blur(5px);
+}
+.modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  background: var(--primary-dark);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  transform: scale(0.9);
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  overflow: hidden;
+}
+.portfolio-modal.is-open .modal-content {
+  transform: scale(1);
+}
+.modal-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0,0,0,0.3);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+html[dir="rtl"] .modal-close-btn { right: auto; left: 15px; }
+.modal-close-btn:hover { background: var(--accent-purple); transform: rotate(90deg); }
+.modal-body { display: flex; flex-direction: column; width: 100%; height: 100%; max-height: 90vh; }
+.modal-image { width: 100%; height: 250px; background-size: cover; background-position: center; flex-shrink: 0; }
+.modal-details { padding: 30px; text-align: left; overflow-y: auto; }
+html[dir="rtl"] .modal-details { text-align: right; }
+.modal-title { font-size: 2rem; color: var(--accent-purple); margin-bottom: 15px; }
+.modal-categories { margin-bottom: 20px; }
+.modal-categories span { font-size: 0.8rem; padding: 4px 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; margin-right: 8px; margin-bottom: 8px; display: inline-block; }
+html[dir="rtl"] .modal-categories span { margin-right: 0; margin-left: 8px; }
+.modal-description { font-size: 1rem; line-height: 1.7; color: rgba(255, 255, 255, 0.85); margin-bottom: 30px; }
+.modal-link { font-weight: bold; border: 2px solid var(--accent-purple); padding: 10px 25px; }
+
+@media (min-width: 768px) {
+  .modal-body { flex-direction: row; }
+  .modal-image { width: 45%; height: auto; }
+  .modal-details { width: 55%; }
 }
 /*--------------------------------------------------------------
 # 11. Team Section (Celestial Profiles)
 --------------------------------------------------------------*/
 #team .swiper-slide {
   height: auto;
-  padding: 20px 0;
+  padding: 40px 0;
+
 }
 
 .celestial-profile {

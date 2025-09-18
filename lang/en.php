@@ -17,6 +17,39 @@ $lang = [
     'hero_tag_designer' => 'Designer',
     'hero_tag_marketing' => 'Marketing',
     'hero_tag_analyst' => 'Analyst',
+    //About Section
+    'about_title' => 'About Us',
+    'about_description' => 'We are a leading company in providing innovative technological solutions aimed at enhancing businesses and achieving success for our clients. Our team of experts is committed to delivering the best services in software development, design, digital marketing, and content creation.',
+    'about_learn_more_btn' => 'Learn More',
+    'about_company_title' => 'Our Company',
+    'about_company_details' => 'We are a technology company specialized in providing innovative and reliable software solutions that help individuals and organizations keep up with digital transformation and achieve their goals more efficiently. We focus on simplifying complexity through technology via our diverse services in website and application development, artificial intelligence solutions, and digital transformation.', 
+    'about_company_text' => '',
+    'about_goals_title' => 'Our Goals',
+    'about_goals_details' => '<strong>1- Achievement</strong><br>We are one team with a constant drive to win; nothing stands between us and our goals, and our interactions are characterized by humility and respect. 
+<br><br>
+<strong>2- Excellence</strong><br>We do not settle for what we have achieved. We celebrate our success, but we strive for excellence and mastery and lead change with all our strength.
+<br><br>
+<strong>3- Innovation</strong><br>We change the rules of the game and think creatively about how to change the present, so we can keep up with the world in technology and focus on ideas that will put us at the top.
+<br><br>
+<strong>4- Providing professional and innovative software solutions</strong><br>We strive to provide high-quality software services that meet clients needs and contribute to the development of their businesses through customized and effective technical solutions.
+<br><br>
+<strong>5- Achieving customer satisfaction</strong><br>We are committed to providing an exceptional experience for our clients by carefully listening to their needs, providing continuous support, and ensuring the highest levels of satisfaction.
+<br><br>
+<strong>6- Continuous innovation</strong><br>We are keen to keep up with the latest technologies and best practices in software development to ensure the delivery of advanced and modern solutions.
+<br><br>
+<strong>7- Enhancing operational efficiency for businesses</strong><br>We help organizations improve their performance and reduce costs by developing intelligent and secure systems that contribute to automating processes and improving resource management.
+<br><br>
+<strong>8- Building a professional and distinguished team</strong><br>We aim to attract and develop a select group of highly skilled engineers and programmers, and empower them to innovate and create in a professional work environment.
+<br><br>
+<strong>9- Expanding into local and regional markets</strong><br>We plan to expand the scope of our services to include various sectors and markets in the region, and strengthen our position as a trusted technical partner.',   'about_goals_text' => '',
+    
+    'about_mission_title' => 'Our Mission',
+    'about_mission_details' => 'Our mission is to empower individuals and organizations to maximize the benefits of technology by providing innovative and reliable software solutions that contribute to improving operational efficiency, enhancing competitiveness, and supporting the digital transformation journey of society and businesses.',
+    'about_mission_text' => '',
+    
+    'about_vision_title' => 'Our Vision',
+    'about_vision_details' => 'To be the first and preferred technical partner in the region for providing integrated software solutions, through continuous innovation, high quality, and dedication to meeting the needs of our clients, and making an effective contribution to the digital transformation of institutions of all sizes.',
+    'about_vision_text' => '',
 
     // Services Section
     'services_title' => 'Our Services',

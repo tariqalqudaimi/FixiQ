@@ -50,9 +50,7 @@
    * BEYOND IMAGINATION: 3D Tilt Effect for Services and Team sections
    */
   function init3DTiltEffect() {
-    // We target both services and team cards with one function
     const tiltElements = document.querySelectorAll('.services .icon-box, .team .member-style-2');
-
     tiltElements.forEach(element => {
       element.addEventListener('mousemove', (e) => {
         const rect = element.getBoundingClientRect();
@@ -60,18 +58,14 @@
         const y = e.clientY - rect.top;
         const width = element.offsetWidth;
         const height = element.offsetHeight;
-        const rotateX = -((height / 2) - y) / 20; // rotation strength
+        const rotateX = -((height / 2) - y) / 20;
         const rotateY = ((width / 2) - x) / 20;
-
         element.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
-
-        // For services card's inner glow effect
         if (element.classList.contains('icon-box')) {
           element.style.setProperty('--mouse-x', `${x}px`);
           element.style.setProperty('--mouse-y', `${y}px`);
         }
       });
-
       element.addEventListener('mouseleave', () => {
         element.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
       });
@@ -86,7 +80,6 @@
     if (featuresSection) {
       featuresSection.addEventListener('mousemove', e => {
         const rect = featuresSection.getBoundingClientRect();
-        // We set CSS variables that are used by the #features::before pseudo-element
         featuresSection.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
         featuresSection.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
       });
@@ -97,14 +90,10 @@
   // END: BEYOND IMAGINATION JAVASCRIPT FUNCTIONS
   // =================================================================================
 
-
   /**
    * Your original DOMContentLoaded listener, now with new function calls
    */
   document.addEventListener('DOMContentLoaded', function () {
-    /**
-     * Your existing Neural Nebula Particle Background Script
-     */
     const canvas = document.getElementById('particle-canvas');
     if (canvas) {
       const ctx = canvas.getContext('2d');
@@ -112,29 +101,17 @@
       const particleCount = 70;
       const setCanvasSize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
       setCanvasSize();
-
       class Particle {
-        constructor() {
-          this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height;
-          this.vx = (Math.random() - 0.5) * 0.3; this.vy = (Math.random() - 0.5) * 0.3;
-          this.radius = Math.random() * 1.5 + 0.5;
-        }
+        constructor() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.vx = (Math.random() - 0.5) * 0.3; this.vy = (Math.random() - 0.5) * 0.3; this.radius = Math.random() * 1.5 + 0.5; }
         draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2); ctx.fillStyle = 'rgba(138, 79, 255, 0.7)'; ctx.fill(); }
-        update() {
-          this.x += this.vx; this.y += this.vy;
-          if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-          if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-        }
+        update() { this.x += this.vx; this.y += this.vy; if (this.x < 0 || this.x > canvas.width) this.vx *= -1; if (this.y < 0 || this.y > canvas.height) this.vy *= -1; }
       }
       const init = () => { particles = []; for (let i = 0; i < particleCount; i++) particles.push(new Particle()); };
       const connectParticles = () => {
         for (let i = 0; i < particles.length; i++) {
           for (let j = i + 1; j < particles.length; j++) {
             const distance = Math.sqrt(Math.pow(particles[i].x - particles[j].x, 2) + Math.pow(particles[i].y - particles[j].y, 2));
-            if (distance < 120) {
-              ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.strokeStyle = `rgba(138, 79, 255, ${1 - distance / 120})`; ctx.lineWidth = 0.5; ctx.stroke();
-            }
+            if (distance < 120) { ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.strokeStyle = `rgba(138, 79, 255, ${1 - distance / 120})`; ctx.lineWidth = 0.5; ctx.stroke(); }
           }
         }
       };
@@ -142,8 +119,6 @@
       window.addEventListener('resize', () => { setCanvasSize(); init(); });
       init(); animate();
     }
-
-    // Initialize the new effects once the DOM is ready
     init3DTiltEffect();
     initFeaturesSpotlight();
   });
@@ -155,14 +130,7 @@
   if (mobileNavContainer) {
     const navContent = select('#navbar ul').outerHTML;
     const actionsContent = select('.header-right-actions') ? select('.header-right-actions').innerHTML : '';
-
-    mobileNavContainer.innerHTML = `
-      <div class="navbar-mobile-content">
-        ${navContent}
-        <div class="mobile-actions">${actionsContent}</div>
-      </div>
-    `;
-
+    mobileNavContainer.innerHTML = `<div class="navbar-mobile-content">${navContent}<div class="mobile-actions">${actionsContent}</div></div>`;
     const closeButton = select('#navbar .mobile-nav-toggle').cloneNode(true);
     closeButton.classList.remove('bi-list');
     closeButton.classList.add('bi-x');
@@ -180,116 +148,163 @@
     this.classList.toggle('active');
   }, true);
   on('click', '.navbar-mobile a.scrollto', function (e) {
-    if (select(this.hash)) {
-      e.preventDefault();
-      select('.mobile-nav-toggle').click();
-      scrollto(this.hash);
-    }
+    if (select(this.hash)) { e.preventDefault(); select('.mobile-nav-toggle').click(); scrollto(this.hash); }
   }, true);
 
   /**
    * All functions to run after page has fully loaded
    */
   window.addEventListener('load', () => {
-    // Your preloader logic
     let preloader = select('#preloader');
     if (preloader) {
-      const animationDisplayTime = 2000;
+      const animationDisplayTime = 1500;
       setTimeout(() => {
         preloader.classList.add('preloader-hidden');
-        setTimeout(() => {
-          preloader.remove();
-        }, 600);
+        setTimeout(() => { preloader.remove(); }, 600);
       }, animationDisplayTime);
     }
-
-    // Your scroll-to-hash logic
-    if (window.location.hash && select(window.location.hash)) {
-      scrollto(window.location.hash);
-    }
-
-    // GLightbox Initialization
+    if (window.location.hash && select(window.location.hash)) { scrollto(window.location.hash); }
     GLightbox({ selector: '.portfolio-lightbox' });
-
-    // AOS Initialization
     AOS.init({ duration: 1000, easing: 'ease-in-out', once: true, mirror: false });
 
     // --- REPLACED SWIPER INITIALIZATIONS ---
 
     /**
- * BEYOND IMAGINATION v4: Pro Masonry Portfolio with Load More & Hero Modal
+     * BEYOND IMAGINATION v4: Pro Masonry Portfolio with Load More & Hero Modal
+     */
+/**
+ * BEYOND IMAGINATION: The Kinetic Wall (v20.0 - MODAL VIEW)
  */
- try {
-        const portfolio = document.querySelector('.kinetic-portfolio');
-        if (!portfolio) return;
+try {
+    const portfolio = document.querySelector('.kinetic-portfolio');
+    if (portfolio) {
 
-        const isMobile = window.matchMedia("(max-width: 991px)").matches;
+        // --- 1. MODAL LOGIC (New & Unified for Desktop/Mobile) ---
+        const modal = document.getElementById('portfolioModal');
+        const wallItems = portfolio.querySelectorAll('.kinetic-track .wall-item');
 
-        if (isMobile) {
-            // --- MOBILE LOGIC ---
-            console.log("Kinetic Wall: Mobile view activated.");
-            
-            const loadMoreBtn = document.getElementById('mobile-load-more-btn');
-            if(loadMoreBtn) {
-                const itemsPerLoad = 3; // عدد المشاريع التي ستظهر في كل مرة
+        if (modal) {
+            const modalImage = modal.querySelector('.modal-image');
+            const modalTitle = modal.querySelector('.modal-title');
+            const modalCategories = modal.querySelector('.modal-categories');
+            const modalDescription = modal.querySelector('.modal-description');
+            const modalLink = modal.querySelector('.modal-link');
+            const closeModalBtn = modal.querySelector('.modal-close-btn');
+            const modalBackdrop = modal.querySelector('.modal-backdrop');
 
-                loadMoreBtn.addEventListener('click', () => {
-                    const hiddenItems = portfolio.querySelectorAll('.wall-item.is-hidden-mobile');
-                    const itemsToShow = Array.from(hiddenItems).slice(0, itemsPerLoad);
+            // Function to open the modal
+            const openModal = (itemData) => {
+                // Populate modal with data
+                modalImage.style.backgroundImage = `url('${itemData.image}')`;
+                modalTitle.textContent = itemData.title;
+                modalDescription.textContent = itemData.description;
+                modalLink.href = itemData.url;
 
-                    itemsToShow.forEach(item => {
-                        item.style.display = 'block'; // Make it visible
-                        // Optional: add an animation class
-                        item.classList.remove('is-hidden-mobile');
-                    });
-
-                    // إخفاء الزر إذا لم يتبقَ مشاريع
-                    if (portfolio.querySelectorAll('.wall-item.is-hidden-mobile').length === 0) {
-                        loadMoreBtn.style.display = 'none';
-                    }
+                // Populate categories
+                modalCategories.innerHTML = ''; // Clear previous categories
+                const categories = JSON.parse(itemData.categories);
+                categories.forEach(cat => {
+                    const span = document.createElement('span');
+                    span.textContent = cat;
+                    modalCategories.appendChild(span);
                 });
-            }
 
-        } else {
-            // --- DESKTOP LOGIC ---
-            const track = portfolio.querySelector('.kinetic-track');
-            if (!track || track.children.length === 0) return;
+                // Show the modal
+                modal.classList.add('is-open');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            };
 
-            // 1. Infinite Scroll Logic
-            const originalItems = Array.from(track.children);
-            if (originalItems.length > 0) {
-                 originalItems.forEach(item => {
-                    const clone = item.cloneNode(true);
-                    track.appendChild(clone);
-                });
-            }
+            // Function to close the modal
+            const closeModal = () => {
+                modal.classList.remove('is-open');
+                document.body.style.overflow = ''; // Restore scrolling
+            };
 
-            // 2. Dynamic Animation Speed
-            const itemCount = originalItems.length;
-            const duration = itemCount * 8;
-            track.style.setProperty('--scroll-duration', `${duration}s`);
-
-            // 3. Prism Effect Logic
-            const allItems = portfolio.querySelectorAll('.wall-item');
-            allItems.forEach(item => {
-                const prismImage = item.querySelector('.item-bg-prism');
-                item.addEventListener('mousemove', (e) => {
-                    const rect = item.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    const moveX = (x / rect.width - 0.5) * 20;
-                    const moveY = (y / rect.height - 0.5) * 20;
-                    if(prismImage) {
-                         prismImage.style.setProperty('--mouse-x', `${moveX}px`);
-                         prismImage.style.setProperty('--mouse-y', `${moveY}px`);
-                    }
+            // Add click listeners to all portfolio items
+            wallItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    openModal(item.dataset);
                 });
             });
+
+            // Add listeners to close the modal
+            closeModalBtn.addEventListener('click', closeModal);
+            modalBackdrop.addEventListener('click', closeModal);
         }
 
-    } catch (error) {
-        console.error("A critical error occurred in the Kinetic Wall script:", error);
+        // --- 2. LOAD MORE & DESKTOP ANIMATION LOGIC (Mostly Unchanged) ---
+        const setupKineticWall = () => {
+            const isMobile = window.matchMedia("(max-width: 991px)").matches;
+
+            if (isMobile) {
+                // Mobile "Load More" Functionality
+                const loadMoreBtn = document.getElementById('mobile-load-more-btn');
+                if (loadMoreBtn && !loadMoreBtn.hasAttribute('data-listener-attached')) {
+                    const initialVisibleItemsCount = 3;
+                    const itemsToLoadPerClick = 3;
+                    let currentlyVisibleItems = initialVisibleItemsCount;
+
+                    if (wallItems.length <= initialVisibleItemsCount) {
+                        loadMoreBtn.style.display = 'none';
+                    }
+
+                    loadMoreBtn.addEventListener('click', () => {
+                        let itemsShown = 0;
+                        for (let i = currentlyVisibleItems; i < wallItems.length && itemsShown < itemsToLoadPerClick; i++) {
+                            if (wallItems[i].classList.contains('is-hidden-mobile')) {
+                                wallItems[i].classList.remove('is-hidden-mobile');
+                                itemsShown++;
+                            }
+                        }
+                        currentlyVisibleItems += itemsShown;
+                        if (currentlyVisibleItems >= wallItems.length) {
+                            loadMoreBtn.style.display = 'none';
+                        }
+                    });
+                    loadMoreBtn.setAttribute('data-listener-attached', 'true');
+                }
+            } else {
+                // Desktop Infinite Scroll & Prism Effect Logic
+                const track = portfolio.querySelector('.kinetic-track');
+                if (!track || track.children.length === 0) return;
+
+                if (!track.hasAttribute('data-cloned')) {
+                    const originalItems = Array.from(track.children);
+                    originalItems.forEach(item => {
+                        const clone = item.cloneNode(true);
+                        track.appendChild(clone);
+                    });
+                    track.setAttribute('data-cloned', 'true');
+                }
+
+                const itemCount = track.children.length / 2;
+                const duration = itemCount * 8;
+                track.style.setProperty('--scroll-duration', `${duration}s`);
+                
+                wallItems.forEach(item => {
+                    const prismImage = item.querySelector('.item-bg-prism');
+                    item.addEventListener('mousemove', (e) => {
+                        if (prismImage) {
+                            const rect = item.getBoundingClientRect();
+                            const x = e.clientX - rect.left;
+                            const y = e.clientY - rect.top;
+                            const moveX = (x / rect.width - 0.5) * 20;
+                            const moveY = (y / rect.height - 0.5) * 20;
+                            prismImage.style.setProperty('--mouse-x', `${moveX}px`);
+                            prismImage.style.setProperty('--mouse-y', `${moveY}px`);
+                        }
+                    });
+                });
+            }
+        };
+
+        setupKineticWall();
+        window.addEventListener('resize', setupKineticWall);
     }
+} catch (error) {
+    console.error("A critical error occurred in the Kinetic Wall script:", error);
+}
+    
     /**
      * BEYOND IMAGINATION: Team Swiper (Enhanced version)
      */
@@ -331,29 +346,21 @@
   if (animatedContactForm) {
     animatedContactForm.addEventListener('submit', function (e) {
       e.preventDefault();
-
       let form = this;
       let loading = form.querySelector('.my-3 .loading');
       let errorMessage = form.querySelector('.my-3 .error-message');
       let sentMessage = form.querySelector('.my-3 .sent-message');
-
       loading.style.display = 'block';
       errorMessage.style.display = 'none';
       sentMessage.style.display = 'none';
-
       fetch(form.action, {
         method: form.method,
         body: new FormData(form),
         headers: { 'X-Requested-With': 'XMLHttpRequest' }
       })
       .then(response => {
-        if (response.ok) {
-          return response.text();
-        } else {
-          return response.text().then(text => {
-            throw new Error(text || 'Server responded with an error.');
-          });
-        }
+        if (response.ok) { return response.text(); } 
+        else { return response.text().then(text => { throw new Error(text || 'Server responded with an error.'); }); }
       })
       .then(data => {
         loading.style.display = 'none';

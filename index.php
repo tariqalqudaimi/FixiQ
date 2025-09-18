@@ -128,8 +128,8 @@ $products_query = $dbcon->query("
   <div class="container" data-aos="fade-up">
 
     <div class="section-title">
-      <h2><?= $lang['about_us_title'] ?? 'About Us' ?></h2>
-      <p><?= $lang['about_us_description'] ?? 'Explore the core of our identity' ?></p>
+      <h2><?= $lang['about_title'] ?? 'About Us' ?></h2>
+      <!-- <p><?= $lang['about_description'] ?? 'Explore the core of our identity' ?></p> -->
     </div>
 
     <div class="about-us-container">
@@ -159,21 +159,25 @@ $products_query = $dbcon->query("
         </div>
       </div>
       
-      <!-- Node 2: Goals -->
-      <div class="neural-node pos-2">
-        <div class="synapse-path">
-          <div class="synapse-pulse"></div>
-        </div>
-        <div class="node-content">
-          <button class="close-node-btn"><i class='bx bx-x'></i></button>
-          <i class="bx bx-bullseye-arrow"></i>
-          <h4><?= $lang['about_goals_title'] ?? 'Goals' ?></h4>
-          <p><?= $lang['about_goals_text'] ?? 'Our key objectives and targets.' ?></p>
-          <div class="node-details">
-            <p><?= $lang['about_goals_details'] ?? 'Our goals are centered around innovation, customer satisfaction, and sustainable growth. We aim to continuously push the boundaries of what is possible, delivering exceptional value to our clients while fostering a positive impact on the community and the environment. We have set clear, measurable objectives for the coming years.' ?></p>
-          </div>
-        </div>
-      </div>
+     <!-- Node 2: Goals -->
+<div class="neural-node pos-2">
+  <div class="synapse-path">
+    <div class="synapse-pulse"></div>
+  </div>
+  <div class="node-content">
+    <button class="close-node-btn"><i class='bx bx-x'></i></button>
+    
+    <!-- تم تعديل الأيقونة هنا -->
+    <i class="bx bx-target-lock"></i> 
+    
+    <h4><?= $lang['about_goals_title'] ?? 'Goals' ?></h4>
+    <p><?= $lang['about_goals_text'] ?? 'Our key objectives and targets.' ?></p>
+    
+    <div class="node-details">
+      <p><?= $lang['about_goals_details'] ?? 'Our goals are centered around innovation, customer satisfaction, and sustainable growth. We aim to continuously push the boundaries of what is possible, delivering exceptional value to our clients while fostering a positive impact on the community and the environment. We have set clear, measurable objectives for the coming years.' ?></p>
+    </div>
+  </div>
+</div>
       
       <!-- Node 3: Vision -->
       <div class="neural-node pos-3">
@@ -264,7 +268,7 @@ $products_query = $dbcon->query("
       </div>
     </section><!-- End Features Section -->
 
- <!-- ======= Portfolio Section (THE KINETIC WALL v19.2 - MOBILE LOAD MORE) ======= -->
+<!-- ======= Portfolio Section (THE KINETIC WALL v20.0 - MODAL VIEW) ======= -->
 <section id="portfolio" class="kinetic-portfolio">
     <div class="container-fluid" data-aos="fade-up">
         <div class="section-title">
@@ -272,44 +276,37 @@ $products_query = $dbcon->query("
             <p><?= $lang['portfolio_description'] ?? 'An endless stream of our creative projects.' ?></p>
         </div>
     </div>
-    
+
     <div class="kinetic-wall-container">
         <div class="kinetic-track">
             <?php
             if ($products_query && $products_query->num_rows > 0) :
                 mysqli_data_seek($products_query, 0);
-                $mobile_initial_limit = 3; // **الحد الأولي للهاتف**
+                $mobile_initial_limit = 3;
                 $counter = 0;
                 while ($product = $products_query->fetch_assoc()) :
                     $counter++;
-                    // إضافة كلاس الإخفاء للمشاريع الزائدة عن الحد في الهاتف
                     $mobile_visibility_class = ($counter > $mobile_initial_limit) ? 'is-hidden-mobile' : '';
                     
                     $product_name = ($current_lang == 'ar' && !empty($product['name_ar'])) ? $product['name_ar'] : $product['name'];
                     $product_desc = ($current_lang == 'ar' && !empty($product['description_ar'])) ? $product['description_ar'] : ($product['description'] ?? 'Default description.');
+                    $categories = !empty($product['category_names']) ? explode(', ', $product['category_names']) : [];
             ?>
-                    <div class="wall-item <?= $mobile_visibility_class ?>">
+                    <!-- كل عنصر الآن يحمل بياناته ليتم عرضها في النافذة المنبثقة -->
+                    <div class="wall-item <?= $mobile_visibility_class ?>" 
+                         data-image="assets/img/portfolio/<?= htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8') ?>"
+                         data-title="<?= htmlspecialchars($product_name) ?>"
+                         data-description="<?= htmlspecialchars($product_desc) ?>"
+                         data-url="<?= htmlspecialchars($product['details_url'] ?? '#', ENT_QUOTES, 'UTF-8') ?>"
+                         data-categories="<?= htmlspecialchars(json_encode($categories)) ?>">
+                        
                         <div class="item-image-container">
                             <div class="item-bg" style="background-image: url('assets/img/portfolio/<?= htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8') ?>');"></div>
                             <div class="item-bg-prism" style="background-image: url('assets/img/portfolio/<?= htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8') ?>');"></div>
                         </div>
                         
-                        <div class="item-info-panel">
-                            <h3 class="info-title"><?= htmlspecialchars($product_name) ?></h3>
-                            <div class="info-categories">
-                                <?php
-                                if (!empty($product['category_names'])) {
-                                    $categories = explode(', ', $product['category_names']);
-                                    foreach ($categories as $category):
-                                        echo "<span>" . htmlspecialchars(trim($category)) . "</span>";
-                                    endforeach;
-                                }
-                                ?>
-                            </div>
-                            <a href="<?= htmlspecialchars($product['project_url'] ?? '#', ENT_QUOTES, 'UTF-8') ?>" class="info-link btn-visit-website" target="_blank">
-                                <?= $lang['visit_website_btn'] ?? 'Visit Website' ?>
-                            </a>
-                        </div>
+                        <!-- لوحة المعلومات هذه لم تعد ضرورية للعرض، لكن يمكن إبقاؤها إذا كانت هناك استخدامات أخرى لها -->
+                        <div class="item-info-panel" style="display: none;"></div>
                     </div>
             <?php
                 endwhile;
@@ -317,16 +314,32 @@ $products_query = $dbcon->query("
             ?>
         </div>
         
-        <!-- **التحسين**: زر "تحميل المزيد" الذي سيظهر فقط في الهاتف -->
         <?php if (isset($counter) && $counter > $mobile_initial_limit) : ?>
             <div class="mobile-load-more-container">
                 <button id="mobile-load-more-btn" class="btn-load-more"><?= $lang['load_more_btn'] ?? 'Load More' ?></button>
             </div>
         <?php endif; ?>
-
     </div>
-</section>
 
+    <!-- ===== هيكل النافذة المنبثقة (Modal) ===== -->
+    <div class="portfolio-modal" id="portfolioModal">
+      
+        <div class="modal-content">
+            <button class="modal-close-btn"><i class='bx bx-x'></i></button>
+            <div class="modal-body">
+                <div class="modal-image"></div>
+                <div class="modal-details">
+                    <h2 class="modal-title"></h2>
+                    <div class="modal-categories"></div>
+                    <p class="modal-description"></p>
+                    <a href="#" class="modal-link btn-visit-website" target="_blank"><?= $lang['visit_website_btn'] ?? 'Visit Website' ?></a>
+                </div>
+            </div>
+        </div>
+          
+    </div>
+    
+</section>
   <!-- ======= Team Section ======= -->
     <section id="team" class="team section-bg">
       <div class="container" data-aos="fade-up">

@@ -50,7 +50,7 @@ if (isset($_POST['submit'])) {
         "UPDATE company_settings SET 
             hero_title = ?, hero_title_ar = ?, hero_subtitle = ?, hero_subtitle_ar = ?, hero_image = ?,
             about_title = ?, about_subtitle = ?, about_image = ?,
-            fb_link = ?, whatsapp_number = ?, instagram_link = ?, linkedin_link = ? 
+            fb_link = ?, twitter_link = ?, instagram_link = ?, linkedin_link = ? 
         WHERE id=1"
     );
 
