@@ -5,14 +5,14 @@ require_once '../Database/db.php';ob_start();
 if (isset($_POST['submit'])) {
     $stmt = $dbcon->prepare("UPDATE contact_information SET
         address = ?,
-        address_ar = ?, 
+        
         email = ?,
         phone = ?
         WHERE id=1");
 
-    $stmt->bind_param("ssss",
+    $stmt->bind_param("sss",
         $_POST['address'],
-        $_POST['address_ar'], 
+       
         $_POST['email'],
         $_POST['phone']
     );
