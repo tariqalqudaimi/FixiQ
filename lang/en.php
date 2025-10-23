@@ -61,8 +61,8 @@ $lang = [
     'features_description' => 'Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.',
 
     // Portfolio Section
-    'portfolio_title' => 'Portfolio',
-    'portfolio_description' => 'Check out our beautiful portfolio.',
+    'portfolio_title' => 'Project',
+    'portfolio_description' => 'Check out our beautiful project.',
     'portfolio_more_details' => 'More Details',
 
 
