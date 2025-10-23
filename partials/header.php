@@ -1,5 +1,5 @@
 <header id="header">
-    < class="container-fluid d-flex align-items-center justify-content-between">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
         <h1 class="logo"><a href="index.php?lang=<?= $current_lang ?>"> <img src="<?= htmlspecialchars($settings['company_logo'] ?? 'assets\img\Artboard 8-8.png') ?>" alt="<?= htmlspecialchars($settings['company_name'] ?? 'Logo') ?>" class="logo">
             </a></h1>
         <nav id="navbar" class="navbar">
@@ -22,7 +22,7 @@
 
         <div class="navbar-mobile"></div>
         <div class="header-right-actions">
-            
+            <div class="language-switcher dropdown">
                 <a href="#" class="btn btn-sm dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-globe"></i> <span class="d-none d-lg-inline"></span>
                 </a>
@@ -31,7 +31,7 @@
                     <li><a class="dropdown-item" href="?lang=ar">العربية</a></li>
                 </ul>
             </div>
-        
+        </div>
 
     </div>
 </header>
