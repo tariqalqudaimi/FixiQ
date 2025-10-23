@@ -164,24 +164,24 @@
       }, animationDisplayTime);
     }
     if (window.location.hash && select(window.location.hash)) { scrollto(window.location.hash); }
-    GLightbox({ selector: '.portfolio-lightbox' });
+    GLightbox({ selector: '.project-lightbox' });
     AOS.init({ duration: 1000, easing: 'ease-in-out', once: true, mirror: false });
 
     // --- REPLACED SWIPER INITIALIZATIONS ---
 
     /**
-     * BEYOND IMAGINATION v4: Pro Masonry Portfolio with Load More & Hero Modal
+     * BEYOND IMAGINATION v4: Pro Masonry Project with Load More & Hero Modal
      */
 /**
  * BEYOND IMAGINATION: The Kinetic Wall (v20.0 - MODAL VIEW)
  */
 try {
-    const portfolio = document.querySelector('.kinetic-portfolio');
-    if (portfolio) {
+    const project = document.querySelector('.kinetic-project');
+    if (project) {
 
         // --- 1. MODAL LOGIC (New & Unified for Desktop/Mobile) ---
-        const modal = document.getElementById('portfolioModal');
-        const wallItems = portfolio.querySelectorAll('.kinetic-track .wall-item');
+        const modal = document.getElementById('projectModal');
+        const wallItems = project.querySelectorAll('.kinetic-track .wall-item');
 
         if (modal) {
             const modalImage = modal.querySelector('.modal-image');
@@ -220,7 +220,7 @@ try {
                 document.body.style.overflow = ''; // Restore scrolling
             };
 
-            // Add click listeners to all portfolio items
+            // Add click listeners to all project items
             wallItems.forEach(item => {
                 item.addEventListener('click', () => {
                     openModal(item.dataset);
@@ -265,7 +265,7 @@ try {
                 }
             } else {
                 // Desktop Infinite Scroll & Prism Effect Logic
-                const track = portfolio.querySelector('.kinetic-track');
+                const track = project.querySelector('.kinetic-track');
                 if (!track || track.children.length === 0) return;
 
                 if (!track.hasAttribute('data-cloned')) {

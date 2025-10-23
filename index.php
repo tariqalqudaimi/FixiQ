@@ -268,12 +268,12 @@ $products_query = $dbcon->query("
       </div>
     </section><!-- End Features Section -->
 
-<!-- ======= Portfolio Section (THE KINETIC WALL v20.0 - MODAL VIEW) ======= -->
-<section id="portfolio" class="kinetic-portfolio">
+<!-- ======= Project Section (THE KINETIC WALL v20.0 - MODAL VIEW) ======= -->
+<section id="project" class="kinetic-project">
     <div class="container-fluid" data-aos="fade-up">
         <div class="section-title">
-            <h2><?= $lang['portfolio_title'] ?? 'Our Works' ?></h2>
-            <p><?= $lang['portfolio_description'] ?? 'An endless stream of our creative projects.' ?></p>
+            <h2><?= $lang['project_title'] ?? 'Our Works' ?></h2>
+            <p><?= $lang['project_description'] ?? 'An endless stream of our creative projects.' ?></p>
         </div>
     </div>
 
@@ -307,22 +307,25 @@ $products_query = $dbcon->query("
                         
                         <!-- لوحة المعلومات هذه لم تعد ضرورية للعرض، لكن يمكن إبقاؤها إذا كانت هناك استخدامات أخرى لها -->
                         <div class="item-info-panel" style="display: none;"></div>
+                        
                     </div>
             <?php
                 endwhile;
             endif;
             ?>
+            
         </div>
-        
-        <?php if (isset($counter) && $counter > $mobile_initial_limit) : ?>
-            <div class="mobile-load-more-container">
-                <button id="mobile-load-more-btn" class="btn-load-more"><?= $lang['load_more_btn'] ?? 'Load More' ?></button>
+   
+        <?php if ($total_products_count > 4) : ?>
+            <div class="text-center mt-5">
+                <a href="projects.php?lang=<?= $current_lang ?>" class="btn btn-primary"><?= $lang['see_all_projects_btn'] ?? 'See All Projects' ?></a>
             </div>
         <?php endif; ?>
-    </div>
+   </div>
+
 
     <!-- ===== هيكل النافذة المنبثقة (Modal) ===== -->
-    <div class="portfolio-modal" id="portfolioModal">
+    <div class="project-modal" id="projectModal">
       
         <div class="modal-content">
             <button class="modal-close-btn"><i class='bx bx-x'></i></button>
@@ -338,7 +341,9 @@ $products_query = $dbcon->query("
         </div>
           
     </div>
-    
+    <div class="modal_btn_see">
+           <a href="project.php" class="modal-link btn-visit-website project_see_more " target="_blank"><?= $lang['see_project'] ?? 'See All Projects' ?></a>
+  </div>
 </section>
   <!-- ======= Team Section ======= -->
     <section id="team" class="team section-bg">

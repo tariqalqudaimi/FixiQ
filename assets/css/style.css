@@ -15,7 +15,7 @@
 7. About Us Section (NEURAL NEBULA)
 8. Services Section (BEYOND IMAGINATION)
 9. Features Section (BEYOND IMAGINATION)
-10. Portfolio Section (BEYOND IMAGINATION)
+10. Project Section (BEYOND IMAGINATION)
 11. Team Section (BEYOND IMAGINATION)
 12. Contact Section
 13. Footer
@@ -1374,8 +1374,8 @@ html[dir="rtl"] .node-details {
 }
 
 .services .icon-box p {
-  line-height: 1.7;
   font-size: 15px;
+  line-height: 1.7;
   color: var(--text-muted);
   transition: color 0.3s ease;
 }
@@ -1453,9 +1453,9 @@ html[dir="rtl"] .node-details {
   color: var(--text-muted);
 }
 /*--------------------------------------------------------------
-# 10. Portfolio Section (THE KINETIC WALL v20.0 - MODAL VIEW)
+# 10. Project Section (THE KINETIC WALL v20.0 - MODAL VIEW)
 --------------------------------------------------------------*/
-.kinetic-portfolio { padding: 80px 0; background-color: var(--primary-dark); position: relative; }
+.kinetic-project { padding: 80px 0; background-color: var(--primary-dark); position: relative; }
 .wall-item { cursor: pointer; } /* جعل جميع العناصر قابلة للنقر */
 
 /* --- DESKTOP STYLES (for screens wider than 991px) --- */
@@ -1480,7 +1480,7 @@ html[dir="rtl"] .node-details {
 
 /* --- MOBILE STYLES (for screens 991px and smaller) --- */
 @media (max-width: 991px) {
-  .kinetic-portfolio .container-fluid { padding: 0; }
+  .kinetic-project .container-fluid { padding: 0; }
   .kinetic-wall-container { margin-top: 30px; }
   .kinetic-track { display: grid; grid-template-columns: 1fr; gap: 25px; padding: 0 15px; }
   .wall-item { width: 100%; }
@@ -1493,8 +1493,8 @@ html[dir="rtl"] .node-details {
   .btn-load-more:hover { background: var(--accent-purple); color: #fff; }
 }
 
-/* ===== PORTFOLIO MODAL STYLES (NEW) ===== */
-.portfolio-modal {
+/* ===== PROJECT MODAL STYLES (NEW) ===== */
+.project-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -1509,7 +1509,7 @@ html[dir="rtl"] .node-details {
   visibility: hidden;
   transition: opacity 0.4s ease, visibility 0.4s ease;
 }
-.portfolio-modal.is-open {
+.project-modal.is-open {
   opacity: 1;
   visibility: visible;
 }
@@ -1535,7 +1535,7 @@ html[dir="rtl"] .node-details {
   transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   overflow: hidden;
 }
-.portfolio-modal.is-open .modal-content {
+.project-modal.is-open .modal-content {
   transform: scale(1);
 }
 .modal-close-btn {
@@ -1573,6 +1573,13 @@ html[dir="rtl"] .modal-categories span { margin-right: 0; margin-left: 8px; }
   .modal-body { flex-direction: row; }
   .modal-image { width: 45%; height: auto; }
   .modal-details { width: 55%; }
+}
+
+.modal_btn_see{
+   display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top:  80px; ;
 }
 /*--------------------------------------------------------------
 # 11. Team Section (Celestial Profiles)

@@ -3,7 +3,7 @@ $lang = [
     // Header
     'home_link' => 'Home',
     'services_link' => 'Services',
-    'portfolio_link' => 'Portfolio',
+    'project_link' => 'Projects',
     'team_link' => 'Team',
     'about_link' => 'About',
     'features_link' => 'Features',
@@ -61,10 +61,10 @@ $lang = [
     'features_description' => 'Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.',
 
     // Portfolio Section
-    'portfolio_title' => 'Project',
-    'portfolio_description' => 'Check out our beautiful project .',
-    'portfolio_more_details' => 'More Details',
-
+    'project_title' => 'Our Projects',
+    'project_description' => 'Check out our beautiful projects.',
+    'project_more_details' => 'More Details',
+    'see_project' =>'See All Projects',
 
     // Team Section
     'team_title' => 'Team',

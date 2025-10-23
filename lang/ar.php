@@ -3,7 +3,7 @@ $lang = [
     // Header
     'home_link' => 'الرئيسية',
     'services_link' => 'خدماتنا',
-    'portfolio_link' => 'أعمالنا',
+    'project_link' => 'أعمالنا',
     'team_link' => 'فريقنا',
     'about_link' => 'عنا',
     'features_link' => 'المميزات',
@@ -64,10 +64,10 @@ $lang = [
     'features_description' => 'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى.',
 
     // Portfolio Section
-    'portfolio_title' => 'أعمالنا',
-    'portfolio_description' => 'ألق نظرة على أعمالنا المميزة.',
-    'portfolio_more_details' => 'المزيد من التفاصيل',
-
+    'project_title' => 'مشاريعنا',
+    'project_description' => 'ألق نظرة على مشاريعنا المميزة.',
+    'project_more_details' => 'المزيد من التفاصيل',
+    'see_project' =>'رؤية جميع المشاريع',
 
     // Team Section
     'team_title' => 'فريقنا',
