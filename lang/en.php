@@ -62,7 +62,7 @@ $lang = [
 
     // Portfolio Section
     'portfolio_title' => 'Project',
-    'portfolio_description' => 'Check out our beautiful project.',
+    'portfolio_description' => 'Check out our beautiful project .',
     'portfolio_more_details' => 'More Details',
 
 
