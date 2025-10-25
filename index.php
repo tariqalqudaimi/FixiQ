@@ -91,7 +91,7 @@ $products_query = $dbcon->query("
       </svg>
     </div>
   </div>
- <canvas id="particle-canvas"></canvas>
+  <canvas id="particle-canvas"></canvas>
   <?php include 'partials/header.php'; ?>
 
   <!-- ======= Hero Section ======= -->
@@ -123,97 +123,97 @@ $products_query = $dbcon->query("
   </section><!-- End Hero -->
 
   <main id="main">
-<!-- ======= About Us Section (NEURAL NEBULA VERSION) ======= -->
-<section id="about" class="about section-bg">
-  <div class="container" data-aos="fade-up">
+    <!-- ======= About Us Section (NEURAL NEBULA VERSION) ======= -->
+    <section id="about" class="about section-bg">
+      <div class="container" data-aos="fade-up">
 
-    <div class="section-title">
-      <h2><?= $lang['about_title'] ?? 'About Us' ?></h2>
-      <!-- <p><?= $lang['about_description'] ?? 'Explore the core of our identity' ?></p> -->
-    </div>
-
-    <div class="about-us-container">
-      <!-- Animated Particle Background -->
-      <canvas id="particle-canvas"></canvas>
-
-      <!-- The Neural Core -->
-      <div class="neural-core">
-        <div class="core-glow"></div>
-        <i class='bx bxs-brain'></i>
-      </div>
-
-      <!-- Connecting Synapses and Nodes -->
-      <!-- Node 1: About -->
-      <div class="neural-node pos-1">
-        <div class="synapse-path">
-          <div class="synapse-pulse"></div>
+        <div class="section-title">
+          <h2><?= $lang['about_title'] ?? 'About Us' ?></h2>
+          <!-- <p><?= $lang['about_description'] ?? 'Explore the core of our identity' ?></p> -->
         </div>
-        <div class="node-content">
-          <button class="close-node-btn"><i class='bx bx-x'></i></button>
-          <i class="bx bx-buildings"></i>
-          <h4><?= $lang['about_company_title'] ?? 'About' ?></h4>
-          <p><?= $lang['about_company_text'] ?? 'A brief description of the company.' ?></p>
-          <div class="node-details">
-            <p><?= $lang['about_company_details'] ?? 'Here is the full, detailed information about our company. We explore our history, our core values, and the foundational principles that guide every decision we make. Our journey began with a simple idea, and through dedication and a commitment to excellence, we have grown into a leader in our industry.' ?></p>
+
+        <div class="about-us-container">
+          <!-- Animated Particle Background -->
+          <canvas id="particle-canvas"></canvas>
+
+          <!-- The Neural Core -->
+          <div class="neural-core">
+            <div class="core-glow"></div>
+            <i class='bx bxs-brain'></i>
           </div>
-        </div>
-      </div>
-      
-     <!-- Node 2: Goals -->
-<div class="neural-node pos-2">
-  <div class="synapse-path">
-    <div class="synapse-pulse"></div>
-  </div>
-  <div class="node-content">
-    <button class="close-node-btn"><i class='bx bx-x'></i></button>
-    
-    <!-- تم تعديل الأيقونة هنا -->
-    <i class="bx bx-target-lock"></i> 
-    
-    <h4><?= $lang['about_goals_title'] ?? 'Goals' ?></h4>
-    <p><?= $lang['about_goals_text'] ?? 'Our key objectives and targets.' ?></p>
-    
-    <div class="node-details">
-      <p><?= $lang['about_goals_details'] ?? 'Our goals are centered around innovation, customer satisfaction, and sustainable growth. We aim to continuously push the boundaries of what is possible, delivering exceptional value to our clients while fostering a positive impact on the community and the environment. We have set clear, measurable objectives for the coming years.' ?></p>
-    </div>
-  </div>
-</div>
-      
-      <!-- Node 3: Vision -->
-      <div class="neural-node pos-3">
-        <div class="synapse-path">
-          <div class="synapse-pulse"></div>
-        </div>
-        <div class="node-content">
-          <button class="close-node-btn"><i class='bx bx-x'></i></button>
-          <i class="bx bx-show"></i>
-          <h4><?= $lang['about_vision_title'] ?? 'Vision' ?></h4>
-          <p><?= $lang['about_vision_text'] ?? 'Our long-term aspirations.' ?></p>
-          <div class="node-details">
-            <p><?= $lang['about_vision_details'] ?? 'Our vision is to be the globally recognized leader in our field, renowned for our innovative solutions and our transformative impact on technology and society. We aspire to create a future where our work empowers individuals and organizations to achieve their full potential, making the world a more connected and efficient place.' ?></p>
-          </div>
-        </div>
-      </div>
 
-      <!-- Node 4: Mission -->
-      <div class="neural-node pos-4">
-        <div class="synapse-path">
-          <div class="synapse-pulse"></div>
-        </div>
-        <div class="node-content">
-          <button class="close-node-btn"><i class='bx bx-x'></i></button>
-          <i class="bx bx-paper-plane"></i>
-          <h4><?= $lang['about_mission_title'] ?? 'Mission' ?></h4>
-          <p><?= $lang['about_mission_text'] ?? 'Our purpose and what we stand for.' ?></p>
-          <div class="node-details">
-            <p><?= $lang['about_mission_details'] ?? 'Our mission is to deliver superior, cutting-edge products and services that solve complex challenges for our clients. We are committed to operating with integrity, fostering a culture of collaboration and continuous improvement, and building lasting relationships based on trust and mutual success. We strive to be a trusted partner in our clients\' journeys.' ?></p>
+          <!-- Connecting Synapses and Nodes -->
+          <!-- Node 1: About -->
+          <div class="neural-node pos-1">
+            <div class="synapse-path">
+              <div class="synapse-pulse"></div>
+            </div>
+            <div class="node-content">
+              <button class="close-node-btn"><i class='bx bx-x'></i></button>
+              <i class="bx bx-buildings"></i>
+              <h4><?= $lang['about_company_title'] ?? 'About' ?></h4>
+              <p><?= $lang['about_company_text'] ?? 'A brief description of the company.' ?></p>
+              <div class="node-details">
+                <p><?= $lang['about_company_details'] ?? 'Here is the full, detailed information about our company. We explore our history, our core values, and the foundational principles that guide every decision we make. Our journey began with a simple idea, and through dedication and a commitment to excellence, we have grown into a leader in our industry.' ?></p>
+              </div>
+            </div>
           </div>
+
+          <!-- Node 2: Goals -->
+          <div class="neural-node pos-2">
+            <div class="synapse-path">
+              <div class="synapse-pulse"></div>
+            </div>
+            <div class="node-content">
+              <button class="close-node-btn"><i class='bx bx-x'></i></button>
+
+              <!-- تم تعديل الأيقونة هنا -->
+              <i class="bx bx-target-lock"></i>
+
+              <h4><?= $lang['about_goals_title'] ?? 'Goals' ?></h4>
+              <p><?= $lang['about_goals_text'] ?? 'Our key objectives and targets.' ?></p>
+
+              <div class="node-details">
+                <p><?= $lang['about_goals_details'] ?? 'Our goals are centered around innovation, customer satisfaction, and sustainable growth. We aim to continuously push the boundaries of what is possible, delivering exceptional value to our clients while fostering a positive impact on the community and the environment. We have set clear, measurable objectives for the coming years.' ?></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Node 3: Vision -->
+          <div class="neural-node pos-3">
+            <div class="synapse-path">
+              <div class="synapse-pulse"></div>
+            </div>
+            <div class="node-content">
+              <button class="close-node-btn"><i class='bx bx-x'></i></button>
+              <i class="bx bx-show"></i>
+              <h4><?= $lang['about_vision_title'] ?? 'Vision' ?></h4>
+              <p><?= $lang['about_vision_text'] ?? 'Our long-term aspirations.' ?></p>
+              <div class="node-details">
+                <p><?= $lang['about_vision_details'] ?? 'Our vision is to be the globally recognized leader in our field, renowned for our innovative solutions and our transformative impact on technology and society. We aspire to create a future where our work empowers individuals and organizations to achieve their full potential, making the world a more connected and efficient place.' ?></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Node 4: Mission -->
+          <div class="neural-node pos-4">
+            <div class="synapse-path">
+              <div class="synapse-pulse"></div>
+            </div>
+            <div class="node-content">
+              <button class="close-node-btn"><i class='bx bx-x'></i></button>
+              <i class="bx bx-paper-plane"></i>
+              <h4><?= $lang['about_mission_title'] ?? 'Mission' ?></h4>
+              <p><?= $lang['about_mission_text'] ?? 'Our purpose and what we stand for.' ?></p>
+              <div class="node-details">
+                <p><?= $lang['about_mission_details'] ?? 'Our mission is to deliver superior, cutting-edge products and services that solve complex challenges for our clients. We are committed to operating with integrity, fostering a culture of collaboration and continuous improvement, and building lasting relationships based on trust and mutual success. We strive to be a trusted partner in our clients\' journeys.' ?></p>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
-      
-    </div>
-  </div>
-</section><!-- End About Us Section -->
+    </section><!-- End About Us Section -->
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
@@ -268,84 +268,84 @@ $products_query = $dbcon->query("
       </div>
     </section><!-- End Features Section -->
 
-<!-- ======= Project Section (THE KINETIC WALL v20.0 - MODAL VIEW) ======= -->
-<section id="project" class="kinetic-project">
-    <div class="container-fluid" data-aos="fade-up">
+    <!-- ======= Project Section (THE KINETIC WALL v20.0 - MODAL VIEW) ======= -->
+    <section id="project" class="kinetic-project">
+      <div class="container-fluid" data-aos="fade-up">
         <div class="section-title">
-            <h2><?= $lang['project_title'] ?? 'Our Works' ?></h2>
-            <p><?= $lang['project_description'] ?? 'An endless stream of our creative projects.' ?></p>
+          <h2><?= $lang['project_title'] ?? 'Our Works' ?></h2>
+          <p><?= $lang['project_description'] ?? 'An endless stream of our creative projects.' ?></p>
         </div>
-    </div>
+      </div>
 
-    <div class="kinetic-wall-container">
+      <div class="kinetic-wall-container">
         <div class="kinetic-track">
-            <?php
-            if ($products_query && $products_query->num_rows > 0) :
-                mysqli_data_seek($products_query, 0);
-                $mobile_initial_limit = 3;
-                $counter = 0;
-                while ($product = $products_query->fetch_assoc()) :
-                    $counter++;
-                    $mobile_visibility_class = ($counter > $mobile_initial_limit) ? 'is-hidden-mobile' : '';
-                    
-                    $product_name = ($current_lang == 'ar' && !empty($product['name_ar'])) ? $product['name_ar'] : $product['name'];
-                    $product_desc = ($current_lang == 'ar' && !empty($product['description_ar'])) ? $product['description_ar'] : ($product['description'] ?? 'Default description.');
-                    $categories = !empty($product['category_names']) ? explode(', ', $product['category_names']) : [];
-            ?>
-                    <!-- كل عنصر الآن يحمل بياناته ليتم عرضها في النافذة المنبثقة -->
-                    <div class="wall-item <?= $mobile_visibility_class ?>" 
-                         data-image="assets/img/portfolio/<?= htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8') ?>"
-                         data-title="<?= htmlspecialchars($product_name) ?>"
-                         data-description="<?= htmlspecialchars($product_desc) ?>"
-                         data-url="<?= htmlspecialchars($product['details_url'] , ENT_QUOTES, 'UTF-8') ?>"
-                         data-categories="<?= htmlspecialchars(json_encode($categories)) ?>">
-                        
-                        <div class="item-image-container">
-                            <div class="item-bg" style="background-image: url('assets/img/portfolio/<?= htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8') ?>');"></div>
-                            <div class="item-bg-prism" style="background-image: url('assets/img/portfolio/<?= htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8') ?>');"></div>
-                        </div>
-                        
-                        <!-- لوحة المعلومات هذه لم تعد ضرورية للعرض، لكن يمكن إبقاؤها إذا كانت هناك استخدامات أخرى لها -->
-                        <div class="item-info-panel" style="display: none;"></div>
-                        
-                    </div>
-            <?php
-                endwhile;
-            endif;
-            ?>
-            
-        </div>
-   
-        <?php if ($total_products_count > 4) : ?>
-            <div class="text-center mt-5">
-                <a href="projects.php?lang=<?= $current_lang ?>" class="btn btn-primary"><?= $lang['see_all_projects_btn'] ?? 'See All Projects' ?></a>
-            </div>
-        <?php endif; ?>
-   </div>
+          <?php
+          if ($products_query && $products_query->num_rows > 0) :
+            mysqli_data_seek($products_query, 0);
+            $mobile_initial_limit = 3;
+            $counter = 0;
+            while ($product = $products_query->fetch_assoc()) :
+              $counter++;
+              $mobile_visibility_class = ($counter > $mobile_initial_limit) ? 'is-hidden-mobile' : '';
 
+              $product_name = ($current_lang == 'ar' && !empty($product['name_ar'])) ? $product['name_ar'] : $product['name'];
+              $product_desc = ($current_lang == 'ar' && !empty($product['description_ar'])) ? $product['description_ar'] : ($product['description'] ?? 'Default description.');
+              $categories = !empty($product['category_names']) ? explode(', ', $product['category_names']) : [];
+          ?>
+              <!-- كل عنصر الآن يحمل بياناته ليتم عرضها في النافذة المنبثقة -->
+              <div class="wall-item <?= $mobile_visibility_class ?>"
+                data-image="assets/img/portfolio/<?= htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8') ?>"
+                data-title="<?= htmlspecialchars($product_name) ?>"
+                data-description="<?= htmlspecialchars($product_desc) ?>"
+                data-url="<?= htmlspecialchars($product['details_url'], ENT_QUOTES, 'UTF-8') ?>"
+                data-categories="<?= htmlspecialchars(json_encode($categories)) ?>">
 
-    <!-- ===== هيكل النافذة المنبثقة (Modal) ===== -->
-    <div class="project-modal" id="projectModal">
-      
-        <div class="modal-content">
-            <button class="modal-close-btn"><i class='bx bx-x'></i></button>
-            <div class="modal-body">
-                <div class="modal-image"></div>
-                <div class="modal-details">
-                    <h2 class="modal-title"></h2>
-                    <div class="modal-categories"></div>
-                    <p class="modal-description"></p>
-                    <a href="#" class="modal-link btn-visit-website" target="_blank"><?= $lang['visit_website_btn'] ?? 'Visit Website' ?></a>
+                <div class="item-image-container">
+                  <div class="item-bg" style="background-image: url('assets/img/portfolio/<?= htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8') ?>');"></div>
+                  <div class="item-bg-prism" style="background-image: url('assets/img/portfolio/<?= htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8') ?>');"></div>
                 </div>
-            </div>
+
+                <!-- لوحة المعلومات هذه لم تعد ضرورية للعرض، لكن يمكن إبقاؤها إذا كانت هناك استخدامات أخرى لها -->
+                <div class="item-info-panel" style="display: none;"></div>
+
+              </div>
+          <?php
+            endwhile;
+          endif;
+          ?>
+
         </div>
-          
-    </div>
-    <div class="modal_btn_see">
-           <a href="project.php" class="modal-link btn-visit-website project_see_more " target="_blank"><?= $lang['see_project'] ?? 'See All Projects' ?></a>
-  </div>
-</section>
-  <!-- ======= Team Section ======= -->
+
+        <?php if ($total_products_count > 4) : ?>
+          <div class="text-center mt-5">
+            <a href="projects.php?lang=<?= $current_lang ?>" class="btn btn-primary"><?= $lang['see_all_projects_btn'] ?? 'See All Projects' ?></a>
+          </div>
+        <?php endif; ?>
+      </div>
+
+
+      <!-- ===== هيكل النافذة المنبثقة (Modal) ===== -->
+      <div class="project-modal" id="projectModal">
+
+        <div class="modal-content">
+          <button class="modal-close-btn"><i class='bx bx-x'></i></button>
+          <div class="modal-body">
+            <div class="modal-image"></div>
+            <div class="modal-details">
+              <h2 class="modal-title"></h2>
+              <div class="modal-categories"></div>
+              <p class="modal-description"></p>
+              <a href="#" class="modal-link btn-visit-website" target="_blank"><?= $lang['visit_website_btn'] ?? 'Visit Website' ?></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal_btn_see">
+        <a href="project.php" class="modal-link btn-visit-website project_see_more " target="_blank"><?= $lang['see_project'] ?? 'See All Projects' ?></a>
+      </div>
+    </section>
+    <!-- ======= Team Section ======= -->
     <section id="team" class="team section-bg">
       <div class="container" data-aos="fade-up">
         <div class="section-title">
@@ -358,8 +358,8 @@ $products_query = $dbcon->query("
                 <div class="swiper-slide">
                   <div class="celestial-profile">
                     <div class="profile-image-wrapper">
-                       <div class="orbital-ring"></div>
-                       <img src="assets/img/team/<?= htmlspecialchars($member['image_file']) ?>" class="img-fluid" alt="<?= htmlspecialchars($member['name']) ?>" loading="lazy">
+                      <div class="orbital-ring"></div>
+                      <img src="assets/img/team/<?= htmlspecialchars($member['image_file']) ?>" class="img-fluid" alt="<?= htmlspecialchars($member['name']) ?>" loading="lazy">
                     </div>
                     <div class="member-info">
                       <h4><?= htmlspecialchars($member['name']) ?></h4>
@@ -373,7 +373,8 @@ $products_query = $dbcon->query("
                     </div>
                   </div>
                 </div>
-            <?php endforeach; endif; ?>
+            <?php endforeach;
+            endif; ?>
           </div>
           <div class="swiper-pagination"></div>
         </div>
@@ -414,7 +415,7 @@ $products_query = $dbcon->query("
 
                 <div class="my-3">
                   <div class="loading"><?= $lang['form_loading'] ?? 'Loading' ?></div>
-                  <div class="error-message"></div> 
+                  <div class="error-message"></div>
                   <div class="sent-message"><?= $lang['form_sent_message'] ?? 'Your message has been sent. Thank you!' ?></div>
                 </div>
 
@@ -545,7 +546,7 @@ $products_query = $dbcon->query("
               return;
             }
             // Reset other nodes and activate the clicked one
-            resetNodes(node); 
+            resetNodes(node);
             aboutContainer.classList.add('node-active-mode');
             node.classList.add('active');
           });
