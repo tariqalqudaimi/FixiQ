@@ -26,8 +26,8 @@ $total_services_count = $dbcon->query("SELECT COUNT(id) as count FROM services")
 $features_query = $dbcon->query("SELECT * FROM features ORDER BY display_order ASC");
 $products_query = $dbcon->query("
     SELECT 
-        p.id, p.name, p.image,
-        GROUP_CONCAT(c.name SEPARATOR ', ') as category_names
+        p.id, p.name, p.name_ar, p.image, p.details_url, p.description, p.description_ar,
+        GROUP_CONCAT(DISTINCT c.name SEPARATOR ', ') as category_names
     FROM 
         products p
     LEFT JOIN 
@@ -38,7 +38,16 @@ $products_query = $dbcon->query("
         p.id
     ORDER BY 
         p.id DESC
+    LIMIT 4
 ");
+
+// Fetch all products into an array to pass to JavaScript
+$products_array = [];
+if ($products_query) {
+    while($row = $products_query->fetch_assoc()) {
+        $products_array[] = $row;
+    }
+}
 
 
 
@@ -66,6 +75,7 @@ $products_query = $dbcon->query("
   <link rel="stylesheet"
     href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
   <link href="assets/css/style.css" rel="stylesheet">
+  <link href="project/style.css" rel="stylesheet">
 
   <!-- ========== NEW FONTS (SORA & TAJAWAL) ========== -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -142,76 +152,75 @@ $products_query = $dbcon->query("
             <i class='bx bxs-brain'></i>
           </div>
 
-          <!-- NEW: The central point where all synapse lines will originate from -->
-          <div class="synapse-origin">
-            <div class="synapse-path synapse-path-1">
+          <!-- Connecting Synapses and Nodes -->
+          <!-- Node 1: About -->
+          <div class="neural-node pos-1">
+            <div class="synapse-path">
               <div class="synapse-pulse"></div>
             </div>
-            <div class="synapse-path synapse-path-2">
-              <div class="synapse-pulse"></div>
-            </div>
-            <div class="synapse-path synapse-path-3">
-              <div class="synapse-pulse"></div>
-            </div>
-            <div class="synapse-path synapse-path-4">
-              <div class="synapse-pulse"></div>
-            </div>
-          </div>
-
-          <!-- The wrapper for the nodes -->
-          <div class="neural-nodes-wrapper">
-            <!-- Node 1: About (NOTE: the synapse-path div is gone from inside here) -->
-            <div class="neural-node pos-1">
-              <div class="node-content">
-                <button class="close-node-btn"><i class='bx bx-x'></i></button>
-                <i class="bx bx-buildings"></i>
-                <h4><?= $lang['about_company_title'] ?? 'About' ?></h4>
-                <p><?= $lang['about_company_text'] ?? 'A brief description of the company.' ?></p>
-                <div class="node-details">
-                  <p><?= $lang['about_company_details'] ?? 'Here is the full, detailed information about our company...' ?></p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Node 2: Goals -->
-            <div class="neural-node pos-2">
-              <div class="node-content">
-                <button class="close-node-btn"><i class='bx bx-x'></i></button>
-                <i class="bx bx-target-lock"></i>
-                <h4><?= $lang['about_goals_title'] ?? 'Goals' ?></h4>
-                <p><?= $lang['about_goals_text'] ?? 'Our key objectives and targets.' ?></p>
-                <div class="node-details">
-                  <p><?= $lang['about_goals_details'] ?? 'Our goals are centered around innovation, customer satisfaction...' ?></p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Node 3: Vision -->
-            <div class="neural-node pos-3">
-              <div class="node-content">
-                <button class="close-node-btn"><i class='bx bx-x'></i></button>
-                <i class="bx bx-show"></i>
-                <h4><?= $lang['about_vision_title'] ?? 'Vision' ?></h4>
-                <p><?= $lang['about_vision_text'] ?? 'Our long-term aspirations.' ?></p>
-                <div class="node-details">
-                  <p><?= $lang['about_vision_details'] ?? 'Our vision is to be the globally recognized leader in our field...' ?></p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Node 4: Mission -->
-            <div class="neural-node pos-4">
-              <div class="node-content">
-                <button class="close-node-btn"><i class='bx bx-x'></i></button>
-                <i class="bx bx-paper-plane"></i>
-                <h4><?= $lang['about_mission_title'] ?? 'Mission' ?></h4>
-                <p><?= $lang['about_mission_text'] ?? 'Our purpose and what we stand for.' ?></p>
-                <div class="node-details">
-                  <p><?= $lang['about_mission_details'] ?? 'Our mission is to deliver superior, cutting-edge products...' ?></p>
-                </div>
+            <div class="node-content">
+              <button class="close-node-btn"><i class='bx bx-x'></i></button>
+              <i class="bx bx-buildings"></i>
+              <h4><?= $lang['about_company_title'] ?? 'About' ?></h4>
+              <p><?= $lang['about_company_text'] ?? 'A brief description of the company.' ?></p>
+              <div class="node-details">
+                <p><?= $lang['about_company_details'] ?? 'Here is the full, detailed information about our company. We explore our history, our core values, and the foundational principles that guide every decision we make. Our journey began with a simple idea, and through dedication and a commitment to excellence, we have grown into a leader in our industry.' ?></p>
               </div>
             </div>
           </div>
+
+          <!-- Node 2: Goals -->
+          <div class="neural-node pos-2">
+            <div class="synapse-path">
+              <div class="synapse-pulse"></div>
+            </div>
+            <div class="node-content">
+              <button class="close-node-btn"><i class='bx bx-x'></i></button>
+
+              <!-- تم تعديل الأيقونة هنا -->
+              <i class="bx bx-target-lock"></i>
+
+              <h4><?= $lang['about_goals_title'] ?? 'Goals' ?></h4>
+              <p><?= $lang['about_goals_text'] ?? 'Our key objectives and targets.' ?></p>
+
+              <div class="node-details">
+                <p><?= $lang['about_goals_details'] ?? 'Our goals are centered around innovation, customer satisfaction, and sustainable growth. We aim to continuously push the boundaries of what is possible, delivering exceptional value to our clients while fostering a positive impact on the community and the environment. We have set clear, measurable objectives for the coming years.' ?></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Node 3: Vision -->
+          <div class="neural-node pos-3">
+            <div class="synapse-path">
+              <div class="synapse-pulse"></div>
+            </div>
+            <div class="node-content">
+              <button class="close-node-btn"><i class='bx bx-x'></i></button>
+              <i class="bx bx-show"></i>
+              <h4><?= $lang['about_vision_title'] ?? 'Vision' ?></h4>
+              <p><?= $lang['about_vision_text'] ?? 'Our long-term aspirations.' ?></p>
+              <div class="node-details">
+                <p><?= $lang['about_vision_details'] ?? 'Our vision is to be the globally recognized leader in our field, renowned for our innovative solutions and our transformative impact on technology and society. We aspire to create a future where our work empowers individuals and organizations to achieve their full potential, making the world a more connected and efficient place.' ?></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Node 4: Mission -->
+          <div class="neural-node pos-4">
+            <div class="synapse-path">
+              <div class="synapse-pulse"></div>
+            </div>
+            <div class="node-content">
+              <button class="close-node-btn"><i class='bx bx-x'></i></button>
+              <i class="bx bx-paper-plane"></i>
+              <h4><?= $lang['about_mission_title'] ?? 'Mission' ?></h4>
+              <p><?= $lang['about_mission_text'] ?? 'Our purpose and what we stand for.' ?></p>
+              <div class="node-details">
+                <p><?= $lang['about_mission_details'] ?? 'Our mission is to deliver superior, cutting-edge products and services that solve complex challenges for our clients. We are committed to operating with integrity, fostering a culture of collaboration and continuous improvement, and building lasting relationships based on trust and mutual success. We strive to be a trusted partner in our clients\' journeys.' ?></p>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section><!-- End About Us Section -->
@@ -269,83 +278,44 @@ $products_query = $dbcon->query("
       </div>
     </section><!-- End Features Section -->
 
-    <!-- ======= Project Section (THE KINETIC WALL v20.0 - MODAL VIEW) ======= -->
-    <section id="project" class="kinetic-project">
-      <div class="container-fluid" data-aos="fade-up">
+   <section id="portal-showcase" class="section-bg">
+      <div class="container" data-aos="fade-up">
         <div class="section-title">
-          <h2><?= $lang['project_title'] ?? 'Our Works' ?></h2>
-          <p><?= $lang['project_description'] ?? 'An endless stream of our creative projects.' ?></p>
+          <h2><?= $lang['project_title'] ?? 'Our Projects' ?></h2>
+          <p><?= $lang['project_description'] ?? 'Check out our beautiful projects.' ?></p>
         </div>
-      </div>
 
-      <div class="kinetic-wall-container">
-        <div class="kinetic-track">
-          <?php
-          if ($products_query && $products_query->num_rows > 0) :
-            mysqli_data_seek($products_query, 0);
-            $mobile_initial_limit = 3;
-            $counter = 0;
-            while ($product = $products_query->fetch_assoc()) :
-              $counter++;
-              $mobile_visibility_class = ($counter > $mobile_initial_limit) ? 'is-hidden-mobile' : '';
-
-              $product_name = ($current_lang == 'ar' && !empty($product['name_ar'])) ? $product['name_ar'] : $product['name'];
-              $product_desc = ($current_lang == 'ar' && !empty($product['description_ar'])) ? $product['description_ar'] : ($product['description'] ?? 'Default description.');
-              $categories = !empty($product['category_names']) ? explode(', ', $product['category_names']) : [];
-          ?>
-              <!-- كل عنصر الآن يحمل بياناته ليتم عرضها في النافذة المنبثقة -->
-              <div class="wall-item <?= $mobile_visibility_class ?>"
-                data-image="assets/img/portfolio/<?= htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8') ?>"
-                data-title="<?= htmlspecialchars($product_name) ?>"
-                data-description="<?= htmlspecialchars($product_desc) ?>"
-                data-url="<?= htmlspecialchars($product['details_url'], ENT_QUOTES, 'UTF-8') ?>"
-                data-categories="<?= htmlspecialchars(json_encode($categories)) ?>">
-
-                <div class="item-image-container">
-                  <div class="item-bg" style="background-image: url('assets/img/portfolio/<?= htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8') ?>');"></div>
-                  <div class="item-bg-prism" style="background-image: url('assets/img/portfolio/<?= htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8') ?>');"></div>
+        <div class="portal-grid">
+          <?php if (!empty($products_array)): ?>
+            <?php foreach ($products_array as $index => $product): ?>
+              <!-- تمت إضافة data-product-id لجلب الصور لاحقاً -->
+              <div class="portal-card" data-index="<?= $index ?>" data-product-id="<?= $product['id'] ?>" tabindex="0">
+                <div class="card-background" style="background-image: url('assets/img/portfolio/<?= htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8') ?>');"></div>
+                <div class="card-overlay"></div>
+                <div class="card-content">
+                  <h3><?= ($current_lang == 'ar' && !empty($product['name_ar'])) ? htmlspecialchars($product['name_ar']) : htmlspecialchars($product['name']); ?></h3>
                 </div>
-
-                <!-- لوحة المعلومات هذه لم تعد ضرورية للعرض، لكن يمكن إبقاؤها إذا كانت هناك استخدامات أخرى لها -->
-                <div class="item-info-panel" style="display: none;"></div>
-
               </div>
-          <?php
-            endwhile;
-          endif;
-          ?>
-
+            <?php endforeach; ?>
+          <?php endif; ?>
         </div>
-
-        <?php if ($total_products_count > 4) : ?>
-          <div class="text-center mt-5">
-            <a href="projects.php?lang=<?= $current_lang ?>" class="btn btn-primary"><?= $lang['see_all_projects_btn'] ?? 'See All Projects' ?></a>
-          </div>
-        <?php endif; ?>
       </div>
-
-
-      <!-- ===== هيكل النافذة المنبثقة (Modal) ===== -->
-      <div class="project-modal" id="projectModal">
-
-        <div class="modal-content">
-          <button class="modal-close-btn"><i class='bx bx-x'></i></button>
-          <div class="modal-body">
-            <div class="modal-image"></div>
-            <div class="modal-details">
-              <h2 class="modal-title"></h2>
-              <div class="modal-categories"></div>
-              <p class="modal-description"></p>
-              <a href="#" class="modal-link btn-visit-website" target="_blank"><?= $lang['visit_website_btn'] ?? 'Visit Website' ?></a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <div class="modal_btn_see">
+       <div class="modal_btn_see">
         <a href="project.php" class="modal-link btn-visit-website project_see_more " target="_blank"><?= $lang['see_project'] ?? 'See All Projects' ?></a>
       </div>
+       <!-- This is the Slideshow structure, initially hidden -->
+  <div class="portal-slideshow">
+    <button class="slideshow-close-btn"><i class='bx bx-x'></i></button>
+    <div class="slideshow-nav prev"><i class='bx bx-chevron-left'></i></div>
+    <div class="slideshow-nav next"><i class='bx bx-chevron-right'></i></div>
+    <div class="slideshow-track">
+      <!-- Slides will be injected here by JavaScript -->
+    </div>
+  </div>
     </section>
+ 
+
+ 
     <!-- ======= Team Section ======= -->
     <section id="team" class="team section-bg">
       <div class="container" data-aos="fade-up">
@@ -560,6 +530,171 @@ $products_query = $dbcon->query("
           }
         });
       }
+
+      
+      //project js
+       const allProjectsData = <?= json_encode($products_array, JSON_UNESCAPED_UNICODE); ?>;
+    const currentLang = '<?= $current_lang; ?>';
+
+    const grid = document.querySelector('.portal-grid');
+    const slideshow = document.querySelector('.portal-slideshow');
+    const slideshowTrack = slideshow.querySelector('.slideshow-track');
+    const closeBtn = slideshow.querySelector('.slideshow-close-btn');
+    const nextBtn = slideshow.querySelector('.slideshow-nav.next');
+    const prevBtn = slideshow.querySelector('.slideshow-nav.prev');
+    const htmlEl = document.documentElement;
+    
+    if (!grid || !slideshow || allProjectsData.length === 0) return;
+
+    // إنشاء عناصر السلايد الأساسية بدون الصور المصغرة
+    const slideElements = allProjectsData.map(product => {
+        const slide = document.createElement('div');
+        slide.className = 'slideshow-slide';
+        // إضافة معرف المنتج للسلايد للوصول إليه لاحقاً
+        slide.dataset.productId = product.id;
+
+        const productName = (currentLang === 'ar' && product.name_ar) ? product.name_ar : product.name;
+        const productDesc = (currentLang === 'ar' && product.description_ar) ? product.description_ar : (product.description || '');
+        const categories = product.category_names || '';
+        const visitText = currentLang === 'ar' ? 'زيارة الموقع' : 'Visit Website';
+
+        slide.innerHTML = `
+            <div class="slide-bg-container">
+                <div class="slide-bg" style="background-image: url('assets/img/portfolio/${product.image}');"></div>
+            </div>
+            <div class="slide-details">
+                <div class="container">
+                    <span class="slide-category">${categories}</span>
+                    <h2 class="slide-title">${productName}</h2>
+                    
+                    ${(product.details_url && product.details_url !== '#') ? `<a href="${product.details_url}" class="slide-link" target="_blank">${visitText}</a>` : ''}
+                    <!-- حاوية الصور المصغرة، ستكون فارغة في البداية -->
+                    <div class="slide-thumbnails-container"></div>
+                </div>
+            </div>
+        `;
+        return slide;
+    });
+    slideshowTrack.append(...slideElements);
+    
+    let currentIndex = 0;
+    let isAnimating = false;
+
+    // --- NEW: Function to load additional images on demand ---
+    async function loadThumbnailsForSlide(slideElement) {
+        // التحقق إذا تم تحميل الصور مسبقاً لمنع الطلبات المتكررة
+        if (slideElement.dataset.imagesLoaded === 'true') {
+            return;
+        }
+
+        const productId = slideElement.dataset.productId;
+        const mainImage = allProjectsData.find(p => p.id == productId).image;
+        const thumbnailsContainer = slideElement.querySelector('.slide-thumbnails-container');
+        thumbnailsContainer.innerHTML = '<span>Loading...</span>'; // رسالة تحميل مؤقتة
+
+        try {
+            const response = await fetch(`project/get_product_images.php?id=${productId}`);
+            if (!response.ok) throw new Error('Network response was not ok');
+            
+            const additionalImages = await response.json();
+            
+            // دمج الصورة الرئيسية مع الصور الإضافية
+            const allImages = [mainImage, ...additionalImages];
+            
+            thumbnailsContainer.innerHTML = ''; // إفراغ حاوية التحميل
+
+            // عرض المعرض فقط إذا كان هناك أكثر من صورة
+            if (allImages.length > 1) {
+                const thumbnailsHTML = allImages.map((img, index) => `
+                    <div 
+                      class="thumbnail-item ${index === 0 ? 'is-active' : ''}" 
+                      style="background-image: url('assets/img/portfolio/${img}');"
+                      data-src="assets/img/portfolio/${img}">
+                    </div>
+                `).join('');
+                thumbnailsContainer.innerHTML = thumbnailsHTML;
+            }
+            
+            // وضع علامة تفيد بأن الصور قد تم تحميلها
+            slideElement.dataset.imagesLoaded = 'true';
+
+        } catch (error) {
+            console.error('Failed to fetch additional images:', error);
+            thumbnailsContainer.innerHTML = '<span>Failed to load images.</span>';
+        }
+    }
+
+    function updateSlideshow(newIndex, direction) {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        const oldIndex = currentIndex;
+        currentIndex = (newIndex + slideElements.length) % slideElements.length;
+
+        const oldSlide = slideElements[oldIndex];
+        const newSlide = slideElements[currentIndex];
+        
+        // --- NEW: Load images for the new active slide ---
+        loadThumbnailsForSlide(newSlide);
+
+        const inClass = direction === 'next' ? 'slide-in-next' : 'slide-in-prev';
+        const outClass = direction === 'next' ? 'slide-out-next' : 'slide-out-prev';
+        
+        newSlide.classList.add('is-active', inClass);
+        oldSlide.classList.add(outClass);
+
+        setTimeout(() => {
+            oldSlide.classList.remove('is-active', outClass);
+            newSlide.classList.remove(inClass);
+            isAnimating = false;
+        }, 600);
+    }
+    
+    function openSlideshow(startIndex) {
+        currentIndex = startIndex;
+        const firstSlide = slideElements[startIndex];
+        
+        slideElements.forEach((slide, index) => {
+            slide.classList.toggle('is-active', index === startIndex);
+        });
+        
+        // تحميل الصور لأول سلايد يتم فتحه
+        loadThumbnailsForSlide(firstSlide);
+        
+        htmlEl.classList.add('slideshow-open');
+    }
+    
+    function closeSlideshow() {
+        htmlEl.classList.remove('slideshow-open');
+    }
+
+    nextBtn.addEventListener('click', () => updateSlideshow(currentIndex + 1, 'next'));
+    prevBtn.addEventListener('click', () => updateSlideshow(currentIndex - 1, 'prev'));
+
+    grid.querySelectorAll('.portal-card').forEach(card => {
+        card.addEventListener('click', () => {
+            openSlideshow(parseInt(card.dataset.index, 10));
+        });
+    });
+    
+    closeBtn.addEventListener('click', closeSlideshow);
+
+    // منطق النقر على الصور المصغرة (Thumbnails) يبقى كما هو
+    slideshowTrack.addEventListener('click', (e) => {
+        if (e.target.classList.contains('thumbnail-item')) {
+            const clickedThumbnail = e.target;
+            const activeSlide = slideshowTrack.querySelector('.slideshow-slide.is-active');
+            if (!activeSlide) return;
+
+            const newImageSrc = clickedThumbnail.dataset.src;
+            const slideBg = activeSlide.querySelector('.slide-bg');
+            slideBg.style.backgroundImage = `url('${newImageSrc}')`;
+            
+            const parentContainer = clickedThumbnail.parentElement;
+            parentContainer.querySelector('.thumbnail-item.is-active')?.classList.remove('is-active');
+            clickedThumbnail.classList.add('is-active');
+        }
+    });
     });
   </script>
 
