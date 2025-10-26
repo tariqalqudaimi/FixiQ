@@ -142,75 +142,76 @@ $products_query = $dbcon->query("
             <i class='bx bxs-brain'></i>
           </div>
 
-          <!-- Connecting Synapses and Nodes -->
-          <!-- Node 1: About -->
-          <div class="neural-node pos-1">
-            <div class="synapse-path">
+          <!-- NEW: The central point where all synapse lines will originate from -->
+          <div class="synapse-origin">
+            <div class="synapse-path synapse-path-1">
               <div class="synapse-pulse"></div>
             </div>
-            <div class="node-content">
-              <button class="close-node-btn"><i class='bx bx-x'></i></button>
-              <i class="bx bx-buildings"></i>
-              <h4><?= $lang['about_company_title'] ?? 'About' ?></h4>
-              <p><?= $lang['about_company_text'] ?? 'A brief description of the company.' ?></p>
-              <div class="node-details">
-                <p><?= $lang['about_company_details'] ?? 'Here is the full, detailed information about our company. We explore our history, our core values, and the foundational principles that guide every decision we make. Our journey began with a simple idea, and through dedication and a commitment to excellence, we have grown into a leader in our industry.' ?></p>
-              </div>
+            <div class="synapse-path synapse-path-2">
+              <div class="synapse-pulse"></div>
+            </div>
+            <div class="synapse-path synapse-path-3">
+              <div class="synapse-pulse"></div>
+            </div>
+            <div class="synapse-path synapse-path-4">
+              <div class="synapse-pulse"></div>
             </div>
           </div>
 
-          <!-- Node 2: Goals -->
-          <div class="neural-node pos-2">
-            <div class="synapse-path">
-              <div class="synapse-pulse"></div>
+          <!-- The wrapper for the nodes -->
+          <div class="neural-nodes-wrapper">
+            <!-- Node 1: About (NOTE: the synapse-path div is gone from inside here) -->
+            <div class="neural-node pos-1">
+              <div class="node-content">
+                <button class="close-node-btn"><i class='bx bx-x'></i></button>
+                <i class="bx bx-buildings"></i>
+                <h4><?= $lang['about_company_title'] ?? 'About' ?></h4>
+                <p><?= $lang['about_company_text'] ?? 'A brief description of the company.' ?></p>
+                <div class="node-details">
+                  <p><?= $lang['about_company_details'] ?? 'Here is the full, detailed information about our company...' ?></p>
+                </div>
+              </div>
             </div>
-            <div class="node-content">
-              <button class="close-node-btn"><i class='bx bx-x'></i></button>
 
-              <!-- تم تعديل الأيقونة هنا -->
-              <i class="bx bx-target-lock"></i>
+            <!-- Node 2: Goals -->
+            <div class="neural-node pos-2">
+              <div class="node-content">
+                <button class="close-node-btn"><i class='bx bx-x'></i></button>
+                <i class="bx bx-target-lock"></i>
+                <h4><?= $lang['about_goals_title'] ?? 'Goals' ?></h4>
+                <p><?= $lang['about_goals_text'] ?? 'Our key objectives and targets.' ?></p>
+                <div class="node-details">
+                  <p><?= $lang['about_goals_details'] ?? 'Our goals are centered around innovation, customer satisfaction...' ?></p>
+                </div>
+              </div>
+            </div>
 
-              <h4><?= $lang['about_goals_title'] ?? 'Goals' ?></h4>
-              <p><?= $lang['about_goals_text'] ?? 'Our key objectives and targets.' ?></p>
+            <!-- Node 3: Vision -->
+            <div class="neural-node pos-3">
+              <div class="node-content">
+                <button class="close-node-btn"><i class='bx bx-x'></i></button>
+                <i class="bx bx-show"></i>
+                <h4><?= $lang['about_vision_title'] ?? 'Vision' ?></h4>
+                <p><?= $lang['about_vision_text'] ?? 'Our long-term aspirations.' ?></p>
+                <div class="node-details">
+                  <p><?= $lang['about_vision_details'] ?? 'Our vision is to be the globally recognized leader in our field...' ?></p>
+                </div>
+              </div>
+            </div>
 
-              <div class="node-details">
-                <p><?= $lang['about_goals_details'] ?? 'Our goals are centered around innovation, customer satisfaction, and sustainable growth. We aim to continuously push the boundaries of what is possible, delivering exceptional value to our clients while fostering a positive impact on the community and the environment. We have set clear, measurable objectives for the coming years.' ?></p>
+            <!-- Node 4: Mission -->
+            <div class="neural-node pos-4">
+              <div class="node-content">
+                <button class="close-node-btn"><i class='bx bx-x'></i></button>
+                <i class="bx bx-paper-plane"></i>
+                <h4><?= $lang['about_mission_title'] ?? 'Mission' ?></h4>
+                <p><?= $lang['about_mission_text'] ?? 'Our purpose and what we stand for.' ?></p>
+                <div class="node-details">
+                  <p><?= $lang['about_mission_details'] ?? 'Our mission is to deliver superior, cutting-edge products...' ?></p>
+                </div>
               </div>
             </div>
           </div>
-
-          <!-- Node 3: Vision -->
-          <div class="neural-node pos-3">
-            <div class="synapse-path">
-              <div class="synapse-pulse"></div>
-            </div>
-            <div class="node-content">
-              <button class="close-node-btn"><i class='bx bx-x'></i></button>
-              <i class="bx bx-show"></i>
-              <h4><?= $lang['about_vision_title'] ?? 'Vision' ?></h4>
-              <p><?= $lang['about_vision_text'] ?? 'Our long-term aspirations.' ?></p>
-              <div class="node-details">
-                <p><?= $lang['about_vision_details'] ?? 'Our vision is to be the globally recognized leader in our field, renowned for our innovative solutions and our transformative impact on technology and society. We aspire to create a future where our work empowers individuals and organizations to achieve their full potential, making the world a more connected and efficient place.' ?></p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Node 4: Mission -->
-          <div class="neural-node pos-4">
-            <div class="synapse-path">
-              <div class="synapse-pulse"></div>
-            </div>
-            <div class="node-content">
-              <button class="close-node-btn"><i class='bx bx-x'></i></button>
-              <i class="bx bx-paper-plane"></i>
-              <h4><?= $lang['about_mission_title'] ?? 'Mission' ?></h4>
-              <p><?= $lang['about_mission_text'] ?? 'Our purpose and what we stand for.' ?></p>
-              <div class="node-details">
-                <p><?= $lang['about_mission_details'] ?? 'Our mission is to deliver superior, cutting-edge products and services that solve complex challenges for our clients. We are committed to operating with integrity, fostering a culture of collaboration and continuous improvement, and building lasting relationships based on trust and mutual success. We strive to be a trusted partner in our clients\' journeys.' ?></p>
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
     </section><!-- End About Us Section -->

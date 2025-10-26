@@ -50,7 +50,7 @@
    * BEYOND IMAGINATION: 3D Tilt Effect for Services and Team sections
    */
   function init3DTiltEffect() {
-    const tiltElements = document.querySelectorAll('.services .icon-box, .team .member-style-2');
+    const tiltElements = document.querySelectorAll('.services .icon-box, .team .celestial-profile');
     tiltElements.forEach(element => {
       element.addEventListener('mousemove', (e) => {
         const rect = element.getBoundingClientRect();
@@ -129,8 +129,7 @@
   const mobileNavContainer = select('.navbar-mobile');
   if (mobileNavContainer) {
     const navContent = select('#navbar ul').outerHTML;
-    const actionsContent = select('.header-right-actions') ? select('.header-right-actions').innerHTML : '';
-    mobileNavContainer.innerHTML = `<div class="navbar-mobile-content">${navContent}<div class="mobile-actions">${actionsContent}</div></div>`;
+    mobileNavContainer.innerHTML = `<div class="navbar-mobile-content">${navContent}</div>`;
     const closeButton = select('#navbar .mobile-nav-toggle').cloneNode(true);
     closeButton.classList.remove('bi-list');
     closeButton.classList.add('bi-x');
@@ -164,147 +163,139 @@
       }, animationDisplayTime);
     }
     if (window.location.hash && select(window.location.hash)) { scrollto(window.location.hash); }
-    GLightbox({ selector: '.project-lightbox' });
     AOS.init({ duration: 1000, easing: 'ease-in-out', once: true, mirror: false });
 
     // --- REPLACED SWIPER INITIALIZATIONS ---
 
-    /**
-     * BEYOND IMAGINATION v4: Pro Masonry Project with Load More & Hero Modal
-     */
-/**
- * BEYOND IMAGINATION: The Kinetic Wall (v20.0 - MODAL VIEW)
- */
-try {
-    const project = document.querySelector('.kinetic-project');
-    if (project) {
+    try {
+      const project = document.querySelector('.kinetic-project');
+      if (project) {
 
-        // --- 1. MODAL LOGIC (New & Unified for Desktop/Mobile) ---
         const modal = document.getElementById('projectModal');
         const wallItems = project.querySelectorAll('.kinetic-track .wall-item');
 
         if (modal) {
-            const modalImage = modal.querySelector('.modal-image');
-            const modalTitle = modal.querySelector('.modal-title');
-            const modalCategories = modal.querySelector('.modal-categories');
-            const modalDescription = modal.querySelector('.modal-description');
-            const modalLink = modal.querySelector('.modal-link');
-            const closeModalBtn = modal.querySelector('.modal-close-btn');
-            const modalBackdrop = modal.querySelector('.modal-backdrop');
+          const modalImage = modal.querySelector('.modal-image');
+          const modalTitle = modal.querySelector('.modal-title');
+          const modalCategories = modal.querySelector('.modal-categories');
+          const modalDescription = modal.querySelector('.modal-description');
+          const modalLink = modal.querySelector('.modal-link');
+          const closeModalBtn = modal.querySelector('.modal-close-btn');
+          const modalBackdrop = modal.querySelector('.modal-backdrop');
 
-            // Function to open the modal
-            const openModal = (itemData) => {
-                // Populate modal with data
-                modalImage.style.backgroundImage = `url('${itemData.image}')`;
-                modalTitle.textContent = itemData.title;
-                modalDescription.textContent = itemData.description;
-                modalLink.href = itemData.url;
+          // Function to open the modal
+          const openModal = (itemData) => {
+            // Populate modal with data
+            modalImage.style.backgroundImage = `url('${itemData.image}')`;
+            modalTitle.textContent = itemData.title;
+            modalDescription.textContent = itemData.description;
+            modalLink.href = itemData.url;
 
-                // Populate categories
-                modalCategories.innerHTML = ''; // Clear previous categories
-                const categories = JSON.parse(itemData.categories);
-                categories.forEach(cat => {
-                    const span = document.createElement('span');
-                    span.textContent = cat;
-                    modalCategories.appendChild(span);
-                });
-
-                // Show the modal
-                modal.classList.add('is-open');
-                document.body.style.overflow = 'hidden'; // Prevent background scrolling
-            };
-
-            // Function to close the modal
-            const closeModal = () => {
-                modal.classList.remove('is-open');
-                document.body.style.overflow = ''; // Restore scrolling
-            };
-
-            // Add click listeners to all project items
-            wallItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    openModal(item.dataset);
-                });
+            // Populate categories
+            modalCategories.innerHTML = ''; // Clear previous categories
+            const categories = JSON.parse(itemData.categories);
+            categories.forEach(cat => {
+              const span = document.createElement('span');
+              span.textContent = cat;
+              modalCategories.appendChild(span);
             });
 
-            // Add listeners to close the modal
-            closeModalBtn.addEventListener('click', closeModal);
-            modalBackdrop.addEventListener('click', closeModal);
+            // Show the modal
+            modal.classList.add('is-open');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+          };
+
+          // Function to close the modal
+          const closeModal = () => {
+            modal.classList.remove('is-open');
+            document.body.style.overflow = ''; // Restore scrolling
+          };
+
+          // Add click listeners to all project items
+          wallItems.forEach(item => {
+            item.addEventListener('click', () => {
+              openModal(item.dataset);
+            });
+          });
+
+          // Add listeners to close the modal
+          closeModalBtn.addEventListener('click', closeModal);
+          modalBackdrop.addEventListener('click', closeModal);
         }
 
         // --- 2. LOAD MORE & DESKTOP ANIMATION LOGIC (Mostly Unchanged) ---
         const setupKineticWall = () => {
-            const isMobile = window.matchMedia("(max-width: 991px)").matches;
+          const isMobile = window.matchMedia("(max-width: 991px)").matches;
 
-            if (isMobile) {
-                // Mobile "Load More" Functionality
-                const loadMoreBtn = document.getElementById('mobile-load-more-btn');
-                if (loadMoreBtn && !loadMoreBtn.hasAttribute('data-listener-attached')) {
-                    const initialVisibleItemsCount = 3;
-                    const itemsToLoadPerClick = 3;
-                    let currentlyVisibleItems = initialVisibleItemsCount;
+          if (isMobile) {
+            // Mobile "Load More" Functionality
+            const loadMoreBtn = document.getElementById('mobile-load-more-btn');
+            if (loadMoreBtn && !loadMoreBtn.hasAttribute('data-listener-attached')) {
+              const initialVisibleItemsCount = 3;
+              const itemsToLoadPerClick = 3;
+              let currentlyVisibleItems = initialVisibleItemsCount;
 
-                    if (wallItems.length <= initialVisibleItemsCount) {
-                        loadMoreBtn.style.display = 'none';
-                    }
+              if (wallItems.length <= initialVisibleItemsCount) {
+                loadMoreBtn.style.display = 'none';
+              }
 
-                    loadMoreBtn.addEventListener('click', () => {
-                        let itemsShown = 0;
-                        for (let i = currentlyVisibleItems; i < wallItems.length && itemsShown < itemsToLoadPerClick; i++) {
-                            if (wallItems[i].classList.contains('is-hidden-mobile')) {
-                                wallItems[i].classList.remove('is-hidden-mobile');
-                                itemsShown++;
-                            }
-                        }
-                        currentlyVisibleItems += itemsShown;
-                        if (currentlyVisibleItems >= wallItems.length) {
-                            loadMoreBtn.style.display = 'none';
-                        }
-                    });
-                    loadMoreBtn.setAttribute('data-listener-attached', 'true');
+              loadMoreBtn.addEventListener('click', () => {
+                let itemsShown = 0;
+                for (let i = currentlyVisibleItems; i < wallItems.length && itemsShown < itemsToLoadPerClick; i++) {
+                  if (wallItems[i].classList.contains('is-hidden-mobile')) {
+                    wallItems[i].classList.remove('is-hidden-mobile');
+                    itemsShown++;
+                  }
                 }
-            } else {
-                // Desktop Infinite Scroll & Prism Effect Logic
-                const track = project.querySelector('.kinetic-track');
-                if (!track || track.children.length === 0) return;
-
-                if (!track.hasAttribute('data-cloned')) {
-                    const originalItems = Array.from(track.children);
-                    originalItems.forEach(item => {
-                        const clone = item.cloneNode(true);
-                        track.appendChild(clone);
-                    });
-                    track.setAttribute('data-cloned', 'true');
+                currentlyVisibleItems += itemsShown;
+                if (currentlyVisibleItems >= wallItems.length) {
+                  loadMoreBtn.style.display = 'none';
                 }
-
-                const itemCount = track.children.length / 2;
-                const duration = itemCount * 8;
-                track.style.setProperty('--scroll-duration', `${duration}s`);
-                
-                wallItems.forEach(item => {
-                    const prismImage = item.querySelector('.item-bg-prism');
-                    item.addEventListener('mousemove', (e) => {
-                        if (prismImage) {
-                            const rect = item.getBoundingClientRect();
-                            const x = e.clientX - rect.left;
-                            const y = e.clientY - rect.top;
-                            const moveX = (x / rect.width - 0.5) * 20;
-                            const moveY = (y / rect.height - 0.5) * 20;
-                            prismImage.style.setProperty('--mouse-x', `${moveX}px`);
-                            prismImage.style.setProperty('--mouse-y', `${moveY}px`);
-                        }
-                    });
-                });
+              });
+              loadMoreBtn.setAttribute('data-listener-attached', 'true');
             }
+          } else {
+            // Desktop Infinite Scroll & Prism Effect Logic
+            const track = project.querySelector('.kinetic-track');
+            if (!track || track.children.length === 0) return;
+
+            if (!track.hasAttribute('data-cloned')) {
+              const originalItems = Array.from(track.children);
+              originalItems.forEach(item => {
+                const clone = item.cloneNode(true);
+                track.appendChild(clone);
+              });
+              track.setAttribute('data-cloned', 'true');
+            }
+
+            const itemCount = track.children.length / 2;
+            const duration = itemCount * 8;
+            track.style.setProperty('--scroll-duration', `${duration}s`);
+
+            wallItems.forEach(item => {
+              const prismImage = item.querySelector('.item-bg-prism');
+              item.addEventListener('mousemove', (e) => {
+                if (prismImage) {
+                  const rect = item.getBoundingClientRect();
+                  const x = e.clientX - rect.left;
+                  const y = e.clientY - rect.top;
+                  const moveX = (x / rect.width - 0.5) * 20;
+                  const moveY = (y / rect.height - 0.5) * 20;
+                  prismImage.style.setProperty('--mouse-x', `${moveX}px`);
+                  prismImage.style.setProperty('--mouse-y', `${moveY}px`);
+                }
+              });
+            });
+          }
         };
 
         setupKineticWall();
         window.addEventListener('resize', setupKineticWall);
+      }
+    } catch (error) {
+      console.error("A critical error occurred in the Kinetic Wall script:", error);
     }
-} catch (error) {
-    console.error("A critical error occurred in the Kinetic Wall script:", error);
-}
-    
+
     /**
      * BEYOND IMAGINATION: Team Swiper (Enhanced version)
      */
@@ -358,26 +349,26 @@ try {
         body: new FormData(form),
         headers: { 'X-Requested-With': 'XMLHttpRequest' }
       })
-      .then(response => {
-        if (response.ok) { return response.text(); } 
-        else { return response.text().then(text => { throw new Error(text || 'Server responded with an error.'); }); }
-      })
-      .then(data => {
-        loading.style.display = 'none';
-        sentMessage.style.display = 'block';
-        form.reset();
-      })
-      .catch(error => {
-        loading.style.display = 'none';
-        errorMessage.textContent = error.message;
-        errorMessage.style.display = 'block';
-      })
-      .finally(() => {
-        setTimeout(() => {
-          sentMessage.style.display = 'none';
-          errorMessage.style.display = 'none';
-        }, 3000);
-      });
+        .then(response => {
+          if (response.ok) { return response.text(); }
+          else { return response.text().then(text => { throw new Error(text || 'Server responded with an error.'); }); }
+        })
+        .then(data => {
+          loading.style.display = 'none';
+          sentMessage.style.display = 'block';
+          form.reset();
+        })
+        .catch(error => {
+          loading.style.display = 'none';
+          errorMessage.textContent = error.message;
+          errorMessage.style.display = 'block';
+        })
+        .finally(() => {
+          setTimeout(() => {
+            sentMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+          }, 3000);
+        });
     });
   }
 
