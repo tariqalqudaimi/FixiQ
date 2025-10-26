@@ -19,10 +19,13 @@ if (file_exists('lang/' . $current_lang . '.php')) {
 }
 
 $settings = $dbcon->query("SELECT * FROM company_settings WHERE id=1")->fetch_assoc();
+
+// --- MODIFIED SQL QUERY (Simpler) ---
+// تم تعديل الاستعلام لإزالة جلب الصور الإضافية بشكل مسبق
 $products_query = $dbcon->query("
     SELECT 
-        p.id, p.name, p.image,
-        GROUP_CONCAT(c.name SEPARATOR ', ') as category_names
+        p.id, p.name, p.name_ar, p.image, p.details_url, p.description, p.description_ar,
+        GROUP_CONCAT(DISTINCT c.name SEPARATOR ', ') as category_names
     FROM 
         products p
     LEFT JOIN 
@@ -34,11 +37,20 @@ $products_query = $dbcon->query("
     ORDER BY 
         p.id DESC
 ");
+
+// Fetch all products into an array to pass to JavaScript
+$products_array = [];
+if ($products_query) {
+    while($row = $products_query->fetch_assoc()) {
+        $products_array[] = $row;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="<?= $current_lang ?>" dir="<?= ($current_lang == 'ar' ? 'rtl' : 'ltr') ?>">
 
 <head>
+  <!-- ... (باقي كود الـ head الخاص بك كما هو) ... -->
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title><?= htmlspecialchars($settings['company_name'] ?? 'Company Name') ?> - <?= $lang['project_link'] ?? 'Projects' ?></title>
@@ -54,136 +66,220 @@ $products_query = $dbcon->query("
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
   <link href="assets/css/style.css" rel="stylesheet">
+<link href="project/style.css" rel="stylesheet">
 </head>
 
 <body>
 
-  <!-- <?php include 'partials/header.php'; ?> -->
+  <main id="main">
+    <section id="portal-showcase" class="section-bg">
+      <div class="container" data-aos="fade-up">
+        <div class="section-title">
+          <h2><?= $lang['project_title'] ?? 'Our Projects' ?></h2>
+          <p><?= $lang['project_description'] ?? 'Check out our beautiful projects.' ?></p>
+        </div>
 
-  <!-- The main container will now be the projects container itself -->
-  <main id="immersive-showcase">
-      <!-- Intro Slide -->
-      <section class="immersive-slide is-intro">
-          <div class="intro-content">
-              <h2 class="section-title"><?= $lang['project_title'] ?? 'Our Projects' ?></h2>
-              <p><?= $lang['project_description'] ?? 'Check out our beautiful projects.' ?></p>
-              <div class="scroll-indicator">
-                  <i class='bx bx-mouse'></i>
-                  <span><?= ($current_lang == 'ar' ? 'مرّر لاستكشاف' : 'Scroll to Explore') ?></span>
+        <div class="portal-grid">
+          <?php if (!empty($products_array)): ?>
+            <?php foreach ($products_array as $index => $product): ?>
+              <!-- تمت إضافة data-product-id لجلب الصور لاحقاً -->
+              <div class="portal-card" data-index="<?= $index ?>" data-product-id="<?= $product['id'] ?>" tabindex="0">
+                <div class="card-background" style="background-image: url('assets/img/portfolio/<?= htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8') ?>');"></div>
+                <div class="card-overlay"></div>
+                <div class="card-content">
+                  <h3><?= ($current_lang == 'ar' && !empty($product['name_ar'])) ? htmlspecialchars($product['name_ar']) : htmlspecialchars($product['name']); ?></h3>
+                </div>
               </div>
-          </div>
-      </section>
-
-      <!-- Projects Slides -->
-      <?php if ($products_query && $products_query->num_rows > 0): ?>
-          <?php foreach ($products_query as $product): 
-              $product_name = ($current_lang == 'ar' && !empty($product['name_ar'])) ? $product['name_ar'] : $product['name'];
-              $product_desc = ($current_lang == 'ar' && !empty($product['description_ar'])) ? $product['description_ar'] : ($product['description'] ?? 'Default description.');
-              $categories = !empty($product['category_names']) ? explode(', ', $product['category_names']) : [];
-          ?>
-              <section class="immersive-slide">
-                  <div class="slide-background" style="background-image: url('assets/img/portfolio/<?= htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8') ?>');"></div>
-                  <div class="slide-overlay"></div>
-                  <div class="slide-content-wrapper container">
-                      <span class="slide-category"><?= htmlspecialchars(implode(' / ', $categories)) ?></span>
-                      <h3 class="slide-title"><?= htmlspecialchars($product_name) ?></h3>
-                      <p class="slide-description"><?= htmlspecialchars(substr($product_desc, 0, 200)) . (strlen($product_desc) > 200 ? '...' : '') ?></p>
-                      <button class="slide-cta"
-                              data-image="assets/img/portfolio/<?= htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8') ?>"
-                              data-title="<?= htmlspecialchars($product_name) ?>"
-                              data-description="<?= htmlspecialchars($product_desc) ?>"
-                              data-url="<?= htmlspecialchars($product['details_url'] ?? '#', ENT_QUOTES, 'UTF-8') ?>"
-                              data-categories='<?= htmlspecialchars(json_encode($categories), ENT_QUOTES, 'UTF-8') ?>'>
-                          <?= ($current_lang == 'ar' ? 'عرض التفاصيل' : 'View Details') ?>
-                      </button>
-                  </div>
-              </section>
-          <?php endforeach; ?>
-      <?php endif; ?>
-
+            <?php endforeach; ?>
+          <?php endif; ?>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <!-- Modal Structure (Using non-conflicting classes) -->
-  <div class="holo-modal" id="holoReelModal">
-    <div class="holo-modal__backdrop"></div>
-    <div class="holo-modal__content">
-        <button class="holo-modal__close-btn"><i class='bx bx-x'></i></button>
-        <div class="holo-modal__body">
-            <div class="holo-modal__image"></div>
-            <div class="holo-modal__details">
-                <h2 class="holo-modal__title"></h2>
-                <div class="holo-modal__categories"></div>
-                <p class="holo-modal__description"></p>
-                <a href="#" class="holo-modal__link btn-visit-website" target="_blank"><?= $lang['visit_website_btn'] ?? 'Visit Website' ?></a>
-            </div>
-        </div>
+  <!-- This is the Slideshow structure, initially hidden -->
+  <div class="portal-slideshow">
+    <button class="slideshow-close-btn"><i class='bx bx-x'></i></button>
+    <div class="slideshow-nav prev"><i class='bx bx-chevron-left'></i></div>
+    <div class="slideshow-nav next"><i class='bx bx-chevron-right'></i></div>
+    <div class="slideshow-track">
+      <!-- Slides will be injected here by JavaScript -->
     </div>
   </div>
 
-  <?php include 'partials/footer.php'; ?>
-
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Vendor JS Files -->
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  
-  <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+ <!-- Portal Showcase Logic (New Version) -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const allProjectsData = <?= json_encode($products_array, JSON_UNESCAPED_UNICODE); ?>;
+    const currentLang = '<?= $current_lang; ?>';
 
-  <!-- Immersive Showcase Logic -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // --- Modal Logic ---
-        const projectModal = document.getElementById('holoReelModal');
-        if (!projectModal) return;
+    const grid = document.querySelector('.portal-grid');
+    const slideshow = document.querySelector('.portal-slideshow');
+    const slideshowTrack = slideshow.querySelector('.slideshow-track');
+    const closeBtn = slideshow.querySelector('.slideshow-close-btn');
+    const nextBtn = slideshow.querySelector('.slideshow-nav.next');
+    const prevBtn = slideshow.querySelector('.slideshow-nav.prev');
+    const htmlEl = document.documentElement;
+    
+    if (!grid || !slideshow || allProjectsData.length === 0) return;
 
-        const modalImage = projectModal.querySelector('.holo-modal__image');
-        const modalTitle = projectModal.querySelector('.holo-modal__title');
-        const modalCategoriesContainer = projectModal.querySelector('.holo-modal__categories');
-        const modalDescription = projectModal.querySelector('.holo-modal__description');
-        const modalLink = projectModal.querySelector('.holo-modal__link');
+    // إنشاء عناصر السلايد الأساسية بدون الصور المصغرة
+    const slideElements = allProjectsData.map(product => {
+        const slide = document.createElement('div');
+        slide.className = 'slideshow-slide';
+        // إضافة معرف المنتج للسلايد للوصول إليه لاحقاً
+        slide.dataset.productId = product.id;
 
-        const openModal = (button) => {
-            modalImage.style.backgroundImage = `url('${button.dataset.image}')`;
-            modalTitle.textContent = button.dataset.title;
-            modalDescription.textContent = button.dataset.description;
-            const categories = JSON.parse(button.dataset.categories);
-            modalCategoriesContainer.innerHTML = '';
-            if (categories) {
-                categories.forEach(cat => {
-                    const span = document.createElement('span');
-                    span.textContent = cat;
-                    modalCategoriesContainer.appendChild(span);
-                });
+        const productName = (currentLang === 'ar' && product.name_ar) ? product.name_ar : product.name;
+        const productDesc = (currentLang === 'ar' && product.description_ar) ? product.description_ar : (product.description || '');
+        const categories = product.category_names || '';
+        const visitText = currentLang === 'ar' ? 'زيارة الموقع' : 'Visit Website';
+
+        slide.innerHTML = `
+            <div class="slide-bg-container">
+                <div class="slide-bg" style="background-image: url('assets/img/portfolio/${product.image}');"></div>
+            </div>
+            <div class="slide-details">
+                <div class="container">
+                    <span class="slide-category">${categories}</span>
+                    <h2 class="slide-title">${productName}</h2>
+                    
+                    ${(product.details_url && product.details_url !== '#') ? `<a href="${product.details_url}" class="slide-link" target="_blank">${visitText}</a>` : ''}
+                    <!-- حاوية الصور المصغرة، ستكون فارغة في البداية -->
+                    <div class="slide-thumbnails-container"></div>
+                </div>
+            </div>
+        `;
+        return slide;
+    });
+    slideshowTrack.append(...slideElements);
+    
+    let currentIndex = 0;
+    let isAnimating = false;
+
+    // --- NEW: Function to load additional images on demand ---
+    async function loadThumbnailsForSlide(slideElement) {
+        // التحقق إذا تم تحميل الصور مسبقاً لمنع الطلبات المتكررة
+        if (slideElement.dataset.imagesLoaded === 'true') {
+            return;
+        }
+
+        const productId = slideElement.dataset.productId;
+        const mainImage = allProjectsData.find(p => p.id == productId).image;
+        const thumbnailsContainer = slideElement.querySelector('.slide-thumbnails-container');
+        thumbnailsContainer.innerHTML = '<span>Loading...</span>'; // رسالة تحميل مؤقتة
+
+        try {
+            const response = await fetch(`project/get_product_images.php?id=${productId}`);
+            if (!response.ok) throw new Error('Network response was not ok');
+            
+            const additionalImages = await response.json();
+            
+            // دمج الصورة الرئيسية مع الصور الإضافية
+            const allImages = [mainImage, ...additionalImages];
+            
+            thumbnailsContainer.innerHTML = ''; // إفراغ حاوية التحميل
+
+            // عرض المعرض فقط إذا كان هناك أكثر من صورة
+            if (allImages.length > 1) {
+                const thumbnailsHTML = allImages.map((img, index) => `
+                    <div 
+                      class="thumbnail-item ${index === 0 ? 'is-active' : ''}" 
+                      style="background-image: url('assets/img/portfolio/${img}');"
+                      data-src="assets/img/portfolio/${img}">
+                    </div>
+                `).join('');
+                thumbnailsContainer.innerHTML = thumbnailsHTML;
             }
-            if (button.dataset.url && button.dataset.url !== '#') {
-                modalLink.href = button.dataset.url;
-                modalLink.style.display = 'inline-block';
-            } else {
-                modalLink.style.display = 'none';
-            }
-            document.body.style.overflow = 'hidden';
-            projectModal.classList.add('is-open');
-        };
+            
+            // وضع علامة تفيد بأن الصور قد تم تحميلها
+            slideElement.dataset.imagesLoaded = 'true';
 
-        const closeModal = () => {
-            document.body.style.overflow = '';
-            projectModal.classList.remove('is-open');
-        };
+        } catch (error) {
+            console.error('Failed to fetch additional images:', error);
+            thumbnailsContainer.innerHTML = '<span>Failed to load images.</span>';
+        }
+    }
 
-        document.querySelectorAll('.slide-cta').forEach(button => {
-            button.addEventListener('click', () => openModal(button));
+    function updateSlideshow(newIndex, direction) {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        const oldIndex = currentIndex;
+        currentIndex = (newIndex + slideElements.length) % slideElements.length;
+
+        const oldSlide = slideElements[oldIndex];
+        const newSlide = slideElements[currentIndex];
+        
+        // --- NEW: Load images for the new active slide ---
+        loadThumbnailsForSlide(newSlide);
+
+        const inClass = direction === 'next' ? 'slide-in-next' : 'slide-in-prev';
+        const outClass = direction === 'next' ? 'slide-out-next' : 'slide-out-prev';
+        
+        newSlide.classList.add('is-active', inClass);
+        oldSlide.classList.add(outClass);
+
+        setTimeout(() => {
+            oldSlide.classList.remove('is-active', outClass);
+            newSlide.classList.remove(inClass);
+            isAnimating = false;
+        }, 600);
+    }
+    
+    function openSlideshow(startIndex) {
+        currentIndex = startIndex;
+        const firstSlide = slideElements[startIndex];
+        
+        slideElements.forEach((slide, index) => {
+            slide.classList.toggle('is-active', index === startIndex);
         });
+        
+        // تحميل الصور لأول سلايد يتم فتحه
+        loadThumbnailsForSlide(firstSlide);
+        
+        htmlEl.classList.add('slideshow-open');
+    }
+    
+    function closeSlideshow() {
+        htmlEl.classList.remove('slideshow-open');
+    }
 
-        projectModal.querySelector('.holo-modal__backdrop').addEventListener('click', closeModal);
-        projectModal.querySelector('.holo-modal__close-btn').addEventListener('click', closeModal);
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && projectModal.classList.contains('is-open')) closeModal();
+    nextBtn.addEventListener('click', () => updateSlideshow(currentIndex + 1, 'next'));
+    prevBtn.addEventListener('click', () => updateSlideshow(currentIndex - 1, 'prev'));
+
+    grid.querySelectorAll('.portal-card').forEach(card => {
+        card.addEventListener('click', () => {
+            openSlideshow(parseInt(card.dataset.index, 10));
         });
     });
-  </script>
+    
+    closeBtn.addEventListener('click', closeSlideshow);
+
+    // منطق النقر على الصور المصغرة (Thumbnails) يبقى كما هو
+    slideshowTrack.addEventListener('click', (e) => {
+        if (e.target.classList.contains('thumbnail-item')) {
+            const clickedThumbnail = e.target;
+            const activeSlide = slideshowTrack.querySelector('.slideshow-slide.is-active');
+            if (!activeSlide) return;
+
+            const newImageSrc = clickedThumbnail.dataset.src;
+            const slideBg = activeSlide.querySelector('.slide-bg');
+            slideBg.style.backgroundImage = `url('${newImageSrc}')`;
+            
+            const parentContainer = clickedThumbnail.parentElement;
+            parentContainer.querySelector('.thumbnail-item.is-active')?.classList.remove('is-active');
+            clickedThumbnail.classList.add('is-active');
+        }
+    });
+});
+</script>
 </body>
 </html>
