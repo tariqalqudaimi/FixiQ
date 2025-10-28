@@ -48,7 +48,20 @@ if ($products_query) {
     $products_array[] = $row;
   }
 }
-
+// --- جلب بيانات قسم "من نحن" ---
+$about_main_description = null;
+$about_nodes = [];
+$about_query = $dbcon->query("SELECT * FROM about_sections ORDER BY id ASC");
+if ($about_query) {
+    while ($row = $about_query->fetch_assoc()) {
+        if ($row['section_key'] === 'main_description') {
+            $about_main_description = $row;
+        } else {
+            $about_nodes[] = $row;
+        }
+    }
+}
+?>
 
 
 ?>
@@ -133,95 +146,56 @@ if ($products_query) {
   </section><!-- End Hero -->
 
   <main id="main">
-    <!-- ======= About Us Section (NEURAL NEBULA VERSION) ======= -->
+    <!-- ======= About Us Section (NEURAL NEBULA VERSION) - UPDATED ======= -->
     <section id="about" class="about section-bg">
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
           <h2><?= $lang['about_title'] ?? 'About Us' ?></h2>
-           <p><?= $lang['about_description'] ?? 'Explore the core of our identity' ?></p> 
+          <?php if ($about_main_description): ?>
+            <div><?= ($current_lang == 'ar' && !empty($about_main_description['details_ar'])) ? $about_main_description['details_ar'] : $about_main_description['details']; ?></div>
+          <?php endif; ?>
         </div>
 
-        <div class="about-us-container">
-          <!-- Animated Particle Background -->
-          <canvas id="particle-canvas"></canvas>
+        <?php if (!empty($about_nodes)): ?>
+          <div class="about-us-container">
+            <!-- Animated Particle Background -->
+            <canvas id="particle-canvas-about"></canvas> <!-- Changed ID to avoid conflict -->
 
-          <!-- The Neural Core -->
-          <div class="neural-core">
-            <div class="core-glow"></div>
-            <i class='bx bxs-brain'></i>
-          </div>
+            <!-- The Neural Core -->
+            <div class="neural-core">
+              <div class="core-glow"></div>
+              <i class='bx bxs-brain'></i>
+            </div>
 
-          <!-- NEW: The central point where all synapse lines will originate from -->
-          <div class="synapse-origin">
-            <div class="synapse-path synapse-path-1">
-              <div class="synapse-pulse"></div>
-            </div>
-            <div class="synapse-path synapse-path-2">
-              <div class="synapse-pulse"></div>
-            </div>
-            <div class="synapse-path synapse-path-3">
-              <div class="synapse-pulse"></div>
-            </div>
-            <div class="synapse-path synapse-path-4">
-              <div class="synapse-pulse"></div>
-            </div>
-          </div>
-
-          <!-- The wrapper for the nodes -->
-          <div class="neural-nodes-wrapper">
-            <div class="neural-node pos-1">
-              <div class="node-content">
-                <button class="close-node-btn"><i class='bx bx-x'></i></button>
-                <i class="bx bx-buildings"></i>
-                <h4><?= $lang['about_company_title'] ?? 'About' ?></h4>
-                <p><?= $lang['about_company_text'] ?? 'A brief description of the company.' ?></p>
-                <div class="node-details">
-                  <p><?= $lang['about_company_details'] ?? 'Here is the full, detailed information about our company...' ?></p>
+            <!-- Synapse paths generated dynamically -->
+            <div class="synapse-origin">
+              <?php foreach (array_keys($about_nodes) as $index): ?>
+                <div class="synapse-path synapse-path-<?= $index + 1 ?>">
+                  <div class="synapse-pulse"></div>
                 </div>
-              </div>
+              <?php endforeach; ?>
             </div>
 
-            <!-- Node 2: Goals -->
-            <div class="neural-node pos-2">
-              <div class="node-content">
-                <button class="close-node-btn"><i class='bx bx-x'></i></button>
-                <i class="bx bx-target-lock"></i>
-                <h4><?= $lang['about_goals_title'] ?? 'Goals' ?></h4>
-                <p><?= $lang['about_goals_text'] ?? 'Our key objectives and targets.' ?></p>
-                <div class="node-details">
-                  <p><?= $lang['about_goals_details'] ?? 'Our goals are centered around innovation, customer satisfaction...' ?></p>
+            <!-- Nodes generated dynamically -->
+            <div class="neural-nodes-wrapper">
+              <?php foreach ($about_nodes as $index => $node): ?>
+                <div class="neural-node pos-<?= $index + 1 ?>">
+                  <div class="node-content">
+                    <button class="close-node-btn"><i class='bx bx-x'></i></button>
+                    <i class="<?= htmlspecialchars($node['icon_class']) ?>"></i>
+                    <h4><?= htmlspecialchars(($current_lang == 'ar' && !empty($node['title_ar'])) ? $node['title_ar'] : $node['title']) ?></h4>
+                    <div class="node-details">
+                        <!-- No htmlspecialchars here to render HTML content from CKEditor -->
+                        <?= ($current_lang == 'ar' && !empty($node['details_ar'])) ? $node['details_ar'] : $node['details'] ?>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-
-            <!-- Node 3: Vision -->
-            <div class="neural-node pos-3">
-              <div class="node-content">
-                <button class="close-node-btn"><i class='bx bx-x'></i></button>
-                <i class="bx bx-show"></i>
-                <h4><?= $lang['about_vision_title'] ?? 'Vision' ?></h4>
-                <p><?= $lang['about_vision_text'] ?? 'Our long-term aspirations.' ?></p>
-                <div class="node-details">
-                  <p><?= $lang['about_vision_details'] ?? 'Our vision is to be the globally recognized leader in our field...' ?></p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Node 4: Mission -->
-            <div class="neural-node pos-4">
-              <div class="node-content">
-                <button class="close-node-btn"><i class='bx bx-x'></i></button>
-                <i class="bx bx-paper-plane"></i>
-                <h4><?= $lang['about_mission_title'] ?? 'Mission' ?></h4>
-                <p><?= $lang['about_mission_text'] ?? 'Our purpose and what we stand for.' ?></p>
-                <div class="node-details">
-                  <p><?= $lang['about_mission_details'] ?? 'Our mission is to deliver superior, cutting-edge products...' ?></p>
-                </div>
-              </div>
+              <?php endforeach; ?>
             </div>
           </div>
-        </div>
+        <?php endif; ?>
+
       </div>
     </section><!-- End About Us Section -->
     <!-- ======= Services Section ======= -->

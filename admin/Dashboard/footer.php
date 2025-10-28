@@ -38,7 +38,8 @@ if (!is_turbolinks_request()) {
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-
+ <!-- CKEditor 5 Script -->
+<script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/classic/ckeditor.js"></script>
     <script>
         document.addEventListener('turbolinks:load', function() {
             if ($('#example').length) { 
@@ -46,6 +47,19 @@ if (!is_turbolinks_request()) {
             }
             
         });
+
+  // ابحث عن كل حقول التكست التي تحمل الكلاس 'ckeditor-editor'
+    const allEditors = document.querySelectorAll('.ckeditor-editor');
+    
+    // قم بتطبيق المحرر على كل حقل منهم
+    allEditors.forEach(editor => {
+        ClassicEditor
+            .create(editor)
+            .catch(error => {
+                console.error(error);
+            });
+    });
+
     </script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js" defer></script>

@@ -66,6 +66,7 @@ require_once '../Database/db.php';
                         
                         <li class="menu-title">Content Management</li>
                         <li><a href="../CompanyInfo/edit_company_info.php"><i class="bi bi-building"></i> <span> Website Settings </span></a></li>
+                         <li><a href="../About/manage_about.php"><i class="bi bi-about"></i> <span> About </span></a></li>
                         <li>
                             <a href="javascript: void(0);"><i class="bi bi-box-seam"></i><span class="badge badge-primary badge-pill float-right"><?= $product_count ?></span> <span> Products </span></a>
                             <ul class="nav-second-level" aria-expanded="false">

@@ -9,7 +9,7 @@
                 <li><a class="nav-link scrollto active" href="index.php#hero"><?= $lang['home_link'] ?? 'Home' ?></a></li>
 
                 
-                <li class="dropdown"><a href="#About"><span><?= $lang['about_link'] ?? 'About' ?></span> <i class="bi bi-chevron-down"></i></a>
+                <li class="dropdown"><a href=""><span><?= $lang['about_link'] ?? 'About' ?></span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
                         <li><a href="index.php#features"><?= $lang['features_link'] ?? 'Features' ?></a></li>
                         <li><a href="index.php#team"><?= $lang['team_link'] ?? 'Team' ?></a></li>
