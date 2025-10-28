@@ -44,9 +44,9 @@ $products_query = $dbcon->query("
 // Fetch all products into an array to pass to JavaScript
 $products_array = [];
 if ($products_query) {
-    while($row = $products_query->fetch_assoc()) {
-        $products_array[] = $row;
-    }
+  while ($row = $products_query->fetch_assoc()) {
+    $products_array[] = $row;
+  }
 }
 
 
@@ -139,7 +139,7 @@ if ($products_query) {
 
         <div class="section-title">
           <h2><?= $lang['about_title'] ?? 'About Us' ?></h2>
-          <!-- <p><?= $lang['about_description'] ?? 'Explore the core of our identity' ?></p> -->
+           <p><?= $lang['about_description'] ?? 'Explore the core of our identity' ?></p> 
         </div>
 
         <div class="about-us-container">
@@ -152,75 +152,75 @@ if ($products_query) {
             <i class='bx bxs-brain'></i>
           </div>
 
-          <!-- Connecting Synapses and Nodes -->
-          <!-- Node 1: About -->
-          <div class="neural-node pos-1">
-            <div class="synapse-path">
+          <!-- NEW: The central point where all synapse lines will originate from -->
+          <div class="synapse-origin">
+            <div class="synapse-path synapse-path-1">
               <div class="synapse-pulse"></div>
             </div>
-            <div class="node-content">
-              <button class="close-node-btn"><i class='bx bx-x'></i></button>
-              <i class="bx bx-buildings"></i>
-              <h4><?= $lang['about_company_title'] ?? 'About' ?></h4>
-              <p><?= $lang['about_company_text'] ?? 'A brief description of the company.' ?></p>
-              <div class="node-details">
-                <p><?= $lang['about_company_details'] ?? 'Here is the full, detailed information about our company. We explore our history, our core values, and the foundational principles that guide every decision we make. Our journey began with a simple idea, and through dedication and a commitment to excellence, we have grown into a leader in our industry.' ?></p>
-              </div>
+            <div class="synapse-path synapse-path-2">
+              <div class="synapse-pulse"></div>
+            </div>
+            <div class="synapse-path synapse-path-3">
+              <div class="synapse-pulse"></div>
+            </div>
+            <div class="synapse-path synapse-path-4">
+              <div class="synapse-pulse"></div>
             </div>
           </div>
 
-          <!-- Node 2: Goals -->
-          <div class="neural-node pos-2">
-            <div class="synapse-path">
-              <div class="synapse-pulse"></div>
+          <!-- The wrapper for the nodes -->
+          <div class="neural-nodes-wrapper">
+            <div class="neural-node pos-1">
+              <div class="node-content">
+                <button class="close-node-btn"><i class='bx bx-x'></i></button>
+                <i class="bx bx-buildings"></i>
+                <h4><?= $lang['about_company_title'] ?? 'About' ?></h4>
+                <p><?= $lang['about_company_text'] ?? 'A brief description of the company.' ?></p>
+                <div class="node-details">
+                  <p><?= $lang['about_company_details'] ?? 'Here is the full, detailed information about our company...' ?></p>
+                </div>
+              </div>
             </div>
-            <div class="node-content">
-              <button class="close-node-btn"><i class='bx bx-x'></i></button>
 
-              <!-- تم تعديل الأيقونة هنا -->
-              <i class="bx bx-target-lock"></i>
+            <!-- Node 2: Goals -->
+            <div class="neural-node pos-2">
+              <div class="node-content">
+                <button class="close-node-btn"><i class='bx bx-x'></i></button>
+                <i class="bx bx-target-lock"></i>
+                <h4><?= $lang['about_goals_title'] ?? 'Goals' ?></h4>
+                <p><?= $lang['about_goals_text'] ?? 'Our key objectives and targets.' ?></p>
+                <div class="node-details">
+                  <p><?= $lang['about_goals_details'] ?? 'Our goals are centered around innovation, customer satisfaction...' ?></p>
+                </div>
+              </div>
+            </div>
 
-              <h4><?= $lang['about_goals_title'] ?? 'Goals' ?></h4>
-              <p><?= $lang['about_goals_text'] ?? 'Our key objectives and targets.' ?></p>
+            <!-- Node 3: Vision -->
+            <div class="neural-node pos-3">
+              <div class="node-content">
+                <button class="close-node-btn"><i class='bx bx-x'></i></button>
+                <i class="bx bx-show"></i>
+                <h4><?= $lang['about_vision_title'] ?? 'Vision' ?></h4>
+                <p><?= $lang['about_vision_text'] ?? 'Our long-term aspirations.' ?></p>
+                <div class="node-details">
+                  <p><?= $lang['about_vision_details'] ?? 'Our vision is to be the globally recognized leader in our field...' ?></p>
+                </div>
+              </div>
+            </div>
 
-              <div class="node-details">
-                <p><?= $lang['about_goals_details'] ?? 'Our goals are centered around innovation, customer satisfaction, and sustainable growth. We aim to continuously push the boundaries of what is possible, delivering exceptional value to our clients while fostering a positive impact on the community and the environment. We have set clear, measurable objectives for the coming years.' ?></p>
+            <!-- Node 4: Mission -->
+            <div class="neural-node pos-4">
+              <div class="node-content">
+                <button class="close-node-btn"><i class='bx bx-x'></i></button>
+                <i class="bx bx-paper-plane"></i>
+                <h4><?= $lang['about_mission_title'] ?? 'Mission' ?></h4>
+                <p><?= $lang['about_mission_text'] ?? 'Our purpose and what we stand for.' ?></p>
+                <div class="node-details">
+                  <p><?= $lang['about_mission_details'] ?? 'Our mission is to deliver superior, cutting-edge products...' ?></p>
+                </div>
               </div>
             </div>
           </div>
-
-          <!-- Node 3: Vision -->
-          <div class="neural-node pos-3">
-            <div class="synapse-path">
-              <div class="synapse-pulse"></div>
-            </div>
-            <div class="node-content">
-              <button class="close-node-btn"><i class='bx bx-x'></i></button>
-              <i class="bx bx-show"></i>
-              <h4><?= $lang['about_vision_title'] ?? 'Vision' ?></h4>
-              <p><?= $lang['about_vision_text'] ?? 'Our long-term aspirations.' ?></p>
-              <div class="node-details">
-                <p><?= $lang['about_vision_details'] ?? 'Our vision is to be the globally recognized leader in our field, renowned for our innovative solutions and our transformative impact on technology and society. We aspire to create a future where our work empowers individuals and organizations to achieve their full potential, making the world a more connected and efficient place.' ?></p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Node 4: Mission -->
-          <div class="neural-node pos-4">
-            <div class="synapse-path">
-              <div class="synapse-pulse"></div>
-            </div>
-            <div class="node-content">
-              <button class="close-node-btn"><i class='bx bx-x'></i></button>
-              <i class="bx bx-paper-plane"></i>
-              <h4><?= $lang['about_mission_title'] ?? 'Mission' ?></h4>
-              <p><?= $lang['about_mission_text'] ?? 'Our purpose and what we stand for.' ?></p>
-              <div class="node-details">
-                <p><?= $lang['about_mission_details'] ?? 'Our mission is to deliver superior, cutting-edge products and services that solve complex challenges for our clients. We are committed to operating with integrity, fostering a culture of collaboration and continuous improvement, and building lasting relationships based on trust and mutual success. We strive to be a trusted partner in our clients\' journeys.' ?></p>
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
     </section><!-- End About Us Section -->
@@ -278,7 +278,7 @@ if ($products_query) {
       </div>
     </section><!-- End Features Section -->
 
-   <section id="portal-showcase" class="section-bg">
+    <section id="portal-showcase" class="section-bg">
       <div class="container" data-aos="fade-up">
         <div class="section-title">
           <h2><?= $lang['project_title'] ?? 'Our Projects' ?></h2>
@@ -300,22 +300,22 @@ if ($products_query) {
           <?php endif; ?>
         </div>
       </div>
-       <div class="modal_btn_see">
+      <div class="modal_btn_see">
         <a href="project.php" class="modal-link btn-visit-website project_see_more " target="_blank"><?= $lang['see_project'] ?? 'See All Projects' ?></a>
       </div>
-       <!-- This is the Slideshow structure, initially hidden -->
-  <div class="portal-slideshow">
-    <button class="slideshow-close-btn"><i class='bx bx-x'></i></button>
-    <div class="slideshow-nav prev"><i class='bx bx-chevron-left'></i></div>
-    <div class="slideshow-nav next"><i class='bx bx-chevron-right'></i></div>
-    <div class="slideshow-track">
-      <!-- Slides will be injected here by JavaScript -->
-    </div>
-  </div>
+      <!-- This is the Slideshow structure, initially hidden -->
+      <div class="portal-slideshow">
+        <button class="slideshow-close-btn"><i class='bx bx-x'></i></button>
+        <div class="slideshow-nav prev"><i class='bx bx-chevron-left'></i></div>
+        <div class="slideshow-nav next"><i class='bx bx-chevron-right'></i></div>
+        <div class="slideshow-track">
+          <!-- Slides will be injected here by JavaScript -->
+        </div>
+      </div>
     </section>
- 
 
- 
+
+
     <!-- ======= Team Section ======= -->
     <section id="team" class="team section-bg">
       <div class="container" data-aos="fade-up">
@@ -531,23 +531,23 @@ if ($products_query) {
         });
       }
 
-      
+
       //project js
-       const allProjectsData = <?= json_encode($products_array, JSON_UNESCAPED_UNICODE); ?>;
-    const currentLang = '<?= $current_lang; ?>';
+      const allProjectsData = <?= json_encode($products_array, JSON_UNESCAPED_UNICODE); ?>;
+      const currentLang = '<?= $current_lang; ?>';
 
-    const grid = document.querySelector('.portal-grid');
-    const slideshow = document.querySelector('.portal-slideshow');
-    const slideshowTrack = slideshow.querySelector('.slideshow-track');
-    const closeBtn = slideshow.querySelector('.slideshow-close-btn');
-    const nextBtn = slideshow.querySelector('.slideshow-nav.next');
-    const prevBtn = slideshow.querySelector('.slideshow-nav.prev');
-    const htmlEl = document.documentElement;
-    
-    if (!grid || !slideshow || allProjectsData.length === 0) return;
+      const grid = document.querySelector('.portal-grid');
+      const slideshow = document.querySelector('.portal-slideshow');
+      const slideshowTrack = slideshow.querySelector('.slideshow-track');
+      const closeBtn = slideshow.querySelector('.slideshow-close-btn');
+      const nextBtn = slideshow.querySelector('.slideshow-nav.next');
+      const prevBtn = slideshow.querySelector('.slideshow-nav.prev');
+      const htmlEl = document.documentElement;
 
-    // إنشاء عناصر السلايد الأساسية بدون الصور المصغرة
-    const slideElements = allProjectsData.map(product => {
+      if (!grid || !slideshow || allProjectsData.length === 0) return;
+
+      // إنشاء عناصر السلايد الأساسية بدون الصور المصغرة
+      const slideElements = allProjectsData.map(product => {
         const slide = document.createElement('div');
         slide.className = 'slideshow-slide';
         // إضافة معرف المنتج للسلايد للوصول إليه لاحقاً
@@ -574,17 +574,17 @@ if ($products_query) {
             </div>
         `;
         return slide;
-    });
-    slideshowTrack.append(...slideElements);
-    
-    let currentIndex = 0;
-    let isAnimating = false;
+      });
+      slideshowTrack.append(...slideElements);
 
-    // --- NEW: Function to load additional images on demand ---
-    async function loadThumbnailsForSlide(slideElement) {
+      let currentIndex = 0;
+      let isAnimating = false;
+
+      // --- NEW: Function to load additional images on demand ---
+      async function loadThumbnailsForSlide(slideElement) {
         // التحقق إذا تم تحميل الصور مسبقاً لمنع الطلبات المتكررة
         if (slideElement.dataset.imagesLoaded === 'true') {
-            return;
+          return;
         }
 
         const productId = slideElement.dataset.productId;
@@ -593,38 +593,38 @@ if ($products_query) {
         thumbnailsContainer.innerHTML = '<span>Loading...</span>'; // رسالة تحميل مؤقتة
 
         try {
-            const response = await fetch(`project/get_product_images.php?id=${productId}`);
-            if (!response.ok) throw new Error('Network response was not ok');
-            
-            const additionalImages = await response.json();
-            
-            // دمج الصورة الرئيسية مع الصور الإضافية
-            const allImages = [mainImage, ...additionalImages];
-            
-            thumbnailsContainer.innerHTML = ''; // إفراغ حاوية التحميل
+          const response = await fetch(`project/get_product_images.php?id=${productId}`);
+          if (!response.ok) throw new Error('Network response was not ok');
 
-            // عرض المعرض فقط إذا كان هناك أكثر من صورة
-            if (allImages.length > 1) {
-                const thumbnailsHTML = allImages.map((img, index) => `
+          const additionalImages = await response.json();
+
+          // دمج الصورة الرئيسية مع الصور الإضافية
+          const allImages = [mainImage, ...additionalImages];
+
+          thumbnailsContainer.innerHTML = ''; // إفراغ حاوية التحميل
+
+          // عرض المعرض فقط إذا كان هناك أكثر من صورة
+          if (allImages.length > 1) {
+            const thumbnailsHTML = allImages.map((img, index) => `
                     <div 
                       class="thumbnail-item ${index === 0 ? 'is-active' : ''}" 
                       style="background-image: url('assets/img/portfolio/${img}');"
                       data-src="assets/img/portfolio/${img}">
                     </div>
                 `).join('');
-                thumbnailsContainer.innerHTML = thumbnailsHTML;
-            }
-            
-            // وضع علامة تفيد بأن الصور قد تم تحميلها
-            slideElement.dataset.imagesLoaded = 'true';
+            thumbnailsContainer.innerHTML = thumbnailsHTML;
+          }
+
+          // وضع علامة تفيد بأن الصور قد تم تحميلها
+          slideElement.dataset.imagesLoaded = 'true';
 
         } catch (error) {
-            console.error('Failed to fetch additional images:', error);
-            thumbnailsContainer.innerHTML = '<span>Failed to load images.</span>';
+          console.error('Failed to fetch additional images:', error);
+          thumbnailsContainer.innerHTML = '<span>Failed to load images.</span>';
         }
-    }
+      }
 
-    function updateSlideshow(newIndex, direction) {
+      function updateSlideshow(newIndex, direction) {
         if (isAnimating) return;
         isAnimating = true;
 
@@ -633,68 +633,68 @@ if ($products_query) {
 
         const oldSlide = slideElements[oldIndex];
         const newSlide = slideElements[currentIndex];
-        
+
         // --- NEW: Load images for the new active slide ---
         loadThumbnailsForSlide(newSlide);
 
         const inClass = direction === 'next' ? 'slide-in-next' : 'slide-in-prev';
         const outClass = direction === 'next' ? 'slide-out-next' : 'slide-out-prev';
-        
+
         newSlide.classList.add('is-active', inClass);
         oldSlide.classList.add(outClass);
 
         setTimeout(() => {
-            oldSlide.classList.remove('is-active', outClass);
-            newSlide.classList.remove(inClass);
-            isAnimating = false;
+          oldSlide.classList.remove('is-active', outClass);
+          newSlide.classList.remove(inClass);
+          isAnimating = false;
         }, 600);
-    }
-    
-    function openSlideshow(startIndex) {
+      }
+
+      function openSlideshow(startIndex) {
         currentIndex = startIndex;
         const firstSlide = slideElements[startIndex];
-        
+
         slideElements.forEach((slide, index) => {
-            slide.classList.toggle('is-active', index === startIndex);
+          slide.classList.toggle('is-active', index === startIndex);
         });
-        
+
         // تحميل الصور لأول سلايد يتم فتحه
         loadThumbnailsForSlide(firstSlide);
-        
+
         htmlEl.classList.add('slideshow-open');
-    }
-    
-    function closeSlideshow() {
+      }
+
+      function closeSlideshow() {
         htmlEl.classList.remove('slideshow-open');
-    }
+      }
 
-    nextBtn.addEventListener('click', () => updateSlideshow(currentIndex + 1, 'next'));
-    prevBtn.addEventListener('click', () => updateSlideshow(currentIndex - 1, 'prev'));
+      nextBtn.addEventListener('click', () => updateSlideshow(currentIndex + 1, 'next'));
+      prevBtn.addEventListener('click', () => updateSlideshow(currentIndex - 1, 'prev'));
 
-    grid.querySelectorAll('.portal-card').forEach(card => {
+      grid.querySelectorAll('.portal-card').forEach(card => {
         card.addEventListener('click', () => {
-            openSlideshow(parseInt(card.dataset.index, 10));
+          openSlideshow(parseInt(card.dataset.index, 10));
         });
-    });
-    
-    closeBtn.addEventListener('click', closeSlideshow);
+      });
 
-    // منطق النقر على الصور المصغرة (Thumbnails) يبقى كما هو
-    slideshowTrack.addEventListener('click', (e) => {
+      closeBtn.addEventListener('click', closeSlideshow);
+
+      // منطق النقر على الصور المصغرة (Thumbnails) يبقى كما هو
+      slideshowTrack.addEventListener('click', (e) => {
         if (e.target.classList.contains('thumbnail-item')) {
-            const clickedThumbnail = e.target;
-            const activeSlide = slideshowTrack.querySelector('.slideshow-slide.is-active');
-            if (!activeSlide) return;
+          const clickedThumbnail = e.target;
+          const activeSlide = slideshowTrack.querySelector('.slideshow-slide.is-active');
+          if (!activeSlide) return;
 
-            const newImageSrc = clickedThumbnail.dataset.src;
-            const slideBg = activeSlide.querySelector('.slide-bg');
-            slideBg.style.backgroundImage = `url('${newImageSrc}')`;
-            
-            const parentContainer = clickedThumbnail.parentElement;
-            parentContainer.querySelector('.thumbnail-item.is-active')?.classList.remove('is-active');
-            clickedThumbnail.classList.add('is-active');
+          const newImageSrc = clickedThumbnail.dataset.src;
+          const slideBg = activeSlide.querySelector('.slide-bg');
+          slideBg.style.backgroundImage = `url('${newImageSrc}')`;
+
+          const parentContainer = clickedThumbnail.parentElement;
+          parentContainer.querySelector('.thumbnail-item.is-active')?.classList.remove('is-active');
+          clickedThumbnail.classList.add('is-active');
         }
-    });
+      });
     });
   </script>
 
