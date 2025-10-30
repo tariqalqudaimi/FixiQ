@@ -9,7 +9,7 @@ if (!isset($_SESSION['lang'])) {
   $_SESSION['lang'] = 'en';
 }
 if (isset($_GET['lang'])) {
-  $_SESSION['lang'] = $_GET['.lang'];
+  $_SESSION['lang'] = $_GET['lang'];
 }
 $current_lang = $_SESSION['lang'];
 if (file_exists('lang/' . $current_lang . '.php')) {
@@ -48,7 +48,6 @@ if ($products_query) {
     $products_array[] = $row;
   }
 }
-// --- جلب بيانات قسم "من نحن" ---
 $about_main_description = null;
 $about_nodes = [];
 $about_query = $dbcon->query("SELECT * FROM about_sections ORDER BY id ASC");
@@ -63,8 +62,6 @@ if ($about_query) {
 }
 ?>
 
-
-?>
 <!DOCTYPE html>
 <html lang="<?= $current_lang ?>" dir="<?= ($current_lang == 'ar' ? 'rtl' : 'ltr') ?>">
 
@@ -88,7 +85,6 @@ if ($about_query) {
   <link rel="stylesheet"
     href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
   <link href="assets/css/style.css" rel="stylesheet">
-  <link href="project/style.css" rel="stylesheet">
 
   <!-- ========== NEW FONTS (SORA & TAJAWAL) ========== -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
