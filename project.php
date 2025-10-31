@@ -19,9 +19,6 @@ if (file_exists('lang/' . $current_lang . '.php')) {
 }
 
 $settings = $dbcon->query("SELECT * FROM company_settings WHERE id=1")->fetch_assoc();
-
-// --- MODIFIED SQL QUERY (Simpler) ---
-// تم تعديل الاستعلام لإزالة جلب الصور الإضافية بشكل مسبق
 $products_query = $dbcon->query("
     SELECT 
         p.id, p.name, p.name_ar, p.image, p.details_url, p.description, p.description_ar,
@@ -38,7 +35,6 @@ $products_query = $dbcon->query("
         p.id DESC
 ");
 
-// Fetch all products into an array to pass to JavaScript
 $products_array = [];
 if ($products_query) {
     while($row = $products_query->fetch_assoc()) {
@@ -50,7 +46,6 @@ if ($products_query) {
 <html lang="<?= $current_lang ?>" dir="<?= ($current_lang == 'ar' ? 'rtl' : 'ltr') ?>">
 
 <head>
-  <!-- ... (باقي كود الـ head الخاص بك كما هو) ... -->
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title><?= htmlspecialchars($settings['company_name'] ?? 'Company Name') ?> - <?= $lang['project_link'] ?? 'Projects' ?></title>
@@ -58,7 +53,6 @@ if ($products_query) {
   <meta content="" name="keywords">
   <link href="assets/img/Artboard 8-8.png" rel="icon">
   <link href="assets/img/Artboard 8-8.png" rel="apple-touch-icon">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Sora:300,300i,400,400i,500,500i,600,600i,700,700i|Tajwal:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -81,7 +75,6 @@ if ($products_query) {
         <div class="portal-grid">
           <?php if (!empty($products_array)): ?>
             <?php foreach ($products_array as $index => $product): ?>
-              <!-- تمت إضافة data-product-id لجلب الصور لاحقاً -->
               <div class="portal-card" data-index="<?= $index ?>" data-product-id="<?= $product['id'] ?>" tabindex="0">
                 <div class="card-background" style="background-image: url('assets/img/portfolio/<?= htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8') ?>');"></div>
                 <div class="card-overlay"></div>
@@ -102,7 +95,6 @@ if ($products_query) {
     <div class="slideshow-nav prev"><i class='bx bx-chevron-left'></i></div>
     <div class="slideshow-nav next"><i class='bx bx-chevron-right'></i></div>
     <div class="slideshow-track">
-      <!-- Slides will be injected here by JavaScript -->
     </div>
   </div>
 
@@ -113,7 +105,6 @@ if ($products_query) {
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/js/main.js"></script>
- <!-- Portal Showcase Logic (New Version) -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const allProjectsData = <?= json_encode($products_array, JSON_UNESCAPED_UNICODE); ?>;
@@ -129,11 +120,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (!grid || !slideshow || allProjectsData.length === 0) return;
 
-    // إنشاء عناصر السلايد الأساسية بدون الصور المصغرة
     const slideElements = allProjectsData.map(product => {
         const slide = document.createElement('div');
         slide.className = 'slideshow-slide';
-        // إضافة معرف المنتج للسلايد للوصول إليه لاحقاً
         slide.dataset.productId = product.id;
 
         const productName = (currentLang === 'ar' && product.name_ar) ? product.name_ar : product.name;
@@ -163,9 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentIndex = 0;
     let isAnimating = false;
 
-    // --- NEW: Function to load additional images on demand ---
     async function loadThumbnailsForSlide(slideElement) {
-        // التحقق إذا تم تحميل الصور مسبقاً لمنع الطلبات المتكررة
         if (slideElement.dataset.imagesLoaded === 'true') {
             return;
         }
@@ -181,12 +168,10 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const additionalImages = await response.json();
             
-            // دمج الصورة الرئيسية مع الصور الإضافية
             const allImages = [mainImage, ...additionalImages];
             
-            thumbnailsContainer.innerHTML = ''; // إفراغ حاوية التحميل
+            thumbnailsContainer.innerHTML = ''; 
 
-            // عرض المعرض فقط إذا كان هناك أكثر من صورة
             if (allImages.length > 1) {
                 const thumbnailsHTML = allImages.map((img, index) => `
                     <div 
@@ -198,7 +183,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 thumbnailsContainer.innerHTML = thumbnailsHTML;
             }
             
-            // وضع علامة تفيد بأن الصور قد تم تحميلها
             slideElement.dataset.imagesLoaded = 'true';
 
         } catch (error) {
@@ -217,7 +201,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const oldSlide = slideElements[oldIndex];
         const newSlide = slideElements[currentIndex];
         
-        // --- NEW: Load images for the new active slide ---
         loadThumbnailsForSlide(newSlide);
 
         const inClass = direction === 'next' ? 'slide-in-next' : 'slide-in-prev';
@@ -241,7 +224,6 @@ document.addEventListener('DOMContentLoaded', () => {
             slide.classList.toggle('is-active', index === startIndex);
         });
         
-        // تحميل الصور لأول سلايد يتم فتحه
         loadThumbnailsForSlide(firstSlide);
         
         htmlEl.classList.add('slideshow-open');
@@ -261,8 +243,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     closeBtn.addEventListener('click', closeSlideshow);
-
-    // منطق النقر على الصور المصغرة (Thumbnails) يبقى كما هو
     slideshowTrack.addEventListener('click', (e) => {
         if (e.target.classList.contains('thumbnail-item')) {
             const clickedThumbnail = e.target;

@@ -41,7 +41,6 @@ $products_query = $dbcon->query("
     LIMIT 4
 ");
 
-// Fetch all products into an array to pass to JavaScript
 $products_array = [];
 if ($products_query) {
   while ($row = $products_query->fetch_assoc()) {
@@ -73,24 +72,14 @@ if ($about_query) {
   <meta content="" name="keywords">
   <link href="assets/img/Artboard 8-8.png" rel="icon">
   <link href="assets/img/Artboard 8-8.png" rel="aArtboard 8-8">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Sora:300,300i,400,400i,500,500i,600,600i,700,700i|Tajwal:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-  <link rel="stylesheet"
-    href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
   <link href="assets/css/style.css" rel="stylesheet">
 
-  <!-- ========== NEW FONTS (SORA & TAJAWAL) ========== -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-  <!-- =================================================== -->
 </head>
 
 <body>
@@ -155,16 +144,13 @@ if ($about_query) {
 
         <?php if (!empty($about_nodes)): ?>
           <div class="about-us-container">
-            <!-- Animated Particle Background -->
-            <canvas id="particle-canvas-about"></canvas> <!-- Changed ID to avoid conflict -->
+            <canvas id="particle-canvas-about"></canvas>
 
-            <!-- The Neural Core -->
             <div class="neural-core">
               <div class="core-glow"></div>
               <i class='bx bxs-brain'></i>
             </div>
 
-            <!-- Synapse paths generated dynamically -->
             <div class="synapse-origin">
               <?php foreach (array_keys($about_nodes) as $index): ?>
                 <div class="synapse-path synapse-path-<?= $index + 1 ?>">
@@ -173,7 +159,6 @@ if ($about_query) {
               <?php endforeach; ?>
             </div>
 
-            <!-- Nodes generated dynamically -->
             <div class="neural-nodes-wrapper">
               <?php foreach ($about_nodes as $index => $node): ?>
                 <div class="neural-node pos-<?= $index + 1 ?>">
@@ -182,7 +167,6 @@ if ($about_query) {
                     <i class="<?= htmlspecialchars($node['icon_class']) ?>"></i>
                     <h4><?= htmlspecialchars(($current_lang == 'ar' && !empty($node['title_ar'])) ? $node['title_ar'] : $node['title']) ?></h4>
                     <div class="node-details">
-                        <!-- No htmlspecialchars here to render HTML content from CKEditor -->
                         <?= ($current_lang == 'ar' && !empty($node['details_ar'])) ? $node['details_ar'] : $node['details'] ?>
                     </div>
                   </div>
@@ -193,7 +177,8 @@ if ($about_query) {
         <?php endif; ?>
 
       </div>
-    </section><!-- End About Us Section -->
+    </section>
+
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
@@ -219,7 +204,7 @@ if ($about_query) {
           </div>
         <?php endif; ?>
       </div>
-    </section><!-- End Services Section -->
+    </section>
 
     <!-- ======= Features Section ======= -->
     <section id="features" class="features section-bg">
@@ -246,9 +231,12 @@ if ($about_query) {
           <?php endif; ?>
         </div>
       </div>
-    </section><!-- End Features Section -->
+    </section>
 
-    <section id="portal-showcase" class="section-bg">
+
+    <section id="portal-showcase" class="section-bg" 
+    data-projects='<?= htmlspecialchars(json_encode($products_array, JSON_UNESCAPED_UNICODE)); ?>' 
+    data-lang="<?= $current_lang; ?>">
       <div class="container" data-aos="fade-up">
         <div class="section-title">
           <h2><?= $lang['project_title'] ?? 'Our Projects' ?></h2>
@@ -258,7 +246,6 @@ if ($about_query) {
         <div class="portal-grid">
           <?php if (!empty($products_array)): ?>
             <?php foreach ($products_array as $index => $product): ?>
-              <!-- تمت إضافة data-product-id لجلب الصور لاحقاً -->
               <div class="portal-card" data-index="<?= $index ?>" data-product-id="<?= $product['id'] ?>" tabindex="0">
                 <div class="card-background" style="background-image: url('assets/img/portfolio/<?= htmlspecialchars($product['image'], ENT_QUOTES, 'UTF-8') ?>');"></div>
                 <div class="card-overlay"></div>
@@ -273,18 +260,16 @@ if ($about_query) {
       <div class="modal_btn_see">
         <a href="project.php" class="modal-link btn-visit-website project_see_more " target="_blank"><?= $lang['see_project'] ?? 'See All Projects' ?></a>
       </div>
-      <!-- This is the Slideshow structure, initially hidden -->
+
       <div class="portal-slideshow">
         <button class="slideshow-close-btn"><i class='bx bx-x'></i></button>
         <div class="slideshow-nav prev"><i class='bx bx-chevron-left'></i></div>
         <div class="slideshow-nav next"><i class='bx bx-chevron-right'></i></div>
         <div class="slideshow-track">
-          <!-- Slides will be injected here by JavaScript -->
+
         </div>
       </div>
     </section>
-
-
 
     <!-- ======= Team Section ======= -->
     <section id="team" class="team section-bg">
@@ -320,9 +305,9 @@ if ($about_query) {
           <div class="swiper-pagination"></div>
         </div>
       </div>
-    </section><!-- End Team Section -->
+    </section>
 
-    <!-- ======= Contact Section (Animated Swap Style) ======= -->
+    <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact">
       <div class="container" data-aos="fade-up">
         <div class="section-title">
@@ -334,7 +319,6 @@ if ($about_query) {
           <div class="forms-container">
             <div class="contact-info-swap">
 
-              <!-- The Contact Form -->
               <form action="forms/contact.php" method="POST" class="contact-form-main animated-contact-form">
                 <h2 class="title"><?= $lang['contact_form_title'] ?? 'Send a Message' ?></h2>
                 <div class="input-field">
@@ -428,8 +412,8 @@ if ($about_query) {
           </div>
         </div>
       </div>
-    </section><!-- End Contact Section -->
-  </main><!-- End #main -->
+    </section>
+
   </main>
 
   <!-- ======================================================= -->
@@ -459,215 +443,6 @@ if ($about_query) {
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
-
-  <script>
-    /**
-     * Interactive "About Us" Section Logic
-     */
-    document.addEventListener('DOMContentLoaded', () => {
-      const aboutContainer = document.querySelector('.about-us-container');
-      if (aboutContainer) {
-        const nodes = aboutContainer.querySelectorAll('.neural-node');
-
-        const resetNodes = (exceptNode = null) => {
-          aboutContainer.classList.remove('node-active-mode');
-          nodes.forEach(n => {
-            if (n !== exceptNode) {
-              n.classList.remove('active');
-            }
-          });
-        };
-
-        nodes.forEach(node => {
-          const closeBtn = node.querySelector('.close-node-btn');
-
-          node.addEventListener('click', (e) => {
-            // Do nothing if the close button was clicked or if the node is already active
-            if ((closeBtn && closeBtn.contains(e.target)) || node.classList.contains('active')) {
-              return;
-            }
-            // Reset other nodes and activate the clicked one
-            resetNodes(node);
-            aboutContainer.classList.add('node-active-mode');
-            node.classList.add('active');
-          });
-
-          if (closeBtn) {
-            closeBtn.addEventListener('click', (e) => {
-              e.stopPropagation(); // Prevent the node's click event from firing
-              resetNodes(); // Resets all nodes, including the current one
-            });
-          }
-        });
-      }
-
-
-      //project js
-      const allProjectsData = <?= json_encode($products_array, JSON_UNESCAPED_UNICODE); ?>;
-      const currentLang = '<?= $current_lang; ?>';
-
-      const grid = document.querySelector('.portal-grid');
-      const slideshow = document.querySelector('.portal-slideshow');
-      const slideshowTrack = slideshow.querySelector('.slideshow-track');
-      const closeBtn = slideshow.querySelector('.slideshow-close-btn');
-      const nextBtn = slideshow.querySelector('.slideshow-nav.next');
-      const prevBtn = slideshow.querySelector('.slideshow-nav.prev');
-      const htmlEl = document.documentElement;
-
-      if (!grid || !slideshow || allProjectsData.length === 0) return;
-
-      // إنشاء عناصر السلايد الأساسية بدون الصور المصغرة
-      const slideElements = allProjectsData.map(product => {
-        const slide = document.createElement('div');
-        slide.className = 'slideshow-slide';
-        // إضافة معرف المنتج للسلايد للوصول إليه لاحقاً
-        slide.dataset.productId = product.id;
-
-        const productName = (currentLang === 'ar' && product.name_ar) ? product.name_ar : product.name;
-        const productDesc = (currentLang === 'ar' && product.description_ar) ? product.description_ar : (product.description || '');
-        const categories = product.category_names || '';
-        const visitText = currentLang === 'ar' ? 'زيارة الموقع' : 'Visit Website';
-
-        slide.innerHTML = `
-            <div class="slide-bg-container">
-                <div class="slide-bg" style="background-image: url('assets/img/portfolio/${product.image}');"></div>
-            </div>
-            <div class="slide-details">
-                <div class="container">
-                    <span class="slide-category">${categories}</span>
-                    <h2 class="slide-title">${productName}</h2>
-                    
-                    ${(product.details_url && product.details_url !== '#') ? `<a href="${product.details_url}" class="slide-link" target="_blank">${visitText}</a>` : ''}
-                    <!-- حاوية الصور المصغرة، ستكون فارغة في البداية -->
-                    <div class="slide-thumbnails-container"></div>
-                </div>
-            </div>
-        `;
-        return slide;
-      });
-      slideshowTrack.append(...slideElements);
-
-      let currentIndex = 0;
-      let isAnimating = false;
-
-      // --- NEW: Function to load additional images on demand ---
-      async function loadThumbnailsForSlide(slideElement) {
-        // التحقق إذا تم تحميل الصور مسبقاً لمنع الطلبات المتكررة
-        if (slideElement.dataset.imagesLoaded === 'true') {
-          return;
-        }
-
-        const productId = slideElement.dataset.productId;
-        const mainImage = allProjectsData.find(p => p.id == productId).image;
-        const thumbnailsContainer = slideElement.querySelector('.slide-thumbnails-container');
-        thumbnailsContainer.innerHTML = '<span>Loading...</span>'; // رسالة تحميل مؤقتة
-
-        try {
-          const response = await fetch(`project/get_product_images.php?id=${productId}`);
-          if (!response.ok) throw new Error('Network response was not ok');
-
-          const additionalImages = await response.json();
-
-          // دمج الصورة الرئيسية مع الصور الإضافية
-          const allImages = [mainImage, ...additionalImages];
-
-          thumbnailsContainer.innerHTML = ''; // إفراغ حاوية التحميل
-
-          // عرض المعرض فقط إذا كان هناك أكثر من صورة
-          if (allImages.length > 1) {
-            const thumbnailsHTML = allImages.map((img, index) => `
-                    <div 
-                      class="thumbnail-item ${index === 0 ? 'is-active' : ''}" 
-                      style="background-image: url('assets/img/portfolio/${img}');"
-                      data-src="assets/img/portfolio/${img}">
-                    </div>
-                `).join('');
-            thumbnailsContainer.innerHTML = thumbnailsHTML;
-          }
-
-          // وضع علامة تفيد بأن الصور قد تم تحميلها
-          slideElement.dataset.imagesLoaded = 'true';
-
-        } catch (error) {
-          console.error('Failed to fetch additional images:', error);
-          thumbnailsContainer.innerHTML = '<span>Failed to load images.</span>';
-        }
-      }
-
-      function updateSlideshow(newIndex, direction) {
-        if (isAnimating) return;
-        isAnimating = true;
-
-        const oldIndex = currentIndex;
-        currentIndex = (newIndex + slideElements.length) % slideElements.length;
-
-        const oldSlide = slideElements[oldIndex];
-        const newSlide = slideElements[currentIndex];
-
-        // --- NEW: Load images for the new active slide ---
-        loadThumbnailsForSlide(newSlide);
-
-        const inClass = direction === 'next' ? 'slide-in-next' : 'slide-in-prev';
-        const outClass = direction === 'next' ? 'slide-out-next' : 'slide-out-prev';
-
-        newSlide.classList.add('is-active', inClass);
-        oldSlide.classList.add(outClass);
-
-        setTimeout(() => {
-          oldSlide.classList.remove('is-active', outClass);
-          newSlide.classList.remove(inClass);
-          isAnimating = false;
-        }, 600);
-      }
-
-      function openSlideshow(startIndex) {
-        currentIndex = startIndex;
-        const firstSlide = slideElements[startIndex];
-
-        slideElements.forEach((slide, index) => {
-          slide.classList.toggle('is-active', index === startIndex);
-        });
-
-        // تحميل الصور لأول سلايد يتم فتحه
-        loadThumbnailsForSlide(firstSlide);
-
-        htmlEl.classList.add('slideshow-open');
-      }
-
-      function closeSlideshow() {
-        htmlEl.classList.remove('slideshow-open');
-      }
-
-      nextBtn.addEventListener('click', () => updateSlideshow(currentIndex + 1, 'next'));
-      prevBtn.addEventListener('click', () => updateSlideshow(currentIndex - 1, 'prev'));
-
-      grid.querySelectorAll('.portal-card').forEach(card => {
-        card.addEventListener('click', () => {
-          openSlideshow(parseInt(card.dataset.index, 10));
-        });
-      });
-
-      closeBtn.addEventListener('click', closeSlideshow);
-
-      // منطق النقر على الصور المصغرة (Thumbnails) يبقى كما هو
-      slideshowTrack.addEventListener('click', (e) => {
-        if (e.target.classList.contains('thumbnail-item')) {
-          const clickedThumbnail = e.target;
-          const activeSlide = slideshowTrack.querySelector('.slideshow-slide.is-active');
-          if (!activeSlide) return;
-
-          const newImageSrc = clickedThumbnail.dataset.src;
-          const slideBg = activeSlide.querySelector('.slide-bg');
-          slideBg.style.backgroundImage = `url('${newImageSrc}')`;
-
-          const parentContainer = clickedThumbnail.parentElement;
-          parentContainer.querySelector('.thumbnail-item.is-active')?.classList.remove('is-active');
-          clickedThumbnail.classList.add('is-active');
-        }
-      });
-    });
-  </script>
-
   <script src="assets/js/main.js"></script>
 </body>
 

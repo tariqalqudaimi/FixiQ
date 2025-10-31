@@ -2,7 +2,7 @@
   "use strict";
 
   /**
-   * Helper Functions from your original file
+   * Helper Functions
    */
   const select = (el, all = false) => el.trim() ? (all ? [...document.querySelectorAll(el)] : document.querySelector(el)) : null;
   const on = (type, el, listener, all = false) => {
@@ -40,11 +40,6 @@
     window.addEventListener('load', toggleBacktotop);
     onscroll(document, toggleBacktotop);
   }
-
-  // =================================================================================
-  // START: BEYOND IMAGINATION JAVASCRIPT FUNCTIONS
-  // These are the new functions for the amazing effects.
-  // =================================================================================
 
   /**
    * BEYOND IMAGINATION: 3D Tilt Effect for Services and Team sections
@@ -86,14 +81,11 @@
     }
   }
 
-  // =================================================================================
-  // END: BEYOND IMAGINATION JAVASCRIPT FUNCTIONS
-  // =================================================================================
-
   /**
-   * Your original DOMContentLoaded listener, now with new function calls
+   * Main DOMContentLoaded listener for all page-specific scripts
    */
   document.addEventListener('DOMContentLoaded', function () {
+    // Particle effect canvas initialization
     const canvas = document.getElementById('particle-canvas');
     if (canvas) {
       const ctx = canvas.getContext('2d');
@@ -121,10 +113,160 @@
     }
     init3DTiltEffect();
     initFeaturesSpotlight();
+
+    // =======================================================
+    // NEW: Interactive "About Us" Section Logic
+    // =======================================================
+    const aboutContainer = document.querySelector('.about-us-container');
+    if (aboutContainer) {
+      const nodes = aboutContainer.querySelectorAll('.neural-node');
+      const resetNodes = (exceptNode = null) => {
+        aboutContainer.classList.remove('node-active-mode');
+        nodes.forEach(n => {
+          if (n !== exceptNode) {
+            n.classList.remove('active');
+          }
+        });
+      };
+      nodes.forEach(node => {
+        const closeBtn = node.querySelector('.close-node-btn');
+        node.addEventListener('click', (e) => {
+          if ((closeBtn && closeBtn.contains(e.target)) || node.classList.contains('active')) {
+            return;
+          }
+          resetNodes(node);
+          aboutContainer.classList.add('node-active-mode');
+          node.classList.add('active');
+        });
+        if (closeBtn) {
+          closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            resetNodes();
+          });
+        }
+      });
+    }
+
+    // =======================================================
+    // NEW: Project Showcase & Slideshow Logic
+    // =======================================================
+    const portalShowcase = document.querySelector('#portal-showcase');
+    if (portalShowcase && portalShowcase.dataset.projects) {
+      const allProjectsData = JSON.parse(portalShowcase.dataset.projects);
+      const currentLang = portalShowcase.dataset.lang;
+      const grid = portalShowcase.querySelector('.portal-grid');
+      const slideshow = document.querySelector('.portal-slideshow');
+      const slideshowTrack = slideshow.querySelector('.slideshow-track');
+      const closeBtn = slideshow.querySelector('.slideshow-close-btn');
+      const nextBtn = slideshow.querySelector('.slideshow-nav.next');
+      const prevBtn = slideshow.querySelector('.slideshow-nav.prev');
+      const htmlEl = document.documentElement;
+
+      if (!grid || !slideshow || allProjectsData.length === 0) return;
+
+      const slideElements = allProjectsData.map(product => {
+        const slide = document.createElement('div');
+        slide.className = 'slideshow-slide';
+        slide.dataset.productId = product.id;
+        const productName = (currentLang === 'ar' && product.name_ar) ? product.name_ar : product.name;
+        const productDesc = (currentLang === 'ar' && product.description_ar) ? product.description_ar : (product.description || '');
+        const categories = product.category_names || '';
+        const visitText = currentLang === 'ar' ? 'زيارة الموقع' : 'Visit Website';
+        slide.innerHTML = `
+            <div class="slide-bg-container">
+                <div class="slide-bg" style="background-image: url('assets/img/portfolio/${product.image}');"></div>
+            </div>
+            <div class="slide-details">
+                <div class="container">
+                    <span class="slide-category">${categories}</span>
+                    <h2 class="slide-title">${productName}</h2>
+                    ${(product.details_url && product.details_url !== '#') ? `<a href="${product.details_url}" class="slide-link" target="_blank">${visitText}</a>` : ''}
+                    <div class="slide-thumbnails-container"></div>
+                </div>
+            </div>
+        `;
+        return slide;
+      });
+      slideshowTrack.append(...slideElements);
+
+      let currentIndex = 0;
+      let isAnimating = false;
+
+      async function loadThumbnailsForSlide(slideElement) {
+        if (slideElement.dataset.imagesLoaded === 'true') return;
+        const productId = slideElement.dataset.productId;
+        const mainImage = allProjectsData.find(p => p.id == productId).image;
+        const thumbnailsContainer = slideElement.querySelector('.slide-thumbnails-container');
+        thumbnailsContainer.innerHTML = '<span>Loading...</span>';
+        try {
+          const response = await fetch(`project/get_product_images.php?id=${productId}`);
+          if (!response.ok) throw new Error('Network response was not ok');
+          const additionalImages = await response.json();
+          const allImages = [mainImage, ...additionalImages];
+          thumbnailsContainer.innerHTML = '';
+          if (allImages.length > 1) {
+            thumbnailsContainer.innerHTML = allImages.map((img, index) => `
+              <div class="thumbnail-item ${index === 0 ? 'is-active' : ''}" style="background-image: url('assets/img/portfolio/${img}');" data-src="assets/img/portfolio/${img}"></div>
+            `).join('');
+          }
+          slideElement.dataset.imagesLoaded = 'true';
+        } catch (error) {
+          console.error('Failed to fetch additional images:', error);
+          thumbnailsContainer.innerHTML = '<span>Failed to load images.</span>';
+        }
+      }
+
+      function updateSlideshow(newIndex, direction) {
+        if (isAnimating) return;
+        isAnimating = true;
+        const oldIndex = currentIndex;
+        currentIndex = (newIndex + slideElements.length) % slideElements.length;
+        const oldSlide = slideElements[oldIndex];
+        const newSlide = slideElements[currentIndex];
+        loadThumbnailsForSlide(newSlide);
+        const inClass = direction === 'next' ? 'slide-in-next' : 'slide-in-prev';
+        const outClass = direction === 'next' ? 'slide-out-next' : 'slide-out-prev';
+        newSlide.classList.add('is-active', inClass);
+        oldSlide.classList.add(outClass);
+        setTimeout(() => {
+          oldSlide.classList.remove('is-active', outClass);
+          newSlide.classList.remove(inClass);
+          isAnimating = false;
+        }, 600);
+      }
+
+      function openSlideshow(startIndex) {
+        currentIndex = startIndex;
+        const firstSlide = slideElements[startIndex];
+        slideElements.forEach((slide, index) => slide.classList.toggle('is-active', index === startIndex));
+        loadThumbnailsForSlide(firstSlide);
+        htmlEl.classList.add('slideshow-open');
+      }
+
+      function closeSlideshow() { htmlEl.classList.remove('slideshow-open'); }
+      
+      nextBtn.addEventListener('click', () => updateSlideshow(currentIndex + 1, 'next'));
+      prevBtn.addEventListener('click', () => updateSlideshow(currentIndex - 1, 'prev'));
+      grid.querySelectorAll('.portal-card').forEach(card => card.addEventListener('click', () => openSlideshow(parseInt(card.dataset.index, 10))));
+      closeBtn.addEventListener('click', closeSlideshow);
+      slideshowTrack.addEventListener('click', (e) => {
+        if (e.target.classList.contains('thumbnail-item')) {
+          const clickedThumbnail = e.target;
+          const activeSlide = slideshowTrack.querySelector('.slideshow-slide.is-active');
+          if (!activeSlide) return;
+          const newImageSrc = clickedThumbnail.dataset.src;
+          const slideBg = activeSlide.querySelector('.slide-bg');
+          slideBg.style.backgroundImage = `url('${newImageSrc}')`;
+          const parentContainer = clickedThumbnail.parentElement;
+          parentContainer.querySelector('.thumbnail-item.is-active')?.classList.remove('is-active');
+          clickedThumbnail.classList.add('is-active');
+        }
+      });
+    }
   });
 
   /**
-   * Your original Mobile Navigation Logic
+   * Mobile Navigation Logic
    */
   const mobileNavContainer = select('.navbar-mobile');
   if (mobileNavContainer) {
@@ -151,7 +293,7 @@
   }, true);
 
   /**
-   * All functions to run after page has fully loaded
+   * Logic to run after page has fully loaded
    */
   window.addEventListener('load', () => {
     let preloader = select('#preloader');
@@ -165,139 +307,8 @@
     if (window.location.hash && select(window.location.hash)) { scrollto(window.location.hash); }
     AOS.init({ duration: 1000, easing: 'ease-in-out', once: true, mirror: false });
 
-    // --- REPLACED SWIPER INITIALIZATIONS ---
-
-    try {
-      const project = document.querySelector('.kinetic-project');
-      if (project) {
-
-        const modal = document.getElementById('projectModal');
-        const wallItems = project.querySelectorAll('.kinetic-track .wall-item');
-
-        if (modal) {
-          const modalImage = modal.querySelector('.modal-image');
-          const modalTitle = modal.querySelector('.modal-title');
-          const modalCategories = modal.querySelector('.modal-categories');
-          const modalDescription = modal.querySelector('.modal-description');
-          const modalLink = modal.querySelector('.modal-link');
-          const closeModalBtn = modal.querySelector('.modal-close-btn');
-          const modalBackdrop = modal.querySelector('.modal-backdrop');
-
-          // Function to open the modal
-          const openModal = (itemData) => {
-            // Populate modal with data
-            modalImage.style.backgroundImage = `url('${itemData.image}')`;
-            modalTitle.textContent = itemData.title;
-            modalDescription.textContent = itemData.description;
-            modalLink.href = itemData.url;
-
-            // Populate categories
-            modalCategories.innerHTML = ''; // Clear previous categories
-            const categories = JSON.parse(itemData.categories);
-            categories.forEach(cat => {
-              const span = document.createElement('span');
-              span.textContent = cat;
-              modalCategories.appendChild(span);
-            });
-
-            // Show the modal
-            modal.classList.add('is-open');
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
-          };
-
-          // Function to close the modal
-          const closeModal = () => {
-            modal.classList.remove('is-open');
-            document.body.style.overflow = ''; // Restore scrolling
-          };
-
-          // Add click listeners to all project items
-          wallItems.forEach(item => {
-            item.addEventListener('click', () => {
-              openModal(item.dataset);
-            });
-          });
-
-          // Add listeners to close the modal
-          closeModalBtn.addEventListener('click', closeModal);
-          modalBackdrop.addEventListener('click', closeModal);
-        }
-
-        // --- 2. LOAD MORE & DESKTOP ANIMATION LOGIC (Mostly Unchanged) ---
-        const setupKineticWall = () => {
-          const isMobile = window.matchMedia("(max-width: 991px)").matches;
-
-          if (isMobile) {
-            // Mobile "Load More" Functionality
-            const loadMoreBtn = document.getElementById('mobile-load-more-btn');
-            if (loadMoreBtn && !loadMoreBtn.hasAttribute('data-listener-attached')) {
-              const initialVisibleItemsCount = 3;
-              const itemsToLoadPerClick = 3;
-              let currentlyVisibleItems = initialVisibleItemsCount;
-
-              if (wallItems.length <= initialVisibleItemsCount) {
-                loadMoreBtn.style.display = 'none';
-              }
-
-              loadMoreBtn.addEventListener('click', () => {
-                let itemsShown = 0;
-                for (let i = currentlyVisibleItems; i < wallItems.length && itemsShown < itemsToLoadPerClick; i++) {
-                  if (wallItems[i].classList.contains('is-hidden-mobile')) {
-                    wallItems[i].classList.remove('is-hidden-mobile');
-                    itemsShown++;
-                  }
-                }
-                currentlyVisibleItems += itemsShown;
-                if (currentlyVisibleItems >= wallItems.length) {
-                  loadMoreBtn.style.display = 'none';
-                }
-              });
-              loadMoreBtn.setAttribute('data-listener-attached', 'true');
-            }
-          } else {
-            // Desktop Infinite Scroll & Prism Effect Logic
-            const track = project.querySelector('.kinetic-track');
-            if (!track || track.children.length === 0) return;
-
-            if (!track.hasAttribute('data-cloned')) {
-              const originalItems = Array.from(track.children);
-              originalItems.forEach(item => {
-                const clone = item.cloneNode(true);
-                track.appendChild(clone);
-              });
-              track.setAttribute('data-cloned', 'true');
-            }
-
-            const itemCount = track.children.length / 2;
-            const duration = itemCount * 8;
-            track.style.setProperty('--scroll-duration', `${duration}s`);
-
-            wallItems.forEach(item => {
-              const prismImage = item.querySelector('.item-bg-prism');
-              item.addEventListener('mousemove', (e) => {
-                if (prismImage) {
-                  const rect = item.getBoundingClientRect();
-                  const x = e.clientX - rect.left;
-                  const y = e.clientY - rect.top;
-                  const moveX = (x / rect.width - 0.5) * 20;
-                  const moveY = (y / rect.height - 0.5) * 20;
-                  prismImage.style.setProperty('--mouse-x', `${moveX}px`);
-                  prismImage.style.setProperty('--mouse-y', `${moveY}px`);
-                }
-              });
-            });
-          }
-        };
-
-        setupKineticWall();
-        window.addEventListener('resize', setupKineticWall);
-      }
-    } catch (error) {
-      console.error("A critical error occurred in the Kinetic Wall script:", error);
-    }
-
     /**
-     * BEYOND IMAGINATION: Team Swiper (Enhanced version)
+     * Team Swiper initialization
      */
     new Swiper('.team-slider', {
       speed: 600,
@@ -315,23 +326,18 @@
   });
 
   /**
-   * Your existing Contact Page Animated Swap logic
+   * Contact Page Animated Swap logic
    */
   const show_info_btn = select("#show-info-btn");
   const show_form_btn = select("#show-form-btn");
-  const container = select(".contact-page-container");
-
-  if (container && show_info_btn && show_form_btn) {
-    show_info_btn.addEventListener('click', () => {
-      container.classList.add("show-info-mode");
-    });
-    show_form_btn.addEventListener('click', () => {
-      container.classList.remove("show-info-mode");
-    });
+  const contactContainer = select(".contact-page-container");
+  if (contactContainer && show_info_btn && show_form_btn) {
+    show_info_btn.addEventListener('click', () => contactContainer.classList.add("show-info-mode"));
+    show_form_btn.addEventListener('click', () => contactContainer.classList.remove("show-info-mode"));
   }
 
   /**
-   * Your existing AJAX handler for the Animated Contact Form
+   * AJAX handler for the Animated Contact Form
    */
   const animatedContactForm = select('#contact .animated-contact-form');
   if (animatedContactForm) {
@@ -349,27 +355,26 @@
         body: new FormData(form),
         headers: { 'X-Requested-With': 'XMLHttpRequest' }
       })
-        .then(response => {
-          if (response.ok) { return response.text(); }
-          else { return response.text().then(text => { throw new Error(text || 'Server responded with an error.'); }); }
-        })
-        .then(data => {
-          loading.style.display = 'none';
-          sentMessage.style.display = 'block';
-          form.reset();
-        })
-        .catch(error => {
-          loading.style.display = 'none';
-          errorMessage.textContent = error.message;
-          errorMessage.style.display = 'block';
-        })
-        .finally(() => {
-          setTimeout(() => {
-            sentMessage.style.display = 'none';
-            errorMessage.style.display = 'none';
-          }, 3000);
-        });
+      .then(response => {
+        if (response.ok) return response.text();
+        else return response.text().then(text => { throw new Error(text || 'Server responded with an error.'); });
+      })
+      .then(data => {
+        loading.style.display = 'none';
+        sentMessage.style.display = 'block';
+        form.reset();
+      })
+      .catch(error => {
+        loading.style.display = 'none';
+        errorMessage.textContent = error.message;
+        errorMessage.style.display = 'block';
+      })
+      .finally(() => {
+        setTimeout(() => {
+          sentMessage.style.display = 'none';
+          errorMessage.style.display = 'none';
+        }, 3000);
+      });
     });
   }
-
 })();
