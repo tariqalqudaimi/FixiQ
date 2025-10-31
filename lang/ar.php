@@ -74,5 +74,25 @@ $lang = [
     'footer_join_newsletter' => 'انضم إلى نشرتنا الإخبارية',
     'footer_newsletter_placeholder' => 'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص.',
     'footer_subscribe_btn' => 'اشتراك',
-    'footer_designed_by' => 'تصميم'
+    'footer_designed_by' => 'تصميم',
+
+     // Footer
+    'company_name' => 'ومضة',
+        'footer_description' => 'ومضة هي شركة رائدة في مجال التقنية وتقدم أفضل الحلول.',
+        'footer_links' => 'روابط سريعة',
+        'home_link' => 'الرئيسية',
+        'about_link' => 'عنا',
+        'services_link' => 'خدماتنا',
+        'team_link' => 'فريقنا',
+        'contact_link' => 'اتصل بنا',
+        'contact_info_title' => 'معلومات الاتصال',
+        'company_address' => 'صنعاء، اليمن',
+        'company_phone' => '+967 123 456 789',
+        'company_email' => 'info@wamdha.com',
+        'fb_link' => 'https://facebook.com',
+        'instagram_link' => 'https://instagram.com',
+        'linkedin_link' => 'https://linkedin.com',
+        'whatsapp_number' => '967123456789',
+        'footer_rights' => 'جميع الحقوق محفوظة.',
+    
 ];

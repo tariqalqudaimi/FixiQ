@@ -74,5 +74,24 @@ $lang = [
     'footer_join_newsletter' => 'Join Our Newsletter',
     'footer_newsletter_placeholder' => 'Tamen quem nulla quae legam multos aute sint culpa legam noster magna',
     'footer_subscribe_btn' => 'Subscribe',
-    'footer_designed_by' => 'Designed by'
+    'footer_designed_by' => 'Designed by',
+
+
+    'company_name' => 'Wamdha',
+        'footer_description' => 'Wamdha is a leading tech company providing the best solutions.',
+        'footer_links' => 'Quick Links',
+        'home_link' => 'Home',
+        'about_link' => 'About',
+        'services_link' => 'Services',
+        'team_link' => 'Team',
+        'contact_link' => 'Contact',
+        'contact_info_title' => 'Contact Info',
+        'company_address' => 'Sana’a, Yemen',
+        'company_phone' => '+967 123 456 789',
+        'company_email' => 'info@wamdha.com',
+        'fb_link' => 'https://facebook.com',
+        'instagram_link' => 'https://instagram.com',
+        'linkedin_link' => 'https://linkedin.com',
+        'whatsapp_number' => '967123456789',
+        'footer_rights' => 'All Rights Reserved.',
 ];
