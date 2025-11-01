@@ -2680,3 +2680,83 @@ html[dir="rtl"] .neural-node.active {
         .slide-link { align-self: center; }
     }
   
+
+/*--------------------------------------------------------------
+# Footer Section (Purple Theme)
+--------------------------------------------------------------*/
+.site-footer {
+  width: 100%;
+  background: var(--accent-purple); 
+  color: var(--text-light);
+  padding: 60px 0 30px 0;
+  font-family: "Poppins", sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.site-footer h5.footer-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.site-footer p, 
+.site-footer li, 
+.site-footer a {
+  font-size: 15px;
+  color: var(--text-light); /* نص فاتح فوق البنفسجي */
+  line-height: 1.8;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.site-footer a:hover {
+  color: var(--accent-purple-darker); /* تدرج أغمق عند hover */
+}
+
+.site-footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-social-links {
+  margin-top: 20px;
+}
+
+.footer-social-links .social-icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  text-decoration: none;
+  color: #ffffff;
+  background: var(--accent-purple-darker); /* تدرج أغمق للأيقونات */
+  margin: 0 5px;
+  transition: 0.3s;
+}
+
+.footer-social-links .social-icon:hover {
+  color: #fff;
+  background: var(--accent-purple); /* عند hover نص أبيض وخلفية البنفسجي الأساسي */
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+@media (max-width: 768px) {
+  .site-footer .row {
+    text-align: center;
+  }
+  .footer-social-links {
+    justify-content: center;
+  }
+}
