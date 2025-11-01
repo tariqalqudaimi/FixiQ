@@ -21,7 +21,26 @@
 13. Footer
 14. RTL Specific Adjustments
 --------------------------------------------------------------*/
+/*--------------------------------------------------------------
+# 1.1. Custom Font Definitions
+--------------------------------------------------------------*/
+@font-face {
+  font-family: 'Pafigo';
+  src: url('../fonts/pafigo/pafigo-regular-webfont.woff2') format('woff2'),
+       url('../fonts/pafigo/pafigo-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Improves perceived performance */
+}
 
+@font-face {
+  font-family: 'ghalib';
+  src: url('../fonts/Ghalib/Al-Ghalib.woff2') format('woff2'),
+       url('../fonts/Ghalib/Al-Ghalib.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Improves perceived performance */
+}
 /*--------------------------------------------------------------
 # 1. General & Variables
 --------------------------------------------------------------*/
@@ -37,7 +56,7 @@
 }
 
 body {
-  font-family: 'Sora', sans-serif;
+  font-family: 'pafigo', sans-serif;
   color: var(--text-light);
   background-color: var(--primary-dark);
 }
@@ -58,14 +77,14 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Sora', sans-serif;
+  font-family: 'pafigo', sans-serif;
   color: var(--text-light);
 }
 
 html[dir="rtl"] body {
   direction: rtl;
   text-align: right;
-  font-family: 'Tajawal', sans-serif;
+  font-family: 'ghalib', sans-serif;
 }
 
 html[dir="rtl"] h1,
@@ -74,7 +93,7 @@ html[dir="rtl"] h3,
 html[dir="rtl"] h4,
 html[dir="rtl"] h5,
 html[dir="rtl"] h6 {
-  font-family: 'Tajawal', sans-serif;
+  font-family: 'ghalib', sans-serif;
 }
 
 /*--------------------------------------------------------------
